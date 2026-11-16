@@ -165,6 +165,9 @@
       .slogan{width:226px;-webkit-mask-image:linear-gradient(90deg,#000 84%,transparent);mask-image:linear-gradient(90deg,#000 84%,transparent)}
       .slogan img{height:45px}
     }
+    .share-box{margin-top:12px;padding-top:12px;border-top:1px solid #cfe9b0}
+    .share-box .field-label{margin-bottom:5px}
+    #share-text{margin:0;white-space:pre-line;font-size:12px;line-height:1.55;color:#3b4f25}
 </style>
 </head>
 <body>
@@ -1531,7 +1534,10 @@
 </div>
 <p class="provider-note">Ништо не се испраќа автоматски: провери го нацртот и притисни „Испрати“. Ако текстот недостасува, копирај го со копчињата под писмото.</p>
 <button class="btn copy-recipient" disabled="" id="copy-selected-email" type="button">⧉ Копирај адреса на избраниот пратеник</button>
-<div class="after" hidden="" id="after"><strong>Го отвори нацртот?</strong>Откако ќе го испратиш писмото, пиши и до уште еден пратеник или сподели ја страницата.<div class="after-actions"><button class="btn" id="another" type="button">Избери уште еден пратеник</button><button class="btn" id="share" type="button">Сподели ја страницата</button></div></div>
+<div class="after" hidden="" id="after"><strong>Го отвори нацртот?</strong>Откако ќе го испратиш писмото, пиши и до уште еден пратеник или покани и други да пишат.<div class="after-actions"><button class="btn" id="another" type="button">Избери уште еден пратеник</button><button class="btn" id="share" type="button">Сподели со порака</button></div>
+<div class="share-box"><div class="field-label">Порака што се споделува</div><p id="share-text">Донирањето кај нас сè уште е покомплицирано отколку што треба, а новиот Закон за донации и спонзорства чека од 2024 година. Јас пишав до пратеник и побарав постапката да продолжи. Потребна е една минута, а секое писмо се брои. Пиши и ти!
+
+Време е за закон што ќе го охрабрува донирањето. ❤️</p></div></div>
 </div>
 </section>
 <div class="letter-content"><h3 class="letter-h">Текст на писмото</h3><p class="letter-sub">Можеш да ја испратиш подготвената порака како што е, или да ѝ дадеш личен печат: додади или измени што сакаш во твојата е-пошта пред да ја испратиш.</p><div class="field-label">Наслов / Subject</div><p class="subject" id="subject">Прашање за продолжување на постапката за Законот за донации и спонзорства</p><div class="field-label">Порака</div><pre class="letter-body" id="letter">Почитуван/а пратенику/пратеничке,
@@ -1687,9 +1693,9 @@
         document.getElementById("choose").scrollIntoView({behavior:"smooth",block:"start"});
       });
       document.getElementById("share").addEventListener("click", () => {
-        const data = {title: document.title, text: "Време е за закон што ќе го охрабрува донирањето", url: location.href};
-        if (navigator.share) navigator.share(data).catch(() => {});
-        else copyText(location.href, "Врската е копирана. Залепи ја каде што сакаш да ја споделиш.", 4500);
+        const text = document.getElementById("share-text").textContent.trim();
+        if (navigator.share) navigator.share({title: document.title, text: text, url: location.href}).catch(() => {});
+        else copyText(text + "\n\n" + location.href, "Пораката и врската се копирани. Залепи ги каде што сакаш да споделиш.", 5000);
       });
       function notify(msg, ms) {
         toast.textContent=msg; toast.classList.add("show");
