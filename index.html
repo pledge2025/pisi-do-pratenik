@@ -188,6 +188,55 @@
     .letter-body{font-size:14px}
     .campaign p,footer{font-size:13px}
     @media(max-width:580px){.intro h2{font-size:20px}.mp-person strong{font-size:14px}.send-tag{font-size:12px}.delivery-explain{font-size:14px}}
+    /* Assembly hall view */
+    .hall{margin-top:16px}
+    #hall{display:block;width:100%;height:auto;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+    .seat{fill:#dcebcd;stroke:#b9d3a0;stroke-width:1.5;transition:fill .12s,opacity .15s}
+    .seat.hover{fill:#b5d68c}
+    .seat.done{fill:var(--accent);stroke:#739c33}
+    .seat.sel{fill:#30492a;stroke:#30492a}
+    .seat.sel.done{stroke:var(--accent);stroke-width:4}
+    .seat.dim{opacity:.18}
+    .hall-num{font:800 40px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;fill:#30492a;text-anchor:middle;letter-spacing:-1px}
+    .hall-sub{font:600 15px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;fill:#6b755f;text-anchor:middle}
+    .hall-info{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-height:50px;margin-top:10px;padding:9px 13px;border:1px solid var(--line);border-radius:11px;background:#fbfef8;font-size:13px;color:var(--muted)}
+    .hall-info strong{font-size:15px;color:var(--ink)}
+    .hall-info .who{display:flex;flex-direction:column;min-width:0;flex:1;overflow-wrap:anywhere;line-height:1.35}
+    .hall-info .btn{background:#30492a;border-color:#30492a;color:#fff}
+    .hall-info .ok{font-weight:800;color:#477018;white-space:nowrap}
+    .hall-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:9px;font-size:12px;color:var(--muted)}
+    .hall-legend span{display:inline-flex;align-items:center;gap:5px}
+    .lg{display:inline-block;width:11px;height:11px;border-radius:50%;background:#dcebcd;border:1px solid #b9d3a0}
+    .lg.sel{background:#30492a;border-color:#30492a}.lg.done{background:var(--accent);border-color:#739c33}
+    .linkbtn{margin-left:auto;border:0;background:none;padding:0;font:inherit;color:#477018;text-decoration:underline;cursor:pointer}
+    .hall-cap{margin:6px 0 0;font-size:11px;color:#808a75}
+    /* Party colours in the hall */
+    .seat{stroke:#fff;stroke-width:1.5}
+    .seat.done{stroke:#fff}
+    .seat.hover{stroke:#15233c;stroke-width:2.5}
+    .seat.sel,.seat.sel.done{stroke:#15233c;stroke-width:4.5}
+    .mark{fill:#fff;pointer-events:none;display:none}.mark.on{display:block}
+    .lg,.lg.sel,.lg.done{background:#aab3a2;border:1px solid #aab3a2}
+    .lg.sel{border:3px solid #15233c;width:13px;height:13px}
+    .lg.done{background:radial-gradient(circle,#fff 0 30%,#aab3a2 34%)}
+    .party-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .pchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:100px;padding:4px 10px 4px 7px;font:inherit;font-size:12px;line-height:1.3;color:#3b4f25;cursor:pointer;text-align:left}
+    .pchip i{flex:0 0 auto;width:10px;height:10px;border-radius:50%}
+    .pchip b{color:#808a75;font-weight:700}
+    .pchip:hover{border-color:#aab3a2}
+    .pchip[aria-pressed="true"]{background:#30492a;border-color:#30492a;color:#fff}.pchip[aria-pressed="true"] b{color:#dcebcb}
+    .mp-person .mp-party,.hall-info .mp-party{display:flex;align-items:center;gap:5px;font-size:12px;color:#4b5540;margin-top:3px}
+    .mp-party i{flex:0 0 auto;width:8px;height:8px;border-radius:50%}
+    .party-legend:not(.open) .pchip.extra:not([aria-pressed="true"]){display:none}
+    .pchip.pmore{border-style:dashed;font-weight:700;color:#477018}
+    /* Hall / list tabs */
+    .tabs{display:flex;gap:4px;margin-top:14px;padding:4px;background:#eef5e6;border-radius:12px}
+    .tab{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 10px;font:700 14px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#4b5540;cursor:pointer}
+    .tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 4px #1c280e22}
+    #pick-panel[data-view="hall"] .search-wrap,#pick-panel[data-view="hall"] #list,#pick-panel[data-view="hall"] #empty,#pick-panel[data-view="hall"] .note{display:none}
+    #pick-panel[data-view="hall"] .panel-heading{border-bottom:0}
+    #pick-panel[data-view="list"] .hall{display:none}
+    .hall{margin-top:12px}
 </style>
 </head>
 <body>
@@ -201,18 +250,26 @@
 <div class="cta-row"><a class="cta" href="#choose">Избери пратеник ↓</a><a class="cta cta-2" href="#why-title">Зошто е важно?</a></div>
 </div></section>
 <div class="wrap"><div class="privacy" role="note"><span><b aria-hidden="true" class="check">✓</b> Без регистрација</span><span><b aria-hidden="true" class="check">✓</b> Без внесување е-пошта на страницата</span><span><b aria-hidden="true" class="check">✓</b> Пораката се испраќа од твојата е-пошта</span></div></div>
-<section class="wrap intro" id="choose"><h2>До кого сакаш да пишуваш?</h2><p>Пребарај и избери еден пратеник од листата. Потоа избери во која е-пошта сакаш да го отвориш подготвеното писмо.</p></section>
+<section class="wrap intro" id="choose"><h2>До кого сакаш да пишуваш?</h2><p>Избери место во салата, пребарај по име или остави случајот да избере. Потоа отвори го подготвеното писмо во твојата е-пошта.</p></section>
 <div class="wrap columns">
-<section aria-labelledby="recipient-title" class="panel">
+<section aria-labelledby="recipient-title" class="panel" data-view="hall" id="pick-panel">
 <div class="panel-heading">
 <div class="panel-title"><div><div class="step-label">ЧЕКОР 1</div><h2 id="recipient-title">Избери пратеник</h2></div><span aria-live="polite" class="count" id="count">120 пратеници</span></div>
+<div aria-label="Начин на избор" class="tabs" role="tablist"><button aria-controls="view-hall" aria-selected="true" class="tab" id="tab-hall" role="tab" type="button">Сала</button><button aria-controls="list" aria-selected="false" class="tab" id="tab-list" role="tab" type="button">Листа со имиња</button></div>
+<div class="hall" id="view-hall">
+<svg aria-label="Приказ на 120-те пратенички места. Истите пратеници се наведени во листата подолу." id="hall" role="img" viewBox="0 0 600 316"></svg>
+<div aria-live="polite" class="hall-info" id="hall-info"></div>
+<div aria-label="Филтер по партија" class="party-legend" id="party-legend"></div>
+<div class="hall-legend"><span><i class="lg sel"></i>избран</span><span><i class="lg done"></i>отворен нацрт</span><button class="linkbtn" hidden="" id="hall-reset" type="button">Почни одново</button></div>
+<p class="hall-cap">Местата се групирани по партија (според sobranie.mk), не според вистинскиот распоред на седење.</p>
+</div>
 <label class="search-wrap"><span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Пребарај пратеник</span><input aria-label="Пребарај по име или презиме" autocomplete="off" id="search" placeholder="Пребарај по име или презиме..." type="search"/></label>
 <div class="random-row"><span>Не знаеш кого да избереш?</span><button class="btn" id="random-mp" type="button">🎲 Избери случаен пратеник</button></div>
 </div>
 <ul class="list" id="list">
 <li class="mp-item" data-search="аднан азизи adnan azizi a.azizi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Аднан Азизи" aria-pressed="false" class="send-mp" data-email="A.Azizi@sobranie.mk" data-name="Аднан Азизи" data-gender="m" type="button">
+<button aria-label="Избери примач: Аднан Азизи" aria-pressed="false" class="send-mp" data-email="A.Azizi@sobranie.mk" data-name="Аднан Азизи" data-gender="m" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">АА</span>
 <span class="mp-person"><strong>Аднан Азизи</strong><small>A.Azizi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -223,7 +280,7 @@
 </li>
 <li class="mp-item" data-search="александар велјановски aleksandar veljanovski a.veljanovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Александар Велјановски" aria-pressed="false" class="send-mp" data-email="A.Veljanovski@sobranie.mk" data-name="Александар Велјановски" data-gender="m" type="button">
+<button aria-label="Избери примач: Александар Велјановски" aria-pressed="false" class="send-mp" data-email="A.Veljanovski@sobranie.mk" data-name="Александар Велјановски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">АВ</span>
 <span class="mp-person"><strong>Александар Велјановски</strong><small>A.Veljanovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -234,7 +291,7 @@
 </li>
 <li class="mp-item" data-search="александар јамалов aleksandar jamalov a.jamalov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Александар Јамалов" aria-pressed="false" class="send-mp" data-email="a.jamalov@sobranie.mk" data-name="Александар Јамалов" data-gender="m" type="button">
+<button aria-label="Избери примач: Александар Јамалов" aria-pressed="false" class="send-mp" data-email="a.jamalov@sobranie.mk" data-name="Александар Јамалов" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">АЈ</span>
 <span class="mp-person"><strong>Александар Јамалов</strong><small>a.jamalov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -245,7 +302,7 @@
 </li>
 <li class="mp-item" data-search="александра николовска aleksandra nikolovska aleksandra.nikolovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Александра Николовска" aria-pressed="false" class="send-mp" data-email="Aleksandra.Nikolovska@sobranie.mk" data-name="Александра Николовска" data-gender="f" type="button">
+<button aria-label="Избери примач: Александра Николовска" aria-pressed="false" class="send-mp" data-email="Aleksandra.Nikolovska@sobranie.mk" data-name="Александра Николовска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">АН</span>
 <span class="mp-person"><strong>Александра Николовска</strong><small>Aleksandra.Nikolovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -256,7 +313,7 @@
 </li>
 <li class="mp-item" data-search="али ахмети ali ahmeti a.ahmeti@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Али Ахмети" aria-pressed="false" class="send-mp" data-email="A.Ahmeti@sobranie.mk" data-name="Али Ахмети" data-gender="m" type="button">
+<button aria-label="Избери примач: Али Ахмети" aria-pressed="false" class="send-mp" data-email="A.Ahmeti@sobranie.mk" data-name="Али Ахмети" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">АА</span>
 <span class="mp-person"><strong>Али Ахмети</strong><small>A.Ahmeti@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -267,7 +324,7 @@
 </li>
 <li class="mp-item" data-search="амар мециновиќ amar mecinovikj a.mecinovikj@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Амар Мециновиќ" aria-pressed="false" class="send-mp" data-email="a.mecinovikj@sobranie.mk" data-name="Амар Мециновиќ" data-gender="m" type="button">
+<button aria-label="Избери примач: Амар Мециновиќ" aria-pressed="false" class="send-mp" data-email="a.mecinovikj@sobranie.mk" data-name="Амар Мециновиќ" data-gender="m" data-party="Левица" type="button">
 <span aria-hidden="true" class="avatar">АМ</span>
 <span class="mp-person"><strong>Амар Мециновиќ</strong><small>a.mecinovikj@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -278,7 +335,7 @@
 </li>
 <li class="mp-item" data-search="ангелинка петкова angelinka petkova a.petkova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Ангелинка Петкова" aria-pressed="false" class="send-mp" data-email="A.Petkova@sobranie.mk" data-name="Ангелинка Петкова" data-gender="f" type="button">
+<button aria-label="Избери примач: Ангелинка Петкова" aria-pressed="false" class="send-mp" data-email="A.Petkova@sobranie.mk" data-name="Ангелинка Петкова" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">АП</span>
 <span class="mp-person"><strong>Ангелинка Петкова</strong><small>A.Petkova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -289,7 +346,7 @@
 </li>
 <li class="mp-item" data-search="антонијо милошоски antonijo miloshoski a.milososki@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Антонијо Милошоски" aria-pressed="false" class="send-mp" data-email="A.Milososki@sobranie.mk" data-name="Антонијо Милошоски" data-gender="m" type="button">
+<button aria-label="Избери примач: Антонијо Милошоски" aria-pressed="false" class="send-mp" data-email="A.Milososki@sobranie.mk" data-name="Антонијо Милошоски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">АМ</span>
 <span class="mp-person"><strong>Антонијо Милошоски</strong><small>A.Milososki@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -300,7 +357,7 @@
 </li>
 <li class="mp-item" data-search="арбана пашоли arbana pasholi a.pasholi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Арбана Пашоли" aria-pressed="false" class="send-mp" data-email="A.Pasholi@sobranie.mk" data-name="Арбана Пашоли" data-gender="f" type="button">
+<button aria-label="Избери примач: Арбана Пашоли" aria-pressed="false" class="send-mp" data-email="A.Pasholi@sobranie.mk" data-name="Арбана Пашоли" data-gender="f" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">АП</span>
 <span class="mp-person"><strong>Арбана Пашоли</strong><small>A.Pasholi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -311,7 +368,7 @@
 </li>
 <li class="mp-item" data-search="африм гаши afrim gashi a.gasi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Африм Гаши" aria-pressed="false" class="send-mp" data-email="A.Gasi@sobranie.mk" data-name="Африм Гаши" data-gender="m" type="button">
+<button aria-label="Избери примач: Африм Гаши" aria-pressed="false" class="send-mp" data-email="A.Gasi@sobranie.mk" data-name="Африм Гаши" data-gender="m" data-party="Алтернатива" type="button">
 <span aria-hidden="true" class="avatar">АГ</span>
 <span class="mp-person"><strong>Африм Гаши</strong><small>A.Gasi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -322,7 +379,7 @@
 </li>
 <li class="mp-item" data-search="бејџан иљас bejdzhan iljas b.iljas@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Бејџан Иљас" aria-pressed="false" class="send-mp" data-email="B.Iljas@sobranie.mk" data-name="Бејџан Иљас" data-gender="m" type="button">
+<button aria-label="Избери примач: Бејџан Иљас" aria-pressed="false" class="send-mp" data-email="B.Iljas@sobranie.mk" data-name="Бејџан Иљас" data-gender="m" data-party="Независни пратеници" type="button">
 <span aria-hidden="true" class="avatar">БИ</span>
 <span class="mp-person"><strong>Бејџан Иљас</strong><small>B.Iljas@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -333,7 +390,7 @@
 </li>
 <li class="mp-item" data-search="беким ќоку bekim kjoku b.qoku@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Беким Ќоку" aria-pressed="false" class="send-mp" data-email="b.qoku@sobranie.mk" data-name="Беким Ќоку" data-gender="m" type="button">
+<button aria-label="Избери примач: Беким Ќоку" aria-pressed="false" class="send-mp" data-email="b.qoku@sobranie.mk" data-name="Беким Ќоку" data-gender="m" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">БЌ</span>
 <span class="mp-person"><strong>Беким Ќоку</strong><small>b.qoku@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -344,7 +401,7 @@
 </li>
 <li class="mp-item" data-search="биљана кузманоска biljana kuzmanoska b.kuzmanoska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Биљана Кузманоска" aria-pressed="false" class="send-mp" data-email="b.kuzmanoska@sobranie.mk" data-name="Биљана Кузманоска" data-gender="f" type="button">
+<button aria-label="Избери примач: Биљана Кузманоска" aria-pressed="false" class="send-mp" data-email="b.kuzmanoska@sobranie.mk" data-name="Биљана Кузманоска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">БК</span>
 <span class="mp-person"><strong>Биљана Кузманоска</strong><small>b.kuzmanoska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -355,7 +412,7 @@
 </li>
 <li class="mp-item" data-search="бисера костадиновска стојчевска bisera kostadinovska stojchevska b.kostadinovskastojcevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Бисера Костадиновска Стојчевска" aria-pressed="false" class="send-mp" data-email="B.KostadinovskaStojcevska@sobranie.mk" data-name="Бисера Костадиновска Стојчевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Бисера Костадиновска Стојчевска" aria-pressed="false" class="send-mp" data-email="B.KostadinovskaStojcevska@sobranie.mk" data-name="Бисера Костадиновска Стојчевска" data-gender="f" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">БК</span>
 <span class="mp-person"><strong>Бисера Костадиновска Стојчевска</strong><small>B.KostadinovskaStojcevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -366,7 +423,7 @@
 </li>
 <li class="mp-item" data-search="бисерка златеска biserka zlateska b.zlateska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Бисерка Златеска" aria-pressed="false" class="send-mp" data-email="B.Zlateska@sobranie.mk" data-name="Бисерка Златеска" data-gender="f" type="button">
+<button aria-label="Избери примач: Бисерка Златеска" aria-pressed="false" class="send-mp" data-email="B.Zlateska@sobranie.mk" data-name="Бисерка Златеска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">БЗ</span>
 <span class="mp-person"><strong>Бисерка Златеска</strong><small>B.Zlateska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -377,7 +434,7 @@
 </li>
 <li class="mp-item" data-search="благица ласовска blagica lasovska b.lasovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Благица Ласовска" aria-pressed="false" class="send-mp" data-email="B.Lasovska@sobranie.mk" data-name="Благица Ласовска" data-gender="f" type="button">
+<button aria-label="Избери примач: Благица Ласовска" aria-pressed="false" class="send-mp" data-email="B.Lasovska@sobranie.mk" data-name="Благица Ласовска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">БЛ</span>
 <span class="mp-person"><strong>Благица Ласовска</strong><small>B.Lasovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -388,7 +445,7 @@
 </li>
 <li class="mp-item" data-search="благој бочварски blagoj bochvarski b.bocvarski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Благој Бочварски" aria-pressed="false" class="send-mp" data-email="b.bocvarski@sobranie.mk" data-name="Благој Бочварски" data-gender="m" type="button">
+<button aria-label="Избери примач: Благој Бочварски" aria-pressed="false" class="send-mp" data-email="b.bocvarski@sobranie.mk" data-name="Благој Бочварски" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ББ</span>
 <span class="mp-person"><strong>Благој Бочварски</strong><small>b.bocvarski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -399,7 +456,7 @@
 </li>
 <li class="mp-item" data-search="блерим беџети blerim bedzheti b.bexheti@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Блерим Беџети" aria-pressed="false" class="send-mp" data-email="B.Bexheti@sobranie.mk" data-name="Блерим Беџети" data-gender="m" type="button">
+<button aria-label="Избери примач: Блерим Беџети" aria-pressed="false" class="send-mp" data-email="B.Bexheti@sobranie.mk" data-name="Блерим Беџети" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">ББ</span>
 <span class="mp-person"><strong>Блерим Беџети</strong><small>B.Bexheti@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -410,7 +467,7 @@
 </li>
 <li class="mp-item" data-search="бобан карапејовски boban karapejovski b.karapejovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Бобан Карапејовски" aria-pressed="false" class="send-mp" data-email="b.karapejovski@sobranie.mk" data-name="Бобан Карапејовски" data-gender="m" type="button">
+<button aria-label="Избери примач: Бобан Карапејовски" aria-pressed="false" class="send-mp" data-email="b.karapejovski@sobranie.mk" data-name="Бобан Карапејовски" data-gender="m" data-party="Движење ЗНАМ" type="button">
 <span aria-hidden="true" class="avatar">БК</span>
 <span class="mp-person"><strong>Бобан Карапејовски</strong><small>b.karapejovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -421,7 +478,7 @@
 </li>
 <li class="mp-item" data-search="бојан стојаноски bojan stojanoski b.stojanoski2@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Бојан Стојаноски" aria-pressed="false" class="send-mp" data-email="B.Stojanoski2@sobranie.mk" data-name="Бојан Стојаноски" data-gender="m" type="button">
+<button aria-label="Избери примач: Бојан Стојаноски" aria-pressed="false" class="send-mp" data-email="B.Stojanoski2@sobranie.mk" data-name="Бојан Стојаноски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">БС</span>
 <span class="mp-person"><strong>Бојан Стојаноски</strong><small>B.Stojanoski2@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -432,7 +489,7 @@
 </li>
 <li class="mp-item" data-search="борислав крмов borislav krmov b.krmov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Борислав Крмов" aria-pressed="false" class="send-mp" data-email="B.Krmov@sobranie.mk" data-name="Борислав Крмов" data-gender="m" type="button">
+<button aria-label="Избери примач: Борислав Крмов" aria-pressed="false" class="send-mp" data-email="B.Krmov@sobranie.mk" data-name="Борислав Крмов" data-gender="m" data-party="Левица" type="button">
 <span aria-hidden="true" class="avatar">БК</span>
 <span class="mp-person"><strong>Борислав Крмов</strong><small>B.Krmov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -443,7 +500,7 @@
 </li>
 <li class="mp-item" data-search="борче цветков borche cvetkov b.cvetkov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Борче Цветков" aria-pressed="false" class="send-mp" data-email="b.cvetkov@sobranie.mk" data-name="Борче Цветков" data-gender="m" type="button">
+<button aria-label="Избери примач: Борче Цветков" aria-pressed="false" class="send-mp" data-email="b.cvetkov@sobranie.mk" data-name="Борче Цветков" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">БЦ</span>
 <span class="mp-person"><strong>Борче Цветков</strong><small>b.cvetkov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -454,7 +511,7 @@
 </li>
 <li class="mp-item" data-search="бране петрушевски brane petrushevski b.petrusevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Бране Петрушевски" aria-pressed="false" class="send-mp" data-email="B.Petrusevski@sobranie.mk" data-name="Бране Петрушевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Бране Петрушевски" aria-pressed="false" class="send-mp" data-email="B.Petrusevski@sobranie.mk" data-name="Бране Петрушевски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">БП</span>
 <span class="mp-person"><strong>Бране Петрушевски</strong><small>B.Petrusevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -465,7 +522,7 @@
 </li>
 <li class="mp-item" data-search="валентина марчевска valentina marchevska v.marchevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Валентина Марчевска" aria-pressed="false" class="send-mp" data-email="v.marchevska@sobranie.mk" data-name="Валентина Марчевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Валентина Марчевска" aria-pressed="false" class="send-mp" data-email="v.marchevska@sobranie.mk" data-name="Валентина Марчевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ВМ</span>
 <span class="mp-person"><strong>Валентина Марчевска</strong><small>v.marchevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -476,7 +533,7 @@
 </li>
 <li class="mp-item" data-search="ваљбона адили-емини valjbona adili-emini v.adili-emini@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Ваљбона Адили-Емини" aria-pressed="false" class="send-mp" data-email="V.Adili-Emini@sobranie.mk" data-name="Ваљбона Адили-Емини" data-gender="f" type="button">
+<button aria-label="Избери примач: Ваљбона Адили-Емини" aria-pressed="false" class="send-mp" data-email="V.Adili-Emini@sobranie.mk" data-name="Ваљбона Адили-Емини" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">ВА</span>
 <span class="mp-person"><strong>Ваљбона Адили-Емини</strong><small>V.Adili-Emini@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -487,7 +544,7 @@
 </li>
 <li class="mp-item" data-search="велика стојкова серафимовска velika stojkova serafimovska v.stojkovaserafimovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Велика Стојкова Серафимовска" aria-pressed="false" class="send-mp" data-email="V.StojkovaSerafimovska@sobranie.mk" data-name="Велика Стојкова Серафимовска" data-gender="f" type="button">
+<button aria-label="Избери примач: Велика Стојкова Серафимовска" aria-pressed="false" class="send-mp" data-email="V.StojkovaSerafimovska@sobranie.mk" data-name="Велика Стојкова Серафимовска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ВС</span>
 <span class="mp-person"><strong>Велика Стојкова Серафимовска</strong><small>V.StojkovaSerafimovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -498,7 +555,7 @@
 </li>
 <li class="mp-item" data-search="венко филипче venko filipche v.filipche@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Венко Филипче" aria-pressed="false" class="send-mp" data-email="v.filipche@sobranie.mk" data-name="Венко Филипче" data-gender="m" type="button">
+<button aria-label="Избери примач: Венко Филипче" aria-pressed="false" class="send-mp" data-email="v.filipche@sobranie.mk" data-name="Венко Филипче" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ВФ</span>
 <span class="mp-person"><strong>Венко Филипче</strong><small>v.filipche@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -509,7 +566,7 @@
 </li>
 <li class="mp-item" data-search="весна бендевска vesna bendevska v.bendevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Весна Бендевска" aria-pressed="false" class="send-mp" data-email="v.bendevska@sobranie.mk" data-name="Весна Бендевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Весна Бендевска" aria-pressed="false" class="send-mp" data-email="v.bendevska@sobranie.mk" data-name="Весна Бендевска" data-gender="f" data-party="Движење ЗНАМ" type="button">
 <span aria-hidden="true" class="avatar">ВБ</span>
 <span class="mp-person"><strong>Весна Бендевска</strong><small>v.bendevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -520,7 +577,7 @@
 </li>
 <li class="mp-item" data-search="весна ѓорѓиева vesna gjorgjieva v.gorgieva@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Весна Ѓорѓиева" aria-pressed="false" class="send-mp" data-email="V.Gorgieva@sobranie.mk" data-name="Весна Ѓорѓиева" data-gender="f" type="button">
+<button aria-label="Избери примач: Весна Ѓорѓиева" aria-pressed="false" class="send-mp" data-email="V.Gorgieva@sobranie.mk" data-name="Весна Ѓорѓиева" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ВЃ</span>
 <span class="mp-person"><strong>Весна Ѓорѓиева</strong><small>V.Gorgieva@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -531,7 +588,7 @@
 </li>
 <li class="mp-item" data-search="горан мисовски goran misovski g.misovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Горан Мисовски" aria-pressed="false" class="send-mp" data-email="G.Misovski@sobranie.mk" data-name="Горан Мисовски" data-gender="m" type="button">
+<button aria-label="Избери примач: Горан Мисовски" aria-pressed="false" class="send-mp" data-email="G.Misovski@sobranie.mk" data-name="Горан Мисовски" data-gender="m" data-party="Нова социјалдемократска партија" type="button">
 <span aria-hidden="true" class="avatar">ГМ</span>
 <span class="mp-person"><strong>Горан Мисовски</strong><small>G.Misovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -542,7 +599,7 @@
 </li>
 <li class="mp-item" data-search="грација бакраческа gracija bakracheska g.bakracevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Грација Бакраческа" aria-pressed="false" class="send-mp" data-email="G.Bakracevska@sobranie.mk" data-name="Грација Бакраческа" data-gender="f" type="button">
+<button aria-label="Избери примач: Грација Бакраческа" aria-pressed="false" class="send-mp" data-email="G.Bakracevska@sobranie.mk" data-name="Грација Бакраческа" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ГБ</span>
 <span class="mp-person"><strong>Грација Бакраческа</strong><small>G.Bakracevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -553,7 +610,7 @@
 </li>
 <li class="mp-item" data-search="даниел стојчевски daniel stojchevski d.stojchevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Даниел Стојчевски" aria-pressed="false" class="send-mp" data-email="d.stojchevski@sobranie.mk" data-name="Даниел Стојчевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Даниел Стојчевски" aria-pressed="false" class="send-mp" data-email="d.stojchevski@sobranie.mk" data-name="Даниел Стојчевски" data-gender="m" data-party="Движење ЗНАМ" type="button">
 <span aria-hidden="true" class="avatar">ДС</span>
 <span class="mp-person"><strong>Даниел Стојчевски</strong><small>d.stojchevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -564,7 +621,7 @@
 </li>
 <li class="mp-item" data-search="даниела белимова daniela belimova d.belimova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Даниела Белимова" aria-pressed="false" class="send-mp" data-email="d.belimova@sobranie.mk" data-name="Даниела Белимова" data-gender="f" type="button">
+<button aria-label="Избери примач: Даниела Белимова" aria-pressed="false" class="send-mp" data-email="d.belimova@sobranie.mk" data-name="Даниела Белимова" data-gender="f" data-party="Движење ЗНАМ" type="button">
 <span aria-hidden="true" class="avatar">ДБ</span>
 <span class="mp-person"><strong>Даниела Белимова</strong><small>d.belimova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -575,7 +632,7 @@
 </li>
 <li class="mp-item" data-search="даниела николова daniela nikolova d.nikolova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Даниела Николова" aria-pressed="false" class="send-mp" data-email="D.Nikolova@sobranie.mk" data-name="Даниела Николова" data-gender="f" type="button">
+<button aria-label="Избери примач: Даниела Николова" aria-pressed="false" class="send-mp" data-email="D.Nikolova@sobranie.mk" data-name="Даниела Николова" data-gender="f" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ДН</span>
 <span class="mp-person"><strong>Даниела Николова</strong><small>D.Nikolova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -586,7 +643,7 @@
 </li>
 <li class="mp-item" data-search="даниела христова daniela hristova d.hristova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Даниела Христова" aria-pressed="false" class="send-mp" data-email="D.Hristova@sobranie.mk" data-name="Даниела Христова" data-gender="f" type="button">
+<button aria-label="Избери примач: Даниела Христова" aria-pressed="false" class="send-mp" data-email="D.Hristova@sobranie.mk" data-name="Даниела Христова" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДХ</span>
 <span class="mp-person"><strong>Даниела Христова</strong><small>D.Hristova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -597,7 +654,7 @@
 </li>
 <li class="mp-item" data-search="дафина стојаноска dafina stojanoska d.jovanoska-stojanoska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Дафина Стојаноска" aria-pressed="false" class="send-mp" data-email="D.Jovanoska-Stojanoska@sobranie.mk" data-name="Дафина Стојаноска" data-gender="f" type="button">
+<button aria-label="Избери примач: Дафина Стојаноска" aria-pressed="false" class="send-mp" data-email="D.Jovanoska-Stojanoska@sobranie.mk" data-name="Дафина Стојаноска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДС</span>
 <span class="mp-person"><strong>Дафина Стојаноска</strong><small>D.Jovanoska-Stojanoska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -608,7 +665,7 @@
 </li>
 <li class="mp-item" data-search="дијана илиевска dijana ilievska d.ilievska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Дијана Илиевска" aria-pressed="false" class="send-mp" data-email="D.Ilievska@sobranie.mk" data-name="Дијана Илиевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Дијана Илиевска" aria-pressed="false" class="send-mp" data-email="D.Ilievska@sobranie.mk" data-name="Дијана Илиевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДИ</span>
 <span class="mp-person"><strong>Дијана Илиевска</strong><small>D.Ilievska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -619,7 +676,7 @@
 </li>
 <li class="mp-item" data-search="дијана тоска dijana toska d.toska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Дијана Тоска" aria-pressed="false" class="send-mp" data-email="d.toska@sobranie.mk" data-name="Дијана Тоска" data-gender="f" type="button">
+<button aria-label="Избери примач: Дијана Тоска" aria-pressed="false" class="send-mp" data-email="d.toska@sobranie.mk" data-name="Дијана Тоска" data-gender="f" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">ДТ</span>
 <span class="mp-person"><strong>Дијана Тоска</strong><small>d.toska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -630,7 +687,7 @@
 </li>
 <li class="mp-item" data-search="димитар апасиев dimitar apasiev d.apasiev@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Димитар Апасиев" aria-pressed="false" class="send-mp" data-email="D.Apasiev@sobranie.mk" data-name="Димитар Апасиев" data-gender="m" type="button">
+<button aria-label="Избери примач: Димитар Апасиев" aria-pressed="false" class="send-mp" data-email="D.Apasiev@sobranie.mk" data-name="Димитар Апасиев" data-gender="m" data-party="Левица" type="button">
 <span aria-hidden="true" class="avatar">ДА</span>
 <span class="mp-person"><strong>Димитар Апасиев</strong><small>D.Apasiev@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -641,7 +698,7 @@
 </li>
 <li class="mp-item" data-search="димитар ковачевски dimitar kovachevski d.kovachevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Димитар Ковачевски" aria-pressed="false" class="send-mp" data-email="d.kovachevski@sobranie.mk" data-name="Димитар Ковачевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Димитар Ковачевски" aria-pressed="false" class="send-mp" data-email="d.kovachevski@sobranie.mk" data-name="Димитар Ковачевски" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ДК</span>
 <span class="mp-person"><strong>Димитар Ковачевски</strong><small>d.kovachevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -652,7 +709,7 @@
 </li>
 <li class="mp-item" data-search="драган ковачки dragan kovachki d.kovacki@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Драган Ковачки" aria-pressed="false" class="send-mp" data-email="D.Kovacki@sobranie.mk" data-name="Драган Ковачки" data-gender="m" type="button">
+<button aria-label="Избери примач: Драган Ковачки" aria-pressed="false" class="send-mp" data-email="D.Kovacki@sobranie.mk" data-name="Драган Ковачки" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДК</span>
 <span class="mp-person"><strong>Драган Ковачки</strong><small>D.Kovacki@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -663,7 +720,7 @@
 </li>
 <li class="mp-item" data-search="драган недељковиќ dragan nedeljkovikj d.nedeljkovik@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Драган Недељковиќ" aria-pressed="false" class="send-mp" data-email="D.Nedeljkovik@sobranie.mk" data-name="Драган Недељковиќ" data-gender="m" type="button">
+<button aria-label="Избери примач: Драган Недељковиќ" aria-pressed="false" class="send-mp" data-email="D.Nedeljkovik@sobranie.mk" data-name="Драган Недељковиќ" data-gender="m" data-party="Демократска партија на Србите" type="button">
 <span aria-hidden="true" class="avatar">ДН</span>
 <span class="mp-person"><strong>Драган Недељковиќ</strong><small>D.Nedeljkovik@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -674,7 +731,7 @@
 </li>
 <li class="mp-item" data-search="драгана арсова dragana arsova d.arsova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Драгана Арсова" aria-pressed="false" class="send-mp" data-email="d.arsova@sobranie.mk" data-name="Драгана Арсова" data-gender="f" type="button">
+<button aria-label="Избери примач: Драгана Арсова" aria-pressed="false" class="send-mp" data-email="d.arsova@sobranie.mk" data-name="Драгана Арсова" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДА</span>
 <span class="mp-person"><strong>Драгана Арсова</strong><small>d.arsova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -685,7 +742,7 @@
 </li>
 <li class="mp-item" data-search="драгана бојковска dragana bojkovska d.bojkovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Драгана Бојковска" aria-pressed="false" class="send-mp" data-email="d.bojkovska@sobranie.mk" data-name="Драгана Бојковска" data-gender="f" type="button">
+<button aria-label="Избери примач: Драгана Бојковска" aria-pressed="false" class="send-mp" data-email="d.bojkovska@sobranie.mk" data-name="Драгана Бојковска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДБ</span>
 <span class="mp-person"><strong>Драгана Бојковска</strong><small>d.bojkovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -696,7 +753,7 @@
 </li>
 <li class="mp-item" data-search="душко иванов dushko ivanov d.ivanov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Душко Иванов" aria-pressed="false" class="send-mp" data-email="d.ivanov@sobranie.mk" data-name="Душко Иванов" data-gender="m" type="button">
+<button aria-label="Избери примач: Душко Иванов" aria-pressed="false" class="send-mp" data-email="d.ivanov@sobranie.mk" data-name="Душко Иванов" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ДИ</span>
 <span class="mp-person"><strong>Душко Иванов</strong><small>d.ivanov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -707,7 +764,7 @@
 </li>
 <li class="mp-item" data-search="ѓорѓија сајкоски gjorgjija sajkoski g.sajkoski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Ѓорѓија Сајкоски" aria-pressed="false" class="send-mp" data-email="G.Sajkoski@sobranie.mk" data-name="Ѓорѓија Сајкоски" data-gender="m" type="button">
+<button aria-label="Избери примач: Ѓорѓија Сајкоски" aria-pressed="false" class="send-mp" data-email="G.Sajkoski@sobranie.mk" data-name="Ѓорѓија Сајкоски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЃС</span>
 <span class="mp-person"><strong>Ѓорѓија Сајкоски</strong><small>G.Sajkoski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -718,7 +775,7 @@
 </li>
 <li class="mp-item" data-search="ели панова eli panova e.panova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Ели Панова" aria-pressed="false" class="send-mp" data-email="E.Panova@sobranie.mk" data-name="Ели Панова" data-gender="f" type="button">
+<button aria-label="Избери примач: Ели Панова" aria-pressed="false" class="send-mp" data-email="E.Panova@sobranie.mk" data-name="Ели Панова" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЕП</span>
 <span class="mp-person"><strong>Ели Панова</strong><small>E.Panova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -729,7 +786,7 @@
 </li>
 <li class="mp-item" data-search="елми азири elmi aziri e.aziri@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Елми Азири" aria-pressed="false" class="send-mp" data-email="E.Aziri@sobranie.mk" data-name="Елми Азири" data-gender="m" type="button">
+<button aria-label="Избери примач: Елми Азири" aria-pressed="false" class="send-mp" data-email="E.Aziri@sobranie.mk" data-name="Елми Азири" data-gender="m" data-party="Алијанса за Албанците" type="button">
 <span aria-hidden="true" class="avatar">ЕА</span>
 <span class="mp-person"><strong>Елми Азири</strong><small>E.Aziri@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -740,7 +797,7 @@
 </li>
 <li class="mp-item" data-search="емил спасовски emil spasovski e.spasovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Емил Спасовски" aria-pressed="false" class="send-mp" data-email="e.spasovski@sobranie.mk" data-name="Емил Спасовски" data-gender="m" type="button">
+<button aria-label="Избери примач: Емил Спасовски" aria-pressed="false" class="send-mp" data-email="e.spasovski@sobranie.mk" data-name="Емил Спасовски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЕС</span>
 <span class="mp-person"><strong>Емил Спасовски</strong><small>e.spasovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -751,7 +808,7 @@
 </li>
 <li class="mp-item" data-search="емилија ангелова emilija angelova e.angelova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Емилија Ангелова" aria-pressed="false" class="send-mp" data-email="E.Angelova@sobranie.mk" data-name="Емилија Ангелова" data-gender="f" type="button">
+<button aria-label="Избери примач: Емилија Ангелова" aria-pressed="false" class="send-mp" data-email="E.Angelova@sobranie.mk" data-name="Емилија Ангелова" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЕА</span>
 <span class="mp-person"><strong>Емилија Ангелова</strong><small>E.Angelova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -762,7 +819,7 @@
 </li>
 <li class="mp-item" data-search="жаклина пешевска zhaklina peshevska z.pesevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Жаклина Пешевска" aria-pressed="false" class="send-mp" data-email="Z.Pesevska@sobranie.mk" data-name="Жаклина Пешевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Жаклина Пешевска" aria-pressed="false" class="send-mp" data-email="Z.Pesevska@sobranie.mk" data-name="Жаклина Пешевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЖП</span>
 <span class="mp-person"><strong>Жаклина Пешевска</strong><small>Z.Pesevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -773,7 +830,7 @@
 </li>
 <li class="mp-item" data-search="жан дрвошанов zhan drvoshanov z.drvoshanov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Жан Дрвошанов" aria-pressed="false" class="send-mp" data-email="Z.Drvoshanov@sobranie.mk" data-name="Жан Дрвошанов" data-gender="m" type="button">
+<button aria-label="Избери примач: Жан Дрвошанов" aria-pressed="false" class="send-mp" data-email="Z.Drvoshanov@sobranie.mk" data-name="Жан Дрвошанов" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЖД</span>
 <span class="mp-person"><strong>Жан Дрвошанов</strong><small>Z.Drvoshanov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -784,7 +841,7 @@
 </li>
 <li class="mp-item" data-search="зеќирја таири zekjirja tairi z.tairi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Зеќирја Таири" aria-pressed="false" class="send-mp" data-email="Z.Tairi@sobranie.mk" data-name="Зеќирја Таири" data-gender="m" type="button">
+<button aria-label="Избери примач: Зеќирја Таири" aria-pressed="false" class="send-mp" data-email="Z.Tairi@sobranie.mk" data-name="Зеќирја Таири" data-gender="m" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">ЗТ</span>
 <span class="mp-person"><strong>Зеќирја Таири</strong><small>Z.Tairi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -795,7 +852,7 @@
 </li>
 <li class="mp-item" data-search="зиадин села ziadin sela z.sela@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Зиадин Села" aria-pressed="false" class="send-mp" data-email="Z.Sela@sobranie.mk" data-name="Зиадин Села" data-gender="m" type="button">
+<button aria-label="Избери примач: Зиадин Села" aria-pressed="false" class="send-mp" data-email="Z.Sela@sobranie.mk" data-name="Зиадин Села" data-gender="m" data-party="Алијанса за Албанците" type="button">
 <span aria-hidden="true" class="avatar">ЗС</span>
 <span class="mp-person"><strong>Зиадин Села</strong><small>Z.Sela@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -806,7 +863,7 @@
 </li>
 <li class="mp-item" data-search="златко пенков zlatko penkov z.penkov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Златко Пенков" aria-pressed="false" class="send-mp" data-email="Z.Penkov@sobranie.mk" data-name="Златко Пенков" data-gender="m" type="button">
+<button aria-label="Избери примач: Златко Пенков" aria-pressed="false" class="send-mp" data-email="Z.Penkov@sobranie.mk" data-name="Златко Пенков" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЗП</span>
 <span class="mp-person"><strong>Златко Пенков</strong><small>Z.Penkov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -817,7 +874,7 @@
 </li>
 <li class="mp-item" data-search="зоран коцевски zoran kocevski z.kocevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Зоран Коцевски" aria-pressed="false" class="send-mp" data-email="Z.Kocevski@sobranie.mk" data-name="Зоран Коцевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Зоран Коцевски" aria-pressed="false" class="send-mp" data-email="Z.Kocevski@sobranie.mk" data-name="Зоран Коцевски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЗК</span>
 <span class="mp-person"><strong>Зоран Коцевски</strong><small>Z.Kocevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -828,7 +885,7 @@
 </li>
 <li class="mp-item" data-search="зоранчо јованчев zorancho jovanchev z.jovancev@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Зоранчо Јованчев" aria-pressed="false" class="send-mp" data-email="Z.Jovancev@sobranie.mk" data-name="Зоранчо Јованчев" data-gender="m" type="button">
+<button aria-label="Избери примач: Зоранчо Јованчев" aria-pressed="false" class="send-mp" data-email="Z.Jovancev@sobranie.mk" data-name="Зоранчо Јованчев" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЗЈ</span>
 <span class="mp-person"><strong>Зоранчо Јованчев</strong><small>Z.Jovancev@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -839,7 +896,7 @@
 </li>
 <li class="mp-item" data-search="иванка василевска ivanka vasilevska i.vasilevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Иванка Василевска" aria-pressed="false" class="send-mp" data-email="I.Vasilevska@sobranie.mk" data-name="Иванка Василевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Иванка Василевска" aria-pressed="false" class="send-mp" data-email="I.Vasilevska@sobranie.mk" data-name="Иванка Василевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ИВ</span>
 <span class="mp-person"><strong>Иванка Василевска</strong><small>I.Vasilevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -850,7 +907,7 @@
 </li>
 <li class="mp-item" data-search="игор здравковски igor zdravkovski i.zdravkovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Игор Здравковски" aria-pressed="false" class="send-mp" data-email="I.Zdravkovski@sobranie.mk" data-name="Игор Здравковски" data-gender="m" type="button">
+<button aria-label="Избери примач: Игор Здравковски" aria-pressed="false" class="send-mp" data-email="I.Zdravkovski@sobranie.mk" data-name="Игор Здравковски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ИЗ</span>
 <span class="mp-person"><strong>Игор Здравковски</strong><small>I.Zdravkovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -861,7 +918,7 @@
 </li>
 <li class="mp-item" data-search="илир демири ilir demiri i.demiri@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Илир Демири" aria-pressed="false" class="send-mp" data-email="i.demiri@sobranie.mk" data-name="Илир Демири" data-gender="m" type="button">
+<button aria-label="Избери примач: Илир Демири" aria-pressed="false" class="send-mp" data-email="i.demiri@sobranie.mk" data-name="Илир Демири" data-gender="m" data-party="Независни пратеници" type="button">
 <span aria-hidden="true" class="avatar">ИД</span>
 <span class="mp-person"><strong>Илир Демири</strong><small>i.demiri@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -872,7 +929,7 @@
 </li>
 <li class="mp-item" data-search="илир хасани ilir hasani i.hasani@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Илир Хасани" aria-pressed="false" class="send-mp" data-email="i.hasani@sobranie.mk" data-name="Илир Хасани" data-gender="m" type="button">
+<button aria-label="Избери примач: Илир Хасани" aria-pressed="false" class="send-mp" data-email="i.hasani@sobranie.mk" data-name="Илир Хасани" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">ИХ</span>
 <span class="mp-person"><strong>Илир Хасани</strong><small>i.hasani@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -883,7 +940,7 @@
 </li>
 <li class="mp-item" data-search="илире даути ilire dauti i.dauti@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Илире Даути" aria-pressed="false" class="send-mp" data-email="I.Dauti@sobranie.mk" data-name="Илире Даути" data-gender="f" type="button">
+<button aria-label="Избери примач: Илире Даути" aria-pressed="false" class="send-mp" data-email="I.Dauti@sobranie.mk" data-name="Илире Даути" data-gender="f" data-party="Алијанса за Албанците" type="button">
 <span aria-hidden="true" class="avatar">ИД</span>
 <span class="mp-person"><strong>Илире Даути</strong><small>I.Dauti@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -894,7 +951,7 @@
 </li>
 <li class="mp-item" data-search="имрлије салиу-фетаи imrlije saliu-fetai i.saliufetai@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Имрлије Салиу-Фетаи" aria-pressed="false" class="send-mp" data-email="I.SaliuFetai@sobranie.mk" data-name="Имрлије Салиу-Фетаи" data-gender="f" type="button">
+<button aria-label="Избери примач: Имрлије Салиу-Фетаи" aria-pressed="false" class="send-mp" data-email="I.SaliuFetai@sobranie.mk" data-name="Имрлије Салиу-Фетаи" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">ИС</span>
 <span class="mp-person"><strong>Имрлије Салиу-Фетаи</strong><small>I.SaliuFetai@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -905,7 +962,7 @@
 </li>
 <li class="mp-item" data-search="исмаил јахоски ismail jahoski i.jahoski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Исмаил Јахоски" aria-pressed="false" class="send-mp" data-email="I.Jahoski@sobranie.mk" data-name="Исмаил Јахоски" data-gender="m" type="button">
+<button aria-label="Избери примач: Исмаил Јахоски" aria-pressed="false" class="send-mp" data-email="I.Jahoski@sobranie.mk" data-name="Исмаил Јахоски" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">ИЈ</span>
 <span class="mp-person"><strong>Исмаил Јахоски</strong><small>I.Jahoski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -916,7 +973,7 @@
 </li>
 <li class="mp-item" data-search="јован јаулески jovan jauleski j.jauleski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Јован Јаулески" aria-pressed="false" class="send-mp" data-email="J.Jauleski@sobranie.mk" data-name="Јован Јаулески" data-gender="m" type="button">
+<button aria-label="Избери примач: Јован Јаулески" aria-pressed="false" class="send-mp" data-email="J.Jauleski@sobranie.mk" data-name="Јован Јаулески" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЈЈ</span>
 <span class="mp-person"><strong>Јован Јаулески</strong><small>J.Jauleski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -927,7 +984,7 @@
 </li>
 <li class="mp-item" data-search="јован митрески jovan mitreski j.mitreski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Јован Митрески" aria-pressed="false" class="send-mp" data-email="J.Mitreski@sobranie.mk" data-name="Јован Митрески" data-gender="m" type="button">
+<button aria-label="Избери примач: Јован Митрески" aria-pressed="false" class="send-mp" data-email="J.Mitreski@sobranie.mk" data-name="Јован Митрески" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ЈМ</span>
 <span class="mp-person"><strong>Јован Митрески</strong><small>J.Mitreski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -938,7 +995,7 @@
 </li>
 <li class="mp-item" data-search="јована мојсоска jovana mojsoska j.mojsoska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Јована Мојсоска" aria-pressed="false" class="send-mp" data-email="j.mojsoska@sobranie.mk" data-name="Јована Мојсоска" data-gender="f" type="button">
+<button aria-label="Избери примач: Јована Мојсоска" aria-pressed="false" class="send-mp" data-email="j.mojsoska@sobranie.mk" data-name="Јована Мојсоска" data-gender="f" data-party="Левица" type="button">
 <span aria-hidden="true" class="avatar">ЈМ</span>
 <span class="mp-person"><strong>Јована Мојсоска</strong><small>j.mojsoska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -949,7 +1006,7 @@
 </li>
 <li class="mp-item" data-search="јованка тренчевска jovanka trenchevska j.trenchevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Јованка Тренчевска" aria-pressed="false" class="send-mp" data-email="j.trenchevska@sobranie.mk" data-name="Јованка Тренчевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Јованка Тренчевска" aria-pressed="false" class="send-mp" data-email="j.trenchevska@sobranie.mk" data-name="Јованка Тренчевска" data-gender="f" data-party="Независни пратеници" type="button">
 <span aria-hidden="true" class="avatar">ЈТ</span>
 <span class="mp-person"><strong>Јованка Тренчевска</strong><small>j.trenchevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -960,7 +1017,7 @@
 </li>
 <li class="mp-item" data-search="јулија тушевска julija tushevska j.tushevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Јулија Тушевска" aria-pressed="false" class="send-mp" data-email="j.tushevska@sobranie.mk" data-name="Јулија Тушевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Јулија Тушевска" aria-pressed="false" class="send-mp" data-email="j.tushevska@sobranie.mk" data-name="Јулија Тушевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЈТ</span>
 <span class="mp-person"><strong>Јулија Тушевска</strong><small>j.tushevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -971,7 +1028,7 @@
 </li>
 <li class="mp-item" data-search="калтрина беќири kaltrina bekjiri k.beqiri@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Калтрина Беќири" aria-pressed="false" class="send-mp" data-email="K.Beqiri@sobranie.mk" data-name="Калтрина Беќири" data-gender="f" type="button">
+<button aria-label="Избери примач: Калтрина Беќири" aria-pressed="false" class="send-mp" data-email="K.Beqiri@sobranie.mk" data-name="Калтрина Беќири" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">КБ</span>
 <span class="mp-person"><strong>Калтрина Беќири</strong><small>K.Beqiri@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -982,7 +1039,7 @@
 </li>
 <li class="mp-item" data-search="каролина насковска karolina naskovska k.naskovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Каролина Насковска" aria-pressed="false" class="send-mp" data-email="k.naskovska@sobranie.mk" data-name="Каролина Насковска" data-gender="f" type="button">
+<button aria-label="Избери примач: Каролина Насковска" aria-pressed="false" class="send-mp" data-email="k.naskovska@sobranie.mk" data-name="Каролина Насковска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">КН</span>
 <span class="mp-person"><strong>Каролина Насковска</strong><small>k.naskovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -993,7 +1050,7 @@
 </li>
 <li class="mp-item" data-search="катерина димитровска katerina dimitrovska k.dimitrovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Катерина Димитровска" aria-pressed="false" class="send-mp" data-email="k.dimitrovska@sobranie.mk" data-name="Катерина Димитровска" data-gender="f" type="button">
+<button aria-label="Избери примач: Катерина Димитровска" aria-pressed="false" class="send-mp" data-email="k.dimitrovska@sobranie.mk" data-name="Катерина Димитровска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">КД</span>
 <span class="mp-person"><strong>Катерина Димитровска</strong><small>k.dimitrovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1004,7 +1061,7 @@
 </li>
 <li class="mp-item" data-search="кире божиновски kire bozhinovski k.bozhinovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Кире Божиновски" aria-pressed="false" class="send-mp" data-email="k.bozhinovski@sobranie.mk" data-name="Кире Божиновски" data-gender="m" type="button">
+<button aria-label="Избери примач: Кире Божиновски" aria-pressed="false" class="send-mp" data-email="k.bozhinovski@sobranie.mk" data-name="Кире Божиновски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">КБ</span>
 <span class="mp-person"><strong>Кире Божиновски</strong><small>k.bozhinovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1015,7 +1072,7 @@
 </li>
 <li class="mp-item" data-search="лидија петкоска lidija petkoska l.petkoska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Лидија Петкоска" aria-pressed="false" class="send-mp" data-email="L.Petkoska@sobranie.mk" data-name="Лидија Петкоска" data-gender="f" type="button">
+<button aria-label="Избери примач: Лидија Петкоска" aria-pressed="false" class="send-mp" data-email="L.Petkoska@sobranie.mk" data-name="Лидија Петкоска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЛП</span>
 <span class="mp-person"><strong>Лидија Петкоска</strong><small>L.Petkoska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1026,7 +1083,7 @@
 </li>
 <li class="mp-item" data-search="љупчо николовски ljupcho nikolovski l.nikolovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Љупчо Николовски" aria-pressed="false" class="send-mp" data-email="L.Nikolovski@sobranie.mk" data-name="Љупчо Николовски" data-gender="m" type="button">
+<button aria-label="Избери примач: Љупчо Николовски" aria-pressed="false" class="send-mp" data-email="L.Nikolovski@sobranie.mk" data-name="Љупчо Николовски" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ЉН</span>
 <span class="mp-person"><strong>Љупчо Николовски</strong><small>L.Nikolovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1037,7 +1094,7 @@
 </li>
 <li class="mp-item" data-search="љупчо пренџов ljupcho prendzhov l.prendzov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Љупчо Пренџов" aria-pressed="false" class="send-mp" data-email="L.Prendzov@sobranie.mk" data-name="Љупчо Пренџов" data-gender="m" type="button">
+<button aria-label="Избери примач: Љупчо Пренџов" aria-pressed="false" class="send-mp" data-email="L.Prendzov@sobranie.mk" data-name="Љупчо Пренџов" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ЉП</span>
 <span class="mp-person"><strong>Љупчо Пренџов</strong><small>L.Prendzov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1048,7 +1105,7 @@
 </li>
 <li class="mp-item" data-search="малиша станковиќ malisha stankovikj m.stankovikj@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Малиша Станковиќ" aria-pressed="false" class="send-mp" data-email="M.Stankovikj@sobranie.mk" data-name="Малиша Станковиќ" data-gender="m" type="button">
+<button aria-label="Избери примач: Малиша Станковиќ" aria-pressed="false" class="send-mp" data-email="M.Stankovikj@sobranie.mk" data-name="Малиша Станковиќ" data-gender="m" data-party="Социјалистичка партија на Македонија" type="button">
 <span aria-hidden="true" class="avatar">МС</span>
 <span class="mp-person"><strong>Малиша Станковиќ</strong><small>M.Stankovikj@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1059,7 +1116,7 @@
 </li>
 <li class="mp-item" data-search="марија петрушевска marija petrushevska m.petrusevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Марија Петрушевска" aria-pressed="false" class="send-mp" data-email="M.Petrusevska@sobranie.mk" data-name="Марија Петрушевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Марија Петрушевска" aria-pressed="false" class="send-mp" data-email="M.Petrusevska@sobranie.mk" data-name="Марија Петрушевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">МП</span>
 <span class="mp-person"><strong>Марија Петрушевска</strong><small>M.Petrusevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1070,7 +1127,7 @@
 </li>
 <li class="mp-item" data-search="мартин стојановски martin stojanovski m.stojanovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Мартин Стојановски" aria-pressed="false" class="send-mp" data-email="M.Stojanovski@sobranie.mk" data-name="Мартин Стојановски" data-gender="m" type="button">
+<button aria-label="Избери примач: Мартин Стојановски" aria-pressed="false" class="send-mp" data-email="M.Stojanovski@sobranie.mk" data-name="Мартин Стојановски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">МС</span>
 <span class="mp-person"><strong>Мартин Стојановски</strong><small>M.Stojanovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1081,7 +1138,7 @@
 </li>
 <li class="mp-item" data-search="мевмед џафери mevmed dzhaferi m.djaferi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Мевмед Џафери" aria-pressed="false" class="send-mp" data-email="m.djaferi@sobranie.mk" data-name="Мевмед Џафери" data-gender="m" type="button">
+<button aria-label="Избери примач: Мевмед Џафери" aria-pressed="false" class="send-mp" data-email="m.djaferi@sobranie.mk" data-name="Мевмед Џафери" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">МЏ</span>
 <span class="mp-person"><strong>Мевмед Џафери</strong><small>m.djaferi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1092,7 +1149,7 @@
 </li>
 <li class="mp-item" data-search="мендух таќи menduh takji m.taci@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Мендух Таќи" aria-pressed="false" class="send-mp" data-email="M.Taci@sobranie.mk" data-name="Мендух Таќи" data-gender="m" type="button">
+<button aria-label="Избери примач: Мендух Таќи" aria-pressed="false" class="send-mp" data-email="M.Taci@sobranie.mk" data-name="Мендух Таќи" data-gender="m" data-party="Демократска партија на Албанците" type="button">
 <span aria-hidden="true" class="avatar">МТ</span>
 <span class="mp-person"><strong>Мендух Таќи</strong><small>M.Taci@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1103,7 +1160,7 @@
 </li>
 <li class="mp-item" data-search="мерита колчи коџаџику merita kolchi kodzhadzhiku m.kolciko@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Мерита Колчи Коџаџику" aria-pressed="false" class="send-mp" data-email="M.KolciKo@sobranie.mk" data-name="Мерита Колчи Коџаџику" data-gender="f" type="button">
+<button aria-label="Избери примач: Мерита Колчи Коџаџику" aria-pressed="false" class="send-mp" data-email="M.KolciKo@sobranie.mk" data-name="Мерита Колчи Коџаџику" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">МК</span>
 <span class="mp-person"><strong>Мерита Колчи Коџаџику</strong><small>M.KolciKo@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1114,7 +1171,7 @@
 </li>
 <li class="mp-item" data-search="миле лефков mile lefkov m.lefkov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Миле Лефков" aria-pressed="false" class="send-mp" data-email="M.Lefkov@sobranie.mk" data-name="Миле Лефков" data-gender="m" type="button">
+<button aria-label="Избери примач: Миле Лефков" aria-pressed="false" class="send-mp" data-email="M.Lefkov@sobranie.mk" data-name="Миле Лефков" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">МЛ</span>
 <span class="mp-person"><strong>Миле Лефков</strong><small>M.Lefkov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1125,7 +1182,7 @@
 </li>
 <li class="mp-item" data-search="миле талевски mile talevski m.talevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Миле Талевски" aria-pressed="false" class="send-mp" data-email="M.Talevski@sobranie.mk" data-name="Миле Талевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Миле Талевски" aria-pressed="false" class="send-mp" data-email="M.Talevski@sobranie.mk" data-name="Миле Талевски" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">МТ</span>
 <span class="mp-person"><strong>Миле Талевски</strong><small>M.Talevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1136,7 +1193,7 @@
 </li>
 <li class="mp-item" data-search="миле цеков mile cekov m.cekov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Миле Цеков" aria-pressed="false" class="send-mp" data-email="m.cekov@sobranie.mk" data-name="Миле Цеков" data-gender="m" type="button">
+<button aria-label="Избери примач: Миле Цеков" aria-pressed="false" class="send-mp" data-email="m.cekov@sobranie.mk" data-name="Миле Цеков" data-gender="m" data-party="Независни пратеници" type="button">
 <span aria-hidden="true" class="avatar">МЦ</span>
 <span class="mp-person"><strong>Миле Цеков</strong><small>m.cekov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1147,7 +1204,7 @@
 </li>
 <li class="mp-item" data-search="мимоза муса mimoza musa m.musa@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Мимоза Муса" aria-pressed="false" class="send-mp" data-email="m.musa@sobranie.mk" data-name="Мимоза Муса" data-gender="f" type="button">
+<button aria-label="Избери примач: Мимоза Муса" aria-pressed="false" class="send-mp" data-email="m.musa@sobranie.mk" data-name="Мимоза Муса" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">ММ</span>
 <span class="mp-person"><strong>Мимоза Муса</strong><small>m.musa@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1158,7 +1215,7 @@
 </li>
 <li class="mp-item" data-search="митко трајчулески mitko trajchuleski m.trajchuleski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Митко Трајчулески" aria-pressed="false" class="send-mp" data-email="M.Trajchuleski@sobranie.mk" data-name="Митко Трајчулески" data-gender="m" type="button">
+<button aria-label="Избери примач: Митко Трајчулески" aria-pressed="false" class="send-mp" data-email="M.Trajchuleski@sobranie.mk" data-name="Митко Трајчулески" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">МТ</span>
 <span class="mp-person"><strong>Митко Трајчулески</strong><small>M.Trajchuleski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1169,7 +1226,7 @@
 </li>
 <li class="mp-item" data-search="мито андонов mito andonov mito.andonov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Мито Андонов" aria-pressed="false" class="send-mp" data-email="Mito.Andonov@sobranie.mk" data-name="Мито Андонов" data-gender="m" type="button">
+<button aria-label="Избери примач: Мито Андонов" aria-pressed="false" class="send-mp" data-email="Mito.Andonov@sobranie.mk" data-name="Мито Андонов" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">МА</span>
 <span class="mp-person"><strong>Мито Андонов</strong><small>Mito.Andonov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1180,7 +1237,7 @@
 </li>
 <li class="mp-item" data-search="моника зајкова monika zajkova m.zajkova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Моника Зајкова" aria-pressed="false" class="send-mp" data-email="M.Zajkova@sobranie.mk" data-name="Моника Зајкова" data-gender="f" type="button">
+<button aria-label="Избери примач: Моника Зајкова" aria-pressed="false" class="send-mp" data-email="M.Zajkova@sobranie.mk" data-name="Моника Зајкова" data-gender="f" data-party="Либерално-демократска партија" type="button">
 <span aria-hidden="true" class="avatar">МЗ</span>
 <span class="mp-person"><strong>Моника Зајкова</strong><small>M.Zajkova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1191,7 +1248,7 @@
 </li>
 <li class="mp-item" data-search="моника трајанова monika trajanova m.trajanova@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Моника Трајанова" aria-pressed="false" class="send-mp" data-email="m.trajanova@sobranie.mk" data-name="Моника Трајанова" data-gender="f" type="button">
+<button aria-label="Избери примач: Моника Трајанова" aria-pressed="false" class="send-mp" data-email="m.trajanova@sobranie.mk" data-name="Моника Трајанова" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">МТ</span>
 <span class="mp-person"><strong>Моника Трајанова</strong><small>m.trajanova@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1202,7 +1259,7 @@
 </li>
 <li class="mp-item" data-search="муса џафери musa dzhaferi m.dzaferi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Муса Џафери" aria-pressed="false" class="send-mp" data-email="M.Dzaferi@sobranie.mk" data-name="Муса Џафери" data-gender="m" type="button">
+<button aria-label="Избери примач: Муса Џафери" aria-pressed="false" class="send-mp" data-email="M.Dzaferi@sobranie.mk" data-name="Муса Џафери" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">МЏ</span>
 <span class="mp-person"><strong>Муса Џафери</strong><small>M.Dzaferi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1213,7 +1270,7 @@
 </li>
 <li class="mp-item" data-search="никола коњановски nikola konjanovski n.konjanovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Никола Коњановски" aria-pressed="false" class="send-mp" data-email="n.konjanovski@sobranie.mk" data-name="Никола Коњановски" data-gender="m" type="button">
+<button aria-label="Избери примач: Никола Коњановски" aria-pressed="false" class="send-mp" data-email="n.konjanovski@sobranie.mk" data-name="Никола Коњановски" data-gender="m" data-party="Социјалистичка партија на Македонија" type="button">
 <span aria-hidden="true" class="avatar">НК</span>
 <span class="mp-person"><strong>Никола Коњановски</strong><small>n.konjanovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1224,7 +1281,7 @@
 </li>
 <li class="mp-item" data-search="никола мицевски nikola micevski n.micevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Никола Мицевски" aria-pressed="false" class="send-mp" data-email="N.Micevski@sobranie.mk" data-name="Никола Мицевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Никола Мицевски" aria-pressed="false" class="send-mp" data-email="N.Micevski@sobranie.mk" data-name="Никола Мицевски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">НМ</span>
 <span class="mp-person"><strong>Никола Мицевски</strong><small>N.Micevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1235,7 +1292,7 @@
 </li>
 <li class="mp-item" data-search="олга лозановска olga lozanovska o.lozanovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Олга Лозановска" aria-pressed="false" class="send-mp" data-email="O.Lozanovska@sobranie.mk" data-name="Олга Лозановска" data-gender="f" type="button">
+<button aria-label="Избери примач: Олга Лозановска" aria-pressed="false" class="send-mp" data-email="O.Lozanovska@sobranie.mk" data-name="Олга Лозановска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ОЛ</span>
 <span class="mp-person"><strong>Олга Лозановска</strong><small>O.Lozanovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1246,7 +1303,7 @@
 </li>
 <li class="mp-item" data-search="оливер спасовски oliver spasovski o.spasovski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Оливер Спасовски" aria-pressed="false" class="send-mp" data-email="o.spasovski@sobranie.mk" data-name="Оливер Спасовски" data-gender="m" type="button">
+<button aria-label="Избери примач: Оливер Спасовски" aria-pressed="false" class="send-mp" data-email="o.spasovski@sobranie.mk" data-name="Оливер Спасовски" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ОС</span>
 <span class="mp-person"><strong>Оливер Спасовски</strong><small>o.spasovski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1257,7 +1314,7 @@
 </li>
 <li class="mp-item" data-search="павле арсоски pavle arsoski p.arsoski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Павле Арсоски" aria-pressed="false" class="send-mp" data-email="P.Arsoski@sobranie.mk" data-name="Павле Арсоски" data-gender="m" type="button">
+<button aria-label="Избери примач: Павле Арсоски" aria-pressed="false" class="send-mp" data-email="P.Arsoski@sobranie.mk" data-name="Павле Арсоски" data-gender="m" data-party="Движење ЗНАМ" type="button">
 <span aria-hidden="true" class="avatar">ПА</span>
 <span class="mp-person"><strong>Павле Арсоски</strong><small>P.Arsoski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1268,7 +1325,7 @@
 </li>
 <li class="mp-item" data-search="петар марков petar markov p.markov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Петар Марков" aria-pressed="false" class="send-mp" data-email="p.markov@sobranie.mk" data-name="Петар Марков" data-gender="m" type="button">
+<button aria-label="Избери примач: Петар Марков" aria-pressed="false" class="send-mp" data-email="p.markov@sobranie.mk" data-name="Петар Марков" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ПМ</span>
 <span class="mp-person"><strong>Петар Марков</strong><small>p.markov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1279,7 +1336,7 @@
 </li>
 <li class="mp-item" data-search="петар ристески petar risteski p.risteski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Петар Ристески" aria-pressed="false" class="send-mp" data-email="P.Risteski@sobranie.mk" data-name="Петар Ристески" data-gender="m" type="button">
+<button aria-label="Избери примач: Петар Ристески" aria-pressed="false" class="send-mp" data-email="P.Risteski@sobranie.mk" data-name="Петар Ристески" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ПР</span>
 <span class="mp-person"><strong>Петар Ристески</strong><small>P.Risteski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1290,7 +1347,7 @@
 </li>
 <li class="mp-item" data-search="пеце милевски pece milevski p.milevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Пеце Милевски" aria-pressed="false" class="send-mp" data-email="p.milevski@sobranie.mk" data-name="Пеце Милевски" data-gender="m" type="button">
+<button aria-label="Избери примач: Пеце Милевски" aria-pressed="false" class="send-mp" data-email="p.milevski@sobranie.mk" data-name="Пеце Милевски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ПМ</span>
 <span class="mp-person"><strong>Пеце Милевски</strong><small>p.milevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1301,7 +1358,7 @@
 </li>
 <li class="mp-item" data-search="рашела мизрахи rashela mizrahi r.mizrahi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Рашела Мизрахи" aria-pressed="false" class="send-mp" data-email="R.Mizrahi@sobranie.mk" data-name="Рашела Мизрахи" data-gender="f" type="button">
+<button aria-label="Избери примач: Рашела Мизрахи" aria-pressed="false" class="send-mp" data-email="R.Mizrahi@sobranie.mk" data-name="Рашела Мизрахи" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">РМ</span>
 <span class="mp-person"><strong>Рашела Мизрахи</strong><small>R.Mizrahi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1312,7 +1369,7 @@
 </li>
 <li class="mp-item" data-search="реџеп исмаил redzhep ismail r.ismail@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Реџеп Исмаил" aria-pressed="false" class="send-mp" data-email="r.ismail@sobranie.mk" data-name="Реџеп Исмаил" data-gender="m" type="button">
+<button aria-label="Избери примач: Реџеп Исмаил" aria-pressed="false" class="send-mp" data-email="r.ismail@sobranie.mk" data-name="Реџеп Исмаил" data-gender="m" data-party="Левица" type="button">
 <span aria-hidden="true" class="avatar">РИ</span>
 <span class="mp-person"><strong>Реџеп Исмаил</strong><small>r.ismail@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1323,7 +1380,7 @@
 </li>
 <li class="mp-item" data-search="ријад шаќири rijad shakjiri r.shaqiri@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Ријад Шаќири" aria-pressed="false" class="send-mp" data-email="r.shaqiri@sobranie.mk" data-name="Ријад Шаќири" data-gender="m" type="button">
+<button aria-label="Избери примач: Ријад Шаќири" aria-pressed="false" class="send-mp" data-email="r.shaqiri@sobranie.mk" data-name="Ријад Шаќири" data-gender="m" data-party="Алијанса за Албанците" type="button">
 <span aria-hidden="true" class="avatar">РШ</span>
 <span class="mp-person"><strong>Ријад Шаќири</strong><small>r.shaqiri@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1334,7 +1391,7 @@
 </li>
 <li class="mp-item" data-search="рина ајдари rina ajdari r.ajdari@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Рина Ајдари" aria-pressed="false" class="send-mp" data-email="R.Ajdari@sobranie.mk" data-name="Рина Ајдари" data-gender="f" type="button">
+<button aria-label="Избери примач: Рина Ајдари" aria-pressed="false" class="send-mp" data-email="R.Ajdari@sobranie.mk" data-name="Рина Ајдари" data-gender="f" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">РА</span>
 <span class="mp-person"><strong>Рина Ајдари</strong><small>R.Ajdari@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1345,7 +1402,7 @@
 </li>
 <li class="mp-item" data-search="садик сулејмани sadik sulejmani sadik.sulejmani@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Садик Сулејмани" aria-pressed="false" class="send-mp" data-email="sadik.sulejmani@sobranie.mk" data-name="Садик Сулејмани" data-gender="m" type="button">
+<button aria-label="Избери примач: Садик Сулејмани" aria-pressed="false" class="send-mp" data-email="sadik.sulejmani@sobranie.mk" data-name="Садик Сулејмани" data-gender="m" data-party="Алијанса за Албанците" type="button">
 <span aria-hidden="true" class="avatar">СС</span>
 <span class="mp-person"><strong>Садик Сулејмани</strong><small>sadik.sulejmani@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1356,7 +1413,7 @@
 </li>
 <li class="mp-item" data-search="садула дураки sadula duraki s.duraki@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Садула Дураки" aria-pressed="false" class="send-mp" data-email="s.duraki@sobranie.mk" data-name="Садула Дураки" data-gender="m" type="button">
+<button aria-label="Избери примач: Садула Дураки" aria-pressed="false" class="send-mp" data-email="s.duraki@sobranie.mk" data-name="Садула Дураки" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">СД</span>
 <span class="mp-person"><strong>Садула Дураки</strong><small>s.duraki@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1367,7 +1424,7 @@
 </li>
 <li class="mp-item" data-search="сали мурати sali murati s.murati@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Сали Мурати" aria-pressed="false" class="send-mp" data-email="s.murati@sobranie.mk" data-name="Сали Мурати" data-gender="m" type="button">
+<button aria-label="Избери примач: Сали Мурати" aria-pressed="false" class="send-mp" data-email="s.murati@sobranie.mk" data-name="Сали Мурати" data-gender="m" data-party="Движење на Турците на Македонија за правда и демократија" type="button">
 <span aria-hidden="true" class="avatar">СМ</span>
 <span class="mp-person"><strong>Сали Мурати</strong><small>s.murati@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1378,7 +1435,7 @@
 </li>
 <li class="mp-item" data-search="сања лукаревска sanja lukarevska s.lukarevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Сања Лукаревска" aria-pressed="false" class="send-mp" data-email="S.Lukarevska@sobranie.mk" data-name="Сања Лукаревска" data-gender="f" type="button">
+<button aria-label="Избери примач: Сања Лукаревска" aria-pressed="false" class="send-mp" data-email="S.Lukarevska@sobranie.mk" data-name="Сања Лукаревска" data-gender="f" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">СЛ</span>
 <span class="mp-person"><strong>Сања Лукаревска</strong><small>S.Lukarevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1389,7 +1446,7 @@
 </li>
 <li class="mp-item" data-search="саранда имери-стафаи saranda imeri-stafai s.stafai@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Саранда Имери-Стафаи" aria-pressed="false" class="send-mp" data-email="s.stafai@sobranie.mk" data-name="Саранда Имери-Стафаи" data-gender="f" type="button">
+<button aria-label="Избери примач: Саранда Имери-Стафаи" aria-pressed="false" class="send-mp" data-email="s.stafai@sobranie.mk" data-name="Саранда Имери-Стафаи" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">СИ</span>
 <span class="mp-person"><strong>Саранда Имери-Стафаи</strong><small>s.stafai@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1400,7 +1457,7 @@
 </li>
 <li class="mp-item" data-search="сашко јанчев sashko janchev s.janchev@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Сашко Јанчев" aria-pressed="false" class="send-mp" data-email="s.janchev@sobranie.mk" data-name="Сашко Јанчев" data-gender="m" type="button">
+<button aria-label="Избери примач: Сашко Јанчев" aria-pressed="false" class="send-mp" data-email="s.janchev@sobranie.mk" data-name="Сашко Јанчев" data-gender="m" data-party="Левица" type="button">
 <span aria-hidden="true" class="avatar">СЈ</span>
 <span class="mp-person"><strong>Сашко Јанчев</strong><small>s.janchev@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1411,7 +1468,7 @@
 </li>
 <li class="mp-item" data-search="сашо донев sasho donev s.donev@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Сашо Донев" aria-pressed="false" class="send-mp" data-email="s.donev@sobranie.mk" data-name="Сашо Донев" data-gender="m" type="button">
+<button aria-label="Избери примач: Сашо Донев" aria-pressed="false" class="send-mp" data-email="s.donev@sobranie.mk" data-name="Сашо Донев" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">СД</span>
 <span class="mp-person"><strong>Сашо Донев</strong><small>s.donev@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1422,7 +1479,7 @@
 </li>
 <li class="mp-item" data-search="сергеј попов sergej popov s.popov@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Сергеј Попов" aria-pressed="false" class="send-mp" data-email="S.Popov@sobranie.mk" data-name="Сергеј Попов" data-gender="m" type="button">
+<button aria-label="Избери примач: Сергеј Попов" aria-pressed="false" class="send-mp" data-email="S.Popov@sobranie.mk" data-name="Сергеј Попов" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">СП</span>
 <span class="mp-person"><strong>Сергеј Попов</strong><small>S.Popov@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1433,7 +1490,7 @@
 </li>
 <li class="mp-item" data-search="силвана ангелевска silvana angelevska s.angelevska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Силвана Ангелевска" aria-pressed="false" class="send-mp" data-email="S.Angelevska@sobranie.mk" data-name="Силвана Ангелевска" data-gender="f" type="button">
+<button aria-label="Избери примач: Силвана Ангелевска" aria-pressed="false" class="send-mp" data-email="S.Angelevska@sobranie.mk" data-name="Силвана Ангелевска" data-gender="f" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">СА</span>
 <span class="mp-person"><strong>Силвана Ангелевска</strong><small>S.Angelevska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1444,7 +1501,7 @@
 </li>
 <li class="mp-item" data-search="скендер реџепи skender redzhepi s.rexhepi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Скендер Реџепи" aria-pressed="false" class="send-mp" data-email="S.Rexhepi@sobranie.mk" data-name="Скендер Реџепи" data-gender="m" type="button">
+<button aria-label="Избери примач: Скендер Реџепи" aria-pressed="false" class="send-mp" data-email="S.Rexhepi@sobranie.mk" data-name="Скендер Реџепи" data-gender="m" data-party="Движење „Попули“" type="button">
 <span aria-hidden="true" class="avatar">СР</span>
 <span class="mp-person"><strong>Скендер Реџепи</strong><small>S.Rexhepi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1455,7 +1512,7 @@
 </li>
 <li class="mp-item" data-search="славјанка петровска slavjanka petrovska s.petrovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Славјанка Петровска" aria-pressed="false" class="send-mp" data-email="S.Petrovska@sobranie.mk" data-name="Славјанка Петровска" data-gender="f" type="button">
+<button aria-label="Избери примач: Славјанка Петровска" aria-pressed="false" class="send-mp" data-email="S.Petrovska@sobranie.mk" data-name="Славјанка Петровска" data-gender="f" data-party="Независни пратеници" type="button">
 <span aria-hidden="true" class="avatar">СП</span>
 <span class="mp-person"><strong>Славјанка Петровска</strong><small>S.Petrovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1466,7 +1523,7 @@
 </li>
 <li class="mp-item" data-search="соња мираковска sonja mirakovska s.mirakovska@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Соња Мираковска" aria-pressed="false" class="send-mp" data-email="S.Mirakovska@sobranie.mk" data-name="Соња Мираковска" data-gender="f" type="button">
+<button aria-label="Избери примач: Соња Мираковска" aria-pressed="false" class="send-mp" data-email="S.Mirakovska@sobranie.mk" data-name="Соња Мираковска" data-gender="f" data-party="Нова социјалдемократска партија" type="button">
 <span aria-hidden="true" class="avatar">СМ</span>
 <span class="mp-person"><strong>Соња Мираковска</strong><small>S.Mirakovska@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1477,7 +1534,7 @@
 </li>
 <li class="mp-item" data-search="талат џафери talat dzhaferi t.dzaferi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Талат Џафери" aria-pressed="false" class="send-mp" data-email="T.Dzaferi@sobranie.mk" data-name="Талат Џафери" data-gender="m" type="button">
+<button aria-label="Избери примач: Талат Џафери" aria-pressed="false" class="send-mp" data-email="T.Dzaferi@sobranie.mk" data-name="Талат Џафери" data-gender="m" data-party="Демократска унија за интеграција" type="button">
 <span aria-hidden="true" class="avatar">ТЏ</span>
 <span class="mp-person"><strong>Талат Џафери</strong><small>T.Dzaferi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1488,7 +1545,7 @@
 </li>
 <li class="mp-item" data-search="тони јаревски toni jarevski t.jarevski@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Тони Јаревски" aria-pressed="false" class="send-mp" data-email="T.Jarevski@sobranie.mk" data-name="Тони Јаревски" data-gender="m" type="button">
+<button aria-label="Избери примач: Тони Јаревски" aria-pressed="false" class="send-mp" data-email="T.Jarevski@sobranie.mk" data-name="Тони Јаревски" data-gender="m" data-party="ВМРО-ДПМНЕ" type="button">
 <span aria-hidden="true" class="avatar">ТЈ</span>
 <span class="mp-person"><strong>Тони Јаревски</strong><small>T.Jarevski@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1499,7 +1556,7 @@
 </li>
 <li class="mp-item" data-search="фатмир битиќи fatmir bitikji f.bytyqi@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Фатмир Битиќи" aria-pressed="false" class="send-mp" data-email="f.bytyqi@sobranie.mk" data-name="Фатмир Битиќи" data-gender="m" type="button">
+<button aria-label="Избери примач: Фатмир Битиќи" aria-pressed="false" class="send-mp" data-email="f.bytyqi@sobranie.mk" data-name="Фатмир Битиќи" data-gender="m" data-party="Социјалдемократски сојуз на Македонија" type="button">
 <span aria-hidden="true" class="avatar">ФБ</span>
 <span class="mp-person"><strong>Фатмир Битиќи</strong><small>f.bytyqi@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1510,7 +1567,7 @@
 </li>
 <li class="mp-item" data-search="фериде хаџиу feride hadzhiu f.haxhiu@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Фериде Хаџиу" aria-pressed="false" class="send-mp" data-email="F.Haxhiu@sobranie.mk" data-name="Фериде Хаџиу" data-gender="f" type="button">
+<button aria-label="Избери примач: Фериде Хаџиу" aria-pressed="false" class="send-mp" data-email="F.Haxhiu@sobranie.mk" data-name="Фериде Хаџиу" data-gender="f" data-party="Движење БЕСА" type="button">
 <span aria-hidden="true" class="avatar">ФХ</span>
 <span class="mp-person"><strong>Фериде Хаџиу</strong><small>F.Haxhiu@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1521,7 +1578,7 @@
 </li>
 <li class="mp-item" data-search="халил снопче halil snopche h.snopce@sobranie.mk">
 <div class="mp-entry">
-<button aria-label="Избери примач: Халил Снопче" aria-pressed="false" class="send-mp" data-email="H.Snopce@sobranie.mk" data-name="Халил Снопче" data-gender="m" type="button">
+<button aria-label="Избери примач: Халил Снопче" aria-pressed="false" class="send-mp" data-email="H.Snopce@sobranie.mk" data-name="Халил Снопче" data-gender="m" data-party="Алијанса за Албанците" type="button">
 <span aria-hidden="true" class="avatar">ХС</span>
 <span class="mp-person"><strong>Халил Снопче</strong><small>H.Snopce@sobranie.mk</small></span>
 <span aria-hidden="true" class="send-tag">Избери →</span>
@@ -1540,7 +1597,7 @@
 <section aria-label="Испраќање писмо" class="delivery">
 <div aria-live="polite" class="recipient-box" id="recipient-box">
 <span aria-hidden="true" class="recipient-bullet">✉</span>
-<div><span class="recipient-label">Избран примач</span><strong id="chosen-name">Сѐ уште не е избран пратеник</strong><span class="chosen-email" id="chosen-email">Избери име од листата за да продолжиш.</span></div>
+<div><span class="recipient-label">Избран примач</span><strong id="chosen-name">Сѐ уште не е избран пратеник</strong><span class="chosen-email" id="chosen-email">Избери пратеник од салата или од листата.</span></div>
 </div>
 <div hidden="" id="send-area">
 <label class="name-field"><span class="field-label">Твоето име и презиме (за потпис)</span><input autocomplete="name" id="sender-name" maxlength="80" placeholder="пр. Ана Петрова" type="text"/></label>
@@ -1597,7 +1654,7 @@
 <img alt="Швајцарска агенција за развој и соработка (SDC)" height="190" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZEAAAC+CAIAAAB7zqVXAADiBklEQVR42uz9d3Nkx50lDGfmNeW9L1QBKHi0N6TEocxoZx5t7MTsR9iI/SbPvl9pI2ZjNuaZGGlIUaLIZnezu+G9LaC8d/fezPePcytxUUBTJCVxjFDD0HSjC1XX5cmfOb9zKOcmufGigghCiBCCXv2MCkrwf46XoJO/K4SQfyLC+aG3/y6l1Pm9k5/2ns+nlBIiqLj+BePPv/lbf/Alrn3UtaO6e/17e03crPfdr5tv+3Pf2e/9FP2Qz9utl+U/0EudOB37fwShhAgiqBivfyEIoZQDdqjEB0rIxAWghHLBBZeAMsYqYWOSuLp2hNqfRsn4j9ePZYydEpTwMYQSISgRN7/7L/Mu3r2+/T0VQvyZAOLuKfrBMYsKIoQdHIkxHlFyFW8JSgQlnBGFEMokRtDriEcIEZbg3KLC/ieKEI3ad1VCmbBjI0oZo4w5AyUbOIUgQggh8OYxclEihB2Ridvgiv4JHrJv//zdRWT/HgKE74QX3zJM+zMd1d0D8yeNs66ipokQlxBBKPBGcGJRwsdvYIxQSq4hiGBckHGcRa8nedTx/xBdURsrOSHserhnp6cCkEmpsN8+vucy+nJ+Dx3D792Dcfe6e/3nxyxnjHMtaqF2PiiEEJwISgVFtkgUSpgTswQwi/Fx1EYIEVymd4QSSqmNdEAXIBWX38KvAItQgdCMUoL/GKWUUADoFXLRieyW0DvYunvdvf6TYhaVmZoYB1r0qoJOiUzCBMffGaFCECoIF0Tg3wXhgpicWBaxLMItYhnEMgjnxLII54RzG7bGuEMUhTBGGCOaSlwqYWNIouMyPeeCUEGBUkzINJKjKMbEVWB1PdR2xGBj2PoW0CWu1cZudAvuXv/essRvd7/EZMnzz3tn756iHzTOEuMMcIxeMtih4zthV8OFoIAhSxBOiWkKTolhipEphgYxDGGMiDEk5ohYJrFMYVqEW8Ky7BupMMIYVRSiKkRRiUcnXjdVFaIwqipUYVRRCaWCE8GYYAplKlXYVQmfjktvdv1LVuXJjb6jhC36LR8457N3V3T4jwNZRKClffNNN8pJ2Gb/rLB19xT92TFrIoGiEq3s+IgSQVGZUighlkmMERkMyWBIhgYZGhz/9Udmf2D2BtZgwAd9MeiJYV9YpjANyzQty+SWhWyPKYqiKIqqUlUlqkLdOvW6FI9b9bg1n0/zeRW3h3o81O0huotqLqK7qE7GIRgiNUYYtjFGCBX0OmwRcbMe5yx/Ci7sztHd4/QX/KKU/oW3+QQXdqHmPx5mTQCWJFUh3RtZZGSRkUFNg1iGGPStXpd3ulanS4cj0R9anb7V7VuDodkbjLp9Phjw4UAMenw4EOaIm6ZpGZZlcYvjEWEKUxRFVVSmKkRRqEshLlXxejWf1xUMugIB1edjPj8NBKnHxzxe5vVRr49oGtE14lKJrhNdJ+q4mE8VWbdybLXiG+gPKLPZlA1KLcsyTdMYGSNjpKmapmmqqiqKgq1ccsHQCWCMEUI456ZpjkYjSqmiKJqmKYpitwrGL9lTl88E5xwfJX8i14wYdxsm/tX5UaPRyDAMzjljzO12q6p61aUdH6dcjc4PcX6vM8TgnDsPWAhhXwrDcLlcmqY5D5sxZvNVhED4IK/JBBBwzvE5lFJN0xhjt64K5xHKi3ztnWLy1lmWNRqNLMuyLAt3hxKqqqrL7aKCmtzEJcLB407Zy3J85IZpWKZlcUtVVbfbzRi79duFGBMRxxf/Jj1i4iba18ER2eHwnBuj87tufojzh87vEo5O1K1XSVy1069Q2Pln5w9v4TnadWr7KZp4SPAVXPCJp5FzbhjGcDh0u91ut1uMX1dP2vjxuHn36Zj9iadlOBx2u912u+12u4PBoK7r8tn7dnHWmPtkh1qWRZpdUuuQZos0G6RZM5v1YbPRb7b6rTazODGsUbtr9fpiZPCRYQ1HxDKpZRLDFJbBTZNbhsUtRweQU8pMRk2mUMYoo5wJi3Lm0hW3W/d6dY9XcbkVj5d5/Zrfr/sDrnDEFYmQgI+EgyQeJdEICQUJqvjj6pt9lVFZcwCWoFfkCXm57T+Pn0jTNFutVqPeqNfroXAoHA4Hg0FFVYgg3OKmZQKYTNPknOu6TggZjUbNZrNSqSiK4vV6w+Gwz+cbjUacc8CxqqpCCC64oii4f4A5SqnCFMooZZRzLviYyiEE5xy/bi+28XECDTnnzWazWq0ahqHr+tTUVCAQAHwAVoAs9q7AGO66EMI0TdM0CSGMMlVVnQgCeAJA4wT7/X6r1Wq1WolEIhKJYEkPh0NKqa7plFEAhxBCVVV8Ar6X2A1khh/2+/1Go6FpWiQSAXzge52PtTwSG4MIYYypqmo/7lxwwRlhlFH5K8PhsF6vd7vdfr+PHypMCQQD6XSaEtrtdSuVSr1eT6fT0WhU0zRcdny7EMIyrWar2W63e72ez+fL5XK6rgNh5ZW332lZuFPoDpmmie3KufzkGUlYl8hin6YglFGmMLnP4XbgkOTCZpRxwTnnTszC5XUClrxK8jgldkzgoPOvzkcLz9LEwVNCBbXhyn4CmSIPT56LYRimaeJRwcEYhlGr1S4vL/P5fCaTkRsVIQRvY4zhmBVFwTnaDydllIFYKRhjo9GoUqns7u6+efMmn88/fPgwHo+Hw+FbgXsyzhKSHCUEGQxJtzOs1gflKim3RKVFag1Rr4t62Wo3jU571OuP+n1VUMYFGRpsZFDLEqalmSbhnArOiKBccG5yy+TCEkIQInGX4FZRRgmlnFimMKmiEFVVNJ1omqVqlqoRTR+5vUOfbxQKDYIhEvCSSJClEjQRI9GIEgqroZASirBgaIxK9LYIa3JjkVuohJ5SqXR6etpsNtvtdiqVSqfT+XweT7xz38NTgris1+sVi8XNzU2fz5dMJjVN8/l8eINkwU6EUc4NRwghuBhvD5Nbrv0wOfZJ7GnNZvPi4kII4fP5UqmU/CK5mcvnTK4iCWESpgm9Cr6c78HK7Ha71Wq1WCyqqhoIBIAgMsIi4vYgceIKd7vdi4uLvb09n8+3vLwcCoW8Xu84sb/6FefSxRHKC4h1KLgQih0OYz2cn59vbm62W+3+oK9pmq7rLpcrnU5HIhFFUYBoFxcXXq/X7/czxpzBLy5XrVY7PT0tl8vxeDwWi2FrkQAqz+5qexPXrurE5ve++AXvl5fXCSuMMmyWMuzFmQI07S8SdngoI015kM7DEEJwi99M7pzfLn+CE5RIhzdcywYInYzgZBuBEFxMeZUGg0G9Xt/b29vY2FBVNZvNUsfLvo/CBkdGGXUUYgQRgl/lLp1OZ2tra2tr6+joyO/341pZltXpdIQQgUBA07SbT5rqWOiUCEI4Ie0uOT3tbW1X1rd4tSOqbd5o8WaTd+t0OFAskwlBBaFUUSnTmaISyoSggqNGLgTRFFXRKOcK5ypHRIFbaBem7KtEqBCCccEEntTBUAxGFqWmIEOLW4oqdJ253dTt5m6d+j1aIqrEwiQScWWzvvyMa2lZDwYlueEGI/4WwBJc4BoKIfr9/uHh4fr6+rt37waDAWMsm812Oh2fz+f3+3VNx9Ykbxgu9Gg06nQ6x8fHL168SCQSlmnFY3GFKapbxUaK3ZMIwoi9M+NOKIpCbQK/EPxaFinjF7nSnOUGzvlgMEBkp+u6qqqWbGgQyhgTRDDC5EOPmA5vQOrqTHlkOiw3bfyWaZq9Xq9SqRwfH0cikUwmwyhTNdXlcuFgcF4qU2Vkh+sznnEQjDHTNNvt9tHR0W9/+9tYLBaJRNxudyAQsE/Tsg8Jz6Xck+X+j5O1MUsIKmz4xkO8t7f3q1/9qtlsGoYRGr+EELOzsy6XazQadbvder3e6/UQjWKRyxXLOa9Wq9vb2wcHB/l8/sGDB36/H9dcrkZ7mTGGa6hQRT4D9h4zfiE6kxfZGR3LyEjuH6Zp4kbgibdXsXwbsQ9SURT81jiAtjc1fLhdrxifkWmaSHJx9ZwLG8eG45SRvnMtoMiAX8TmoTCFEqooiuBiYhkxxjSmOfO10WhUKpU2NjY+/fTTXC73/PlzBFMKU1D8wRNufzVOQlw956ZpKkzBHanX669fvz46OqKUulwun8+naZppmhcXF4ZhzM3NYV+5BbOunZAlzEZruLPXfP22+uprbcC1gUX7AzrsM2OgCFMlQqVMYUyjQqVEV4hCCOWyrcgFQQBGDGtoGIZpGoJzclUSopQxxYG/8rwoszmmlBDKKKeCE4sYQyFMa8TEoG32GsOya+j1qqXLTqMR83j0RILoLqLrRIDwRb95UJELTgkVXCBWWltbOzo6IoTE4/FoNBoKhYLBIG7POHBnw+FwMBgMBgPTNL1eL24/8izTMDvdTrlcdnvc2PY9Hg9wDUmZ2+1GOsk5R7XFNE2Px+PxeGTAb8MZpaqqApva7fZoNPL5fH6f3+vz4usikQhSOb/f73K5jJHRbrf7/f5gOMDjjgNwuVyIj/Cl1Wq13W5TSt1udzQaRenBuRu3223TNAFMfr8/Go22222/3491yC3e7XU7nU673fZ6vOFI2O12u1wufL5hGJ1Op9FoIHuKRqMejweg0+l0KKXValXX9X6/r+u6ruu4GnIJGYbR7/ebzeZgMAiFQj6fD/8q16rgwhIWFgnwqFgs+n3+memZWDwWDoddLlc0GlVVVdM0v9+fTCYJIaFQSGbBlNJer9fv9yUM4Se9Xs+JL6Zp1uv1fr+vqqqu6x6PR9M0mV8TQobDYa1WGwwGhBCfz4eHBGvesqxutzscDkej0WAw6Pf7Ho/H6/X6fD63243SBe6vaZqVcqXRaBBK3G53LBbDZZfbRr/fL5fL/V5f1VSv1xsIBFCbGw6HvV6vXq8Ph0OXyxUMBMORMPAI+1mlUsE5hkKhRCIhM1xz/MLber2ex+Px+Xwej0c+lkIIFATwNr/f7/f5PV4PTh8fgmdSURS32x2JRFAx6PV6rVar0WhUKpVOp2NZlt/n9/l8Hq+HMUaoDdbNZrPb7SK1xFd7vV5u8cFgUG/Uj46Ojo+Ph8Ph0tJSJpPx+/39fv/s7OzTTz9tt9vPnj2bm5tLp9MyWcYGqdKJTi0XZqPV3d5rvl2vv/o6qHlUxaUIrlKhMqoyqihMZUxVFIUwlVJFYYwQYgluCS64YEIQYVGLC6tnDAaD/mg0xLJEwIWEWVUVhSmUMUVhiqoSQgmjVKGUKQplCqU6o4IQTqgQggvLMgzTMEft4YDwFmWkVlW7HXc2G1lYJMEgUVVCqV30fP+MNFYp7mi73T4/P19bW2u1WrlcrlAozM3NMcYk7gBSueDdTrdcKTcajcFgkEwmA4EAY8zj8fj9fqawbrd7cXlhWiYKW5lMBtDT7/eHw2EoFEIcAXRALSaRSPh8PpQwB4MBymQul8vtdvf7/YuLi7Ozs06nk81mU6mUoiqoSsbj8UAgAPxyu93D4bBSrVQqlWq1imPGIUWjUYAanphisXh4eKiqKlY4FolMwYbDYaVS6fV6wfELW7S97BWGtVosFs/Pz+Px+KyYjUaj+BAsg1KptL+/j7NYWFjIZDIAX5lpWpZVqVSwzhOJBEJ9xDKj0aherx8dHTWbzZmZmVQqhVzATqAItbjduhmNRv1+v91uNxqNqezUo0eP0pl0OBy2LMvr9brGL0ppMBh0u90AFOzkrVbr4uIC34hdRIKXDOtGo9HZ2Vm5XEZUGIlEIuGIy+WSmV232z0+Pq7X65zzZDI5PT0dCAR8Ph/wtNFoNBoNLOBarRaLxRKJRD6fd7lcggoEIGggnJ6dHhwcCCHC4fDy8nIsFkM8yBgbDoftdvvw8LBarXo8nkQikcvlUOPr9/uVSmVnZ6fdbodCoVwu5/P7XC4XY2wwGDQaje3tbWwPs7Oz4XBY13VFUXDRms1mr9cDKJdKpVgslk6np6amPB4P7rVpmtVqdX9/v9/vc86npqYymQzKspRRwzC63e7p6enZ2Zmu69j2ZPUKteCLi4vz8/PRaDQ1NZVMJnWXjozQHJr43cvLS0B5MpnMZDKBQMA0zV6/d3Z2tr+/XywWw+Hw7OxsNpv1+Xy1Wm13d/fXv/71xcUFCpfRaFRhipM4Mo6zEIsKQblgpqUPDb/FI1QJMMWrMiYIFZwQzgRh3O7YEUo4pUQITgjhQiAFFNwiglPKVY3F3R4W04gwOTe5pRCiUkI5pxanYJ9aXBBiEcqQynEiBBeUYxiIjpFDIVRjRBDmpqpGLEaoRQjjXDNNMhoR0xoTylA3+6aZQ5l3DIfDfr+P3h/KUrOzs9j0fD6fqqqc81qtdnx0fHh0eHh4KITQdX1ubi6Xy0WjUQRT1Wr18vKyUqmEw2HTNOPx+PPnz2OxGKX04OBge3t7dXV1bm7O5/M1Go2XL1+en5+32+0PP/wwHo+32+1qtXp4eMg5n52d9fl8+K3d3d1WqzUcDi8uLjKZzMrKSjKZDIfD5XL57OyMMeb1enO53Gg0ury8PD8/L5fLiAX6/b7P53v+/PnMzEwwGCyVSnt7e4eHh2dnZ6qqhkKhdrtdKBRmZmZGoxGejMPDw+Fw6PV6l5aWkIBUKpXT01O/308IwRa6v79fLpc7nU6/3+92u/fu3QsEAt1ut1Qqra+vn5ycVCoVYH0wGES2hfXZbre3trZCoRD2AK/Xe//+/ZmZmVAohADt9PT08PCwXC53u91ms5nNZguFQiwWw6XAaITszCL8AfDl8rlkIhkMBTnnmqa5XC4sLZxsPp9Pp9OMsW63e3BwcHp6en5+HggEvF7v+fl5sVgcjUYu3UUJRaC3s7Ozt7eHhwHPhmVZi4uLz58/93q9jLHT09Ojo6OdnZ1mswlYPDg4uHfv3tzcnGVZ5XL59evXZ2dn3W53MBgMh0NUAz/88EOgkqqow9EQn3B8fHxxcUEI8Xg8+/v7i4uLjx8/RvC7tbV1cHBQq9WGw6Gu66ZpBgIBJMVv377d2dlptVpCCIR4uVwOodnW1tbu7u7R0VGj0WCMXV5elkqlxcXFQqEAnP3qq6/K5bLH40HuryiKx+P5q7/6q9XVVbfb3Wq19vb2isUiniJVVbH/hYKhkTHqdDq7u7vv3r3rdDqj0cjlcmUymWQyCUxEGX5vby8SiTQajX6/v7u7OzMz88EHH6Am0G63y+UyThkp7cnJyfz8PHZxVGa2trbQWdrZ2QkGg/F4vF6v1+v1ZrNZr9fPzs7Oz88bjQYNU92lyxquapdXHUM7jAvd5B6LBCjzM+ZRmOAEdVsiBBOMckqIEJQLSq1xnZByTrmwCDeIMFWd+DyeRFwNBoSmjbg1GI4oowqjxDDJaES6XdHuWO0OHxnMEoRQRTDk8YISwgTSQ4pGAyUKQwKpKIJyQUzCCBeqaRHDINyySfaCkvFAERGEvkfERiYFIA3IEiMyF3AdhBCDwaBYLL56/erg4ODs7AwhjHzJEn6v15PxeSgUikajQohQKHR+fv7ixQvkLOl0utFovHnzBngEaGs2m8VicX19nVIaDoexzW5vb29vbyNFKpVKjUYDOVokEmm32ycnJ4SQYDCIb+l2u1gn7XYb253H48nlcvF4nBBydHT0xRdfIDInhNRqNaScyWRyMBhcXFy8ePHixYsX0Wh0ZmYmn88Ph0PLsi4vL4+OjqampoQQtVoN9T7kboiqZmZmTNNsNBoHBwcvXrwolUqKovh8PlyxwWAAuDdNs9PpXF5eovbUbDYJIYFAwO/3I0g8Pz/f39/f3d01TdOyLKQniDiAFPI2KYqiqiqyNpfLpekaYkDEILhfg8Gg1WodHR2tr6+rqoqWeaVSef36NfaJRCIRCoUODw8vLi7waUD5Uqn09u3bFy9epFIpJCa1Wu3s9Kzf78/OzmIZ7+3tvXv37vLyEqlZuVze2dnRNC0YDCqKAsw6ODhAvOx2u3Gyfr8fhVGu8Xq9vr29/Zvf/GYwGGCbJIQcHBz0er1sNhsKhSila2trL1++RPgmqS3I3L/++uvXr19HIhGE7ShTIEjf2tp69erVcDhEiarVap2enqIy2+12Ly8vf//735+enubzebSJUO+LxWLRaDSVStXr9VevXpXLZcuygsFgJBIBicfiFiDv7du3n332md/vD4VCqDeNRiOEsQiySqXS+fn5cDjsdDqVSqXVamWzWdws3JRWq9XpdFRV7Xa75XLZNM1QKBSLxQgh9XodO5aqqvV6vdVq9ft94P5oOBoMBp1Op9frDQYD0zJ1ostHQqVXUzA2ZYBRRVU1SplpcS64IFwQS9jdSnQcGBVEMMpRSheCcKEIolI6sshQWMTnU/NT+pNH7nxOuN1uzn2jESWCMkK4IP0BKV70Dw6r6xt82NJM4VEUTdE4t7iNWZQp1I6+UJoRghLBKAPHQRGMcsYsYc8G2XNGwiY32GT+W2b35Ssejy8uLnY6nf39/aOjo8FgUKvVlpaWZmdnPR7PaDQ6PT3d2Nh4/fq1rusrKyvpdDqZTOK5QS0GhV50x5LJ5Nu3b9vt9tramhDi2bNnhmFUq9Xd3V1sXMjST09PkeG3Wq1yuXx+fn55een1enVdb7fb2BJHo9HDhw+TyeTr168vLy9/+9vfGoYxOzuL5QQyy/LyciQSyefz8Xicc765ubmxsQGkQMvs6Ojo3bt3r169evjw4Y9+9KNarXZxcbGxsYEPN02zVqsdHR3t7e1NT08vLy9PT0+7XK5SqXR8fLy+vr60tDQajc7Pz9fX11+/fj01NfXLX/4SO2cwGEQ5/O3bt7u7u6FQ6KOPPsK+GovFgsGgYRgIAbxebz6fLxQKuVzu9evXJycnJycnSL5qtdqLFy/q9bphGPPz86FQ6PXr14eHh3hqE4kEctsJ2tpoNGq1WhsbG3gPsuB0Or2wsGBZ1mAwuLy8RPACasjBwcHvf/97j8fz6NGjeDzu8XhOTk6Gw6HgAi2Iy8vLL774Yn19vVKpPHnyZGVlpd1ur6+vb21ugVSBw3j9+vX6+jqqB+FweGdn58svv0T6PDMzMxgMTk9Pq9Xq1NTU/Pz84uLimzdvDg4O9vf3XS5XNptVFGV7e3tzc3NnZ+fZs2crKyuEkHK5/OrVq7Ozs7W1tenp6UQisbGx8fvf//5v/uZvlpaWCoVCNBr1+XyVSuX8/Hxra2tvb+/v/u7vnj59Go/HE4mE2+2u1+unp6fv3r3b39//6KOPpqamDMPY3t5+8eJFLBYrFAqGYQghAArZbHZ2djYajb569erNmzdHR0eRSMTj8dRqta+++so0zdnZ2cXFxUePHjHG0Oc5Pj7+5JNPjo+PGWPz8/P37t3DrhOJRAghoLAIIWKx2PLysq7r9Xr9s88+q1arOzs7qDNiMysUCslkUghxeHi4u7u7v7+vadqzZ8/y+fzU1NTszOzFxUUymXz8+HGhUPB6vbFYLJPJRGPRkTFaXFwszBaikajb5Xa2EVTqlPSzU0TKmEoo1Bns6EcOPI8L3ZSI8aiyIEQQRRBGqSDEEETxemgiri4saCtLxOdDr8JmsXNBuj2yt28MRqO9A4u0GaimFB1MPhanYWO+lTPpQ7mSUMGoRagliMXHB8aFQ92GCHFrdih7ST6fL51O379/n1IK6lO73Ua1C3yTYrGIVHxpaenx48fJZBLdcUk8YYwh5Jmbm8tms7Va7eDgoFwu12o1VVV1TVdVtdFonJ6ezs/P9/t9JOder3c4HBaLxVKphEWLOAJBlmEYsiylaVq32221Wsjm8KWoE1uW5Xa7U6kUfn56ekoIiUQi4XA4HA5zzs/Ozg4PD09OTh4+fJjJZBBAVatVpHUIEhFYpdPpxcXFRCKBKjLAFCVqpE6NRgPtOY/Hg7IRjv/09HQ4HIbD4Xur9yLRCMr8iqK0220EsCivLC4u5vP5YrF4eXkpP7xarW5tbXHOkbKFQiHLsqrVarPZTKfTss7ipHHZpFDDqNVqqOP0+/1IJOL1evF+XBzUkgkh3W4Xee7CwsLKykokEqGUplKpYrE4GAwsyyKU1Ov1jY2NZrPp9/unpqYWFhYajUa9Xnd73LhEvV5vOBweHx+fnJzMzc0hTiSEIEY+Pj6OxWLgvuCxQa7X6XSwLRWLxeFgyDnf398vlUqoFj19+lQIcXx8fHx8PBgMDg4OUJrA1w0GA9BZgsGgy+VCOINQlBCi6zr4g3g2sAtWKhWXyxWLxbrdLuf88vLy8vKyXC57vV40InVdn5mZuXfvXjweL5fLu7u7eCyXl5clOxo7DQiiKM9Xq1VswIVCYWVl5f79+5ZlqYrq9/t7vR5gy+/3ZzKZ+fl5r9dbKpXW1tZwZaampmQXSDZ8sK+gHrK8vOx2u5PJZDqT9vv9sVhscXExm82i84BW2Gg0mp6eTmfSXq9XVVUnUUa9jRkAMKKYUr76kf0Hu7NHkMWNU0phl8WYoEzoOvd5RShIolESChOFEW4RRonCiGGRZovU6sLn45rOmSIIt4VmbLghVEB3hsgPp4QwQillRFACaQlLCIvLOGvMQbZhl74HsCS9U1VVj8czMzODQsnGxgbStFar9eGHH/p8vsvLS3BzZ2dnf/zjHyNtxG7faDRQoAkGg9PT06gfFwqF4XB4eXlJCNE1PRaLzc7OohTdaDQsywqFQoyxeDyuadrW1lan0zEMA/Vaxlin07m4uEAYghC60WhwzkF5H41GiqIAO0Dg1jQtFAqhoFar1fr9/v379xcXF1OpVLvdxg+BQaVS6eLiol6v40zRfMQTMz8/v7KyMj8/73a7LctunON/QX2amZk5PDjsdrr//M//vLy8vLq6iooP0sxcLjc/P5/JZNxu93A0RB0QRZNIJBKNRhcXF3O5XCQSSSaTiUQCEIDaEzLZQCBQrVb7/T4aT7g7eNax2JwtdlTN/H5/JBKJxWLxWDwYCqLFiYN3u93o1qmqikBY07RkMnnv3j3EzisrK4PBYGd7hwtOCOn1ehcXF/F4vFAoTE9PB4NBQkgymZybm0skEoQQ5N2Akn6/X61WQVsFcvX7fXAmA4FAMBh88ODB4uJiOp2enZ1FlMc5p4z2ur2TkxMhxPLyMqJOANC9e/dOTk7K5XK/3w+FQisrKxcXF41G49WrV6ZpLi0uFeYKqFsvLy8jm37x4gVSy2AwiML8YDAwDAOwValUSqWS1+slhLTbbXTokIWtrKzMzc15PJ5sNotiaLPZNE0zFos9f/4cPZ+NjY3BYPDw4cN8Po/ntlarLSws/N3f/V02m43FYqCD6bqO8pbb7c7n87Ozs7Ozs7hxU1NThBCUPtEEqNfru7u7pVKJMVar1XBbO52OaZq6rqOWgnWEr0BSqWma2+32+/3xeDwUCiGpGyvC0AktGnpFLKX2f87RY8AYu+rQ2Yhm/yMVtiYgoYQyzhShqETTidtNNJWMdUupyuloRFxuoutCUQS1UU9QIahNOpX1J0qFfSxiLGZqj0IKwrmwLGJaRPA/MKs6MTcw5tQpiuL1eJPJpGwhgb+TzWaTyeRwOERTCZubJEkjFkO1EtuCz+fzer0IQ/DNjLFwJDw9PX18fIymjMfjicfjyWQyHo83Go2vv/4aayyRSKTTaVQ0US4BU0FRlGQyiepPoVDQVG2CzImSarlcRn+gUCjcu3dvfn4+EAg0m03snJLWgH3Y5/PNzMygawPI9vv9fr8f9SNJCMQfVFVNJBIrKyuWaZ2fn7farcPDQ9M0FxYW0LCTHCuX2+XxehRVsZlcYKgriq7raOoxxwtfgQog2qkIi9LpNKr1+XweLT9JH5eMUzzQuVzu8ePHSNI9Hk8oFNI0zTAMZ+4vmy0IB9BiVxXV7XJjx3bOM+FWgo2B6hiiacnGME0TVTZ0ezOZDPp62WzW4/GgWONyuUKhENgJoINI0hn6krI77PV6Oederxd7Dwr/Hrfn4cOHjLFisdjtdrc2tzqdTrvTxuPxwQcfhMPhk5OTarWK6pXf7+90Oij94EbjiiWTSbfbvbCwgAZfp9NBEodTw01B4w/PWDwe/+CDD7LZLHbozc1NdBinpqYsyxoOh4qiIAfXdd0mr9Or+yL73faMx5hqhybMwcHBy5cvO50O5zwYDHo8HrfbTSmVByzjLxyPc15CzgNIYrMkOtyqn+VQTXb+XRCFEwJdPsCIDVsoezMBCjwlnBDBhWnxMdsbNSgiLJNbJkOYxhTCVEIVQqmgggOwCBfUIhQzNwolghCLEsGQGQLeBEU3QFgWNy1imsTBgqOC3tBOvcYPtnnGY6Iwo8zn9XmmPYFAYHp6+h/+4R9QtcUNRr0TqYQkNKFVj/Ujn0tJh+Ec9DQaCoXy+fzZ6dnlxSV271QqhcC+WCx+9dVXsVgsl8utrKxMTU1h9eLegMaSSCTATkgkEpFwBG314XCIthT6nsVicX9/f2NjY2Zm5tGjRzMzM7FYTB4hbr+u65jyAfMbVTmkV3Jt4+wmLhce6HA4vLCwsLW19emnnxaLxa2tLdM0V1dX8YCWSiVsnljwCEIBQ7gakpKGy4jjkUQEXDTwMGKxmNfrjUQikUgEAI3TBLw6MWtxcfFv//ZvQVySVMxutytvgVwD8uzkfen2us1mE0kxUi3QOxCTYt8CF2w4HGJjGA6HiG3j8ThCJISi9oyXoqCd54RLwzDs9HMcHoInia+WjH/0TyilGPZ6+uTp/Pz827dvUXE/ODw4OTn5+c9/vry8HI/HV1ZWPvnkkxcvXnz++eeNRiOdTjebTVmqR/3I5XLNzMz4/X6UitBhwDXsdDpglqOYgB1L13U8Zo1Go1Qq/fa3v/3iiy/Ozs62t7f//u//Xp5Lt9sNBoM2LFLmZP/K+4suPPDd7/dTSrvd7uvXr//pn/5pYWFhbm5udnYWFXeEAvgQkLzwi91uF8kEbhnCZNw4J+v4vZp/dpBFyNXEpCDUltPCDBa6dIIQwZCTietCVZRSymSuJ7gAeUvY04EMuaBlcYtzqdeF4Sdq56G23DsbG2rQ6zPB3LIECBOCEwd1+Ooc6LVoSw5P4UE3DAM8vUF/YHGr3W6jxYb8Ak9As9lUVfX8/Pw3v/lNIBAIBAIejwdUGiQLSKkQjjlXKcYOpqamfH7fcDjc29sbjUarq6tgvqBYQCmNRqNo3jPGwuEwlgQWDJ54OUpCGUU5AHcRLfYvv/zy6OioUqmgxlkqlcC00jQN2BQIBBCigyuANQwIGI1GIL7KqBP1Mqx57JNgEoKIEAwGLy4ukLyYppnJZNCWOjk5+fLLL5PJpM/nC4VC6MOqiorLoio2zR3EcbAu0VPLZrNoDFmWJUMAiURXm8qYX45tv9PpHB4evnz5Ejkg8rJsNgugxAfKklA4HEb6/Otf/zoei2u6tr62vr+/j4oeeANzc3NnZ2cHBwdv3rzpdDqtVmt7e/vi4gIlZGBBPB5HLRKUSxyS3+8PBoPIdgE9gANJLrfJnBb3erz5fB5tzZ2dnVQqZZomqEkgVcRisX6/X66Uy+UyGq8Al3a7jcZZpVJBzcHr9SLfr9VqiqKAhInLpapqPB5HhIiyI54WPI3YySQcyEXR6XROTk5wUxA3VatV5OPRaHR2dnY0Gv3rv/7rwsLCzMwMHp5IJIL3I1iWU0eAsH6/j5wafeR2uy2EwAcOh0MkpChBOimTzjkn5B8oMuzs7CB0DQQCuu7oG96uU3GlYAzqvaDcDrjYWEOUjsfYbcxyaFdRxihTbIl3TjiwCbjGGCGMECYEsSzOuYDo6bhoZRMvGCwqHFHeBGvBQm5oWYQLMSkE4JSnERM8eEYZI2w0HKHHAezv9XoYLg+Hw2gDY7DA5/MVi8V/+Zd/SaVSqVRKAgECBzSYscjlA4G8CcsyFAoJIk5PTxEx5XI5FNH7/T4edyTto9EoHo/Pz8+fn5+3Wi0UUPA53W7X6/WGaRhrHpgL7tiXX35ZKpVcLhee7HK5rKrqwsIChqjPz8+j0ShjrNfrgbgIbgSuw3A4BDzJ+RJJypcyEhcXFyjxmqaJoQow7wkh+XweDbXz8/PPPvsMtJ3Z2dlMJkMI0XSNEsoo03RbJwPrHHEi6Bqzs7NnZ2e1Wg25obx0nHNJoZYj0zLDwnjaaDSSiVg+n0fbQa6Z0WgETInH4+D7/H//3/+XzWaj0ejbd28PDw+DwSA+ORwOLy4uXl5eHh8f+3y+i4uLwWBwdnZ2eXk5OzsLQPR4PJlMBvNA6DlgTQLRer0e0B97A7DjaojK4pxzf8BfKBQODg6KxeL29jaayKVS6eDgYHp6enV1NZFMdLqdnZ2dg4MDVKPAz5LF0+3t7ePjYwRH6MB0Op1kMpnP5yORCN4Mhg0m+BBmSpCaSJmd89jgOgghkskk59zn82E5aJoWCASWl5e3t7d/9atfgcQwGo28Xu/i4iIeJ8ShiIgl8x5hFObq5ZA/eiYICwghIOs6c3kEy3iwcZput3s0GmGkF8UTOdNGKVX+f//v/zues6VECGJyUq6Qo+N+8bxzceFRVRdjzLIY51QINiaIE0IZoYxShRAmBBNCJUJlYiT4gAoWi6rplHd+Xk8miccjqIJhN4VQJigdGaRcHZ0V20dHSrfv5sSnaF5FUwhTKNWYoqDsZnFhWojOEB0pqmZS2rMsU3NZHo8/n/Pnp0g4RPx+okCWftwfoDcnDolzKKQ/6NfrdRDewAW3LAvAsbK8kkqn8HyAUw4mMZQ3fD4fMjXDMFKpVDabTSQSXq8XcIC6/vz8vIQJbIBLS0vg2iFsVhRldna2UCg8evQokUjghiGIwzbYbrfb7bZlWag6h0IhFD7BbUmn0+AigIvk9XoNw0DLLBQK+f3+cDgs09tarQbyi2VZyDoxdG1Zlt/vf/LkCcjr2JNxCvfv30+lUo1Go1wuo+eFqurU1NTz58+Xl5ZDwRDCHFRkEcYjFEXKbFrmVG5qcXER0064OH6/P5VKgWSL4hcQELNBOFmUjeSguJwNBhsI06CoiWBhBIPBXC6Hldzr9TRNe/ToUT6f9/v9YG8hfcNyIoSkUqnV1dWHDx8uLi6CP+XxeMLhMGYMEDu0Wq18Pn/v3j0gIxpqINC1Wq1ms9npdHCcaGWCTPDw4UOQvBA8ut3udCa9urIaCtvhJ0AQzU3LsiKRyOrq6qNHj/x+v2VZ+/v7h4eH9Xq93W6rqjo7O/vs2TOc2ubm5tbWFsqUoVDo/v37T58+RQVwNBoBf0Fzr1Qq3W4XnTiASK/XS6fTDx8+xGRVt9u1LAvP7fT09HA43N/fr9fr4PFjePPRo0f379+PRCLoXZqmiTYl5rHS6TSCTdQBnj59WigUZGCI1hCe7VarhQAK2zDG0TKZzNTU1L1791KpFNhYhmEUCoXHjx8Dr+WkPZ5Jv9+fy+X8Pr/X65Vz6eoty1phiqYyVWUK5ollsmZrLHNCubDAm2cwsBCcM8G5sAQ3CVdAkbdl+RgljAqFUs7wIeMiF1M1rmqEWYQqlCqU2smgEBzkds7JFUvLTjbtcAkpjc11uKYOKch7ZMwooYRdvRfoDrwAi6pQKMzOzqbSKb/PTxmdnp72eDxbW1tra2tIyrCrYNnMz89jM0cvFkzOaDSaSCRk621mZgaoEQwGY7EYnt2FhQWsSeRTOIZ4PC4Lt4ibUKyVBx8Oh2dmZkDHd7vdXq+3UCjE43FUphDxYdVhxgJnt7+/f3x8jMcLU0ecc5fLBRjNZDKxWIxRJoTQNT0cDhcKhWAwmEqlcE1A0UZElk6ns9ns0tJSMpUkhKCUGwqF3r17Zw9mcY5dNB6P37t3D/0gDOtgCWGpe71eTdNAU0KRG0hkV53GMgwTc8tutzuTyTx58kTOryEJQh1N1/RAILCwsIAqPoru6XT6+fPngBvcu9nZ2UgkMjU1hTuLK4m4D1sXjh8MDCQpoVDo3r17fr9/fX0dgIJHRWoTJRKJBw8eoCWHfmIkEikUCqFQSNd1n9+HNBbgAsYJdppMJoNpJ1BqNVUDO1xRlOnp6YWFhYcPH2I6UiZ0wWAQFDCMhXPOsdQPDw8bjUan0wF/CuGqruvxePzJkyeEEJQLdV1Pp9NopwKsjZHh9XoR16ONMD8/D3aY1+t98OAB5Hrq9Xqn0wFvS9M03MHZ2VnOuZzWCgQCs7Oz4O4nk0mX7gJvbnt7u1KpGIaB3QU9H0yS+Hy+bDb75MmTaDTq8/rAIlIUxe/337t3T9O07e1tW5yLXNMXUyfU8KgglFKiqlRRiIypiG1awbmwiDApMSmxLIsQaJUQgXEdRTS52STcZZmUcAumhQqjqqowRoRFhEUIIQxzP2IoLMMyLdNgDLAHdSEiBOeWpTCqqSqDPAJlhDDOiWVxy7Ihy+nGKKto75vauZow54Ix5vP6wAfBDoASbzAYRB8Q542+Hjp3eO4j4Yjf79ddejAYDAVDaJZhwC2ZTIJUgt4fVloikQC9AE00jKHk83kw6fGNUp7J7/cvLCzIlqU9Rej2eH1eFLzkSC06wQiv5NAcaqsYNkamsLq6OjU11W63UYCIRqPhcNjn9VncJpcByEzLFEIoqoJhvVgshiAlnU4jMkf/CE1StFBRW8lP58OR8MrKCo4ftBoUzpASyjYFPhPyBhjl8fv9y8vL6XQaaRca8wALPLsyrcAfvF7v9PQ0QhLLrikIXdf9fr/X40VRXNO0bDaLhA6Ym8lkXC6XpBeAm47v0jQN5XZUo0DQ3d/f73Q6sVgsFouFw2HcWQwzg6uBJj1YGti6EHApihIKhly6S47XIKPBe1B78vl8KLehKg/NHFyocDj87Nmz2cJsr9sjlASDwVAoFA6FBRF+v/+jjz5aWloSQrhcLjRM5YzU7OwsKvQogwJkEVIB0x89eoS5cTQQUdyAHCNSsL/66K/6gz4ycfRYkVsAibABgL4gmYMu3WVZlkt3pdNpJMuMMeSSw+GQWxyc+3wuHwwGC4VCr9fDMsHwOQCOMRYMBHVdj8fiukuX053Y7IGbKHQkk0k5GmFLGAnLJHLczxLUMMjWNvnss9Jnvz3/7e/CTAlQpoxMalmCC4uLkRCmrhu6bhBuCaIwRigRgjMqVEU0LbNOLPfycvDJ4/zf/j+hBw9JOCpUVVgWARFCWLTdJltbtS9e7PzzrwYnZ3qnF1BUv6pZ3OSCU9T8uaUz5lYUZnFmcRXaaZT0LKs6MobBoJVIZn/20/RP/orMzYh0UuiaYBolypVF0JUK4HVNSH71fxOgJtXUZMNVptBIfzRNw7im7LxCgwXxi5Qlki3biT7uzfqCszPgHIp0Uo2/wRFPyuZJCRfZEJRz/yBbYpxYUzVCiMUt+1zGWoa3ikABbmTZS9YdnE0c7APO5uOVXNdNUc0bwluyk4WDmehm4idXQp0QAnRc7fE2Nakp6rwRCFJwjogU5CG1220MtZXLZSD43t4eOqEPHz786U9/Cq6GrBOjxwIsdmyS8vvHVGuHpK1T14yPX85jcF4QbvH+oG+T8hRVKtBKbQasZ9nTANAwxoyRMRwNsbVgy3ReTKfm16T411ieVPaanfdOHhsyOEk3ldJd8v3OhABqNrYn6fj+YuhaUa8kMIUQkHaxVVLR9rVMKOvhvqM0CYjXNE3qNalOgy3b+VShRNeIqthJlrBlYiDKLxgjPp8a8puUCEZM22rVYpRQRoRlUGGKcJD7PMLrIrpKFMqFMCxLVZmqasQQBEwGl0aDfhIJck0zVW2kabC7YJSohKjCVgfjnQHpDhhTGKFCcC4IEQK6UZQpRFEJY8RuUV6tBvp+d0wxfv6dCYh81uXam1DskyBC2TXBXDysTnhyFjul1AyePPngOos1sr4ob7xTSgVSeROSgVKyUkKt/Ou1qJnbVClZC0CEJc/0Sk8OpBvBJxSZ5UyfVKecUInD+UvymlMJ7w+qKsvYEL1CJ8BNaHVyzu1FQplUobtVtENeQ5kpO68n+hjymqNLi+4+bkGv1wuFQmjPIx6Rgla4j4hhr1b4eLExxlRmM78kB80pNmvrRkFFi1IUwpwnQillCnO5XHiQDGHIC4hFKxnR+Ha5R+LAvB4vhICkFCr01yxuQdDVKdol03Ap/iW3N/mlTs1V+Z5rjwclco+8poA4pkDiW5wQ79yhoT1le86PV7RGNSnMjTjRWSKQD4l6XSdd2LmbqghVEYyC5IC3cyGoqmpur57Jstmc7tFNl2YvDmExKhRGdXPktQxlKuOamdaDAaIqRAhCOVGobQ6mMqJrJBRy5abiq8tGPM56A13TdV2zhMUJZ5QwSlXG1G5PqTcHZ5ejzkATQhNUEMLscjxSToWo8BkbV9wFucaCvcEsdXKsbtHDvaFRe1OQE7/r3MkntlPn++U7J0KPiVhDQo/z1+Xyc5IknTuhRMYJJp5TtFsqeTtB1qliOO7zXmny3dRNdTJFry4IJjoRmztUNJ2b+U2rrpsWEraOHqG3/quksAgiCCeccmgBTmCcE81vPuIg4skIyLkJBQKBZDLZ7/cRi4FJOzc3l0ql5EYir78Eo5uRqdwFb+q7X0nvI3/g/CaCTxBxJBVAqpsKeu2pu3o85GgtvZpLs8M6wp1fxwS7sktwtu3INRXm9+nQO7FJAtbVYywcivXjLOfWKNsZnKJQdcXvZbY5jc2wdOQrzmt1rZ4liCCEUyIIY0RVhcK4QjmnY2o65dxiquoKhbRCQXv2WCQiJOgn3CDcIsRCJUyYI2EaJBSksYgSDhNGCbeoojBVoQojjBKqEq+HJJNeQaY1nbTaZGhSTSMunQhOCCeUEMaoqpGLEtnbN7rD4XnJLQQRglFhl/QZI4piY5bCbifB0/cClrwHsjLijOclcU4q7Ts1150SwM6nROq6XUEDZYTZU3JOxXE89xPPtHOvk7GYpHfKjRrlAHkj0Q4DUVPGdPadJgI5IMrVV8kCJQpTnOgzEcRN2hBw+3PQJbRRchyX4agQjk1aMIy9D/iNQQWb8kpsNXRiEfnE3lQuthl9jDl34AlxUad9hlMFWGp7OiV95WGgOu73+wuFApp9gfELp+O8GnIK8lpMAUFa4VCRVxT5nDhV2ymhiqpwi1um5bwIdrBGhGVZiImctQJbd5JyZ4R+06/EMA25dTktCCT9h3POybWN84p0DhHh8Sc7Y9UJdflrgrqUocjgjLul6Ltsbclsw/mN0vtqojCCyEuhikKUm6vVebtV27pQjA3oKSEKI26duHShqdwQnAvBCKWCC5MphPp0loyx+QJJxkkkQMwRERaR9C1uEc6JrhGXm/j8RNGIolBma/BywanglDLi8dJ4QtV0MhgRyyKKQq5SG1vFlmge0u5x/4GtViMs+8O5SalQNJXqOnG7kB7aRtMTlNI/ZEXnjG6u9qixr4zM+yZ2HqfkgPMZulr81zyubXzEbcZ7INgikQvhtMz4JowJnJkaaApOoXfn+pQJEb7LOQQzUUS7tbR0s5ZxFbpf1xTHAeMC2lg8BnrnZi6IuDXOkstYlgXplYvmbfNXwoatq9IRvWaxZIcVjnDASSBSmDKe/R+nJOPbinQPfTQUksDpn7ibE30r5025aWwzIe3vlKZgCoMo2LXGKCWEE6efgLzUUunfdsdj9lMkv0KWBexPI1f/N6GTd6vAifxwMa6OTKwbQa9CJzE2aXb2c68qGFQgHpSPB7WPl16zIBLE+VTICsPV9M11o5Bb3YZUmysgkOIJSgRRFOJyEZdL6BrnhmVa0G7nxCQKJ16VxMMknyOpOIkEiTUiwrLp6vIhNDkRgigKUVSiqFDO4oRzwRmYpbqLhF0kFB4jpr1tEanPzAUZWeSyZHncBuXQBifcsq2qiVA0jblcxO0iqmoT6+mVFwcl4huM7a78HRwpAxfXYh9naDqBUM7UYOLBlcYEznULwEa4IUXf5YicfQwwMlAVZ0oy4TMmq/iSdeEUI5dSnFJxHLZsMgRzdhWu4SyhdgxCrvD6CnTGa9v5pMq8Dx2om8ndhNMaeU95cQJ97DmJsdeOE8UopQq1jXBuOmUh4pM2RdIEBOEhrr+9gMdFMSm3j/ruldDghOkWqjNETMR0zpHGiRORWCAPw5mrTpT57DcwKt0D3gcx3+Sdpai3UnuuvEu+yehxDBuC/AHDxxvYrdBr3Ri7wuBMdW51NhM3fLZvs1n8hgaO6iQ2EXt2kBFdIy6NunRhgAQFzBKCCoMKhQqNcsFNYRiCG0KYNiOVOUWqGKWMOO1exhGQxShwhQqFW5ZpC41ShEeMC0oExEhNIQzBTcsyueBUMEooEZbFBSFEVYnbRTxuoipjVr40DyPfDFjOrh+aILiQMp6fiAiummKIlW4rk91qcXzNCf1KfJVO+EdIsyz5V+Q4t95IzLtdfSC71oK8tt/esB293SxHUkYomQgtnaeMEO8qpxgLfdBv2iC+l1fod7dKBacQIeFVzuVQQblZr3QuofcV3d5X0/zmg3f6A054Vr7vK+RQ202L7O/lN+s4AnrLw/8+RPo39Gf9Tl+tXruAUHFRGNF16nJRl0v0jbHUC7EIp1RYjHAmCBWCW8I0LG4IYlEiCKOCg3tFmaIyRgmmdK4fDLetRGweAreEaVlSJosSqnLBKBGKwgkxiTC54NzihAtGKLPLKIIx5nJRl4u43URRyNiT1ZYnFe+/lTcLX46IwJkhvtdKk94ySHQ7CtxmRYkRE9My1fHLmad8sxPXTR9gu0xArzpKtyLdrQHOt4GJqwAKDTJuOXvVN5vifxJT++9h8O2skjgLSc6O8FUNkU449ArnA/Bd188tySz9Dgvy2nWjV5HdH40Bf17UIP/GPtKSISHPVlOJx0M9XsXrFZ2BRQknhBBqYdkrClEYYWhKmIRblFiUElsFSxBBKWFM2IZiglIuKIYUhWNyWTiaPfYaZ8ICGNqhguBMCEUIJgSsfQSlnBDOFOZy6X6/4vUS3YVCGMhYggoiOHGy3b/FrcLkB+rZGBmTDBcZECEju6rafK8XaN8XlxeXl5cgLkpLCOfWKM0vb34CCAdIAG2PP911kxj17R/6Sava69UZp/0iYwzeWXL0B4eqadqfIDQgf4LIwpnOYwIczC9Q9iUj6e71H/0l/Q2vlLDsepbHTd1uoaoWJBcI4UIwQihTqKIQFV0e4cAgO8QRtjAEF6BujRUBEazRsVIW4dBDJgpleBcjhBHBxJXOn0KJSolGqEIpo8TixCRUKBpzuXV/QPF4iKYRhY5rWH9APOvWKMkwjP6gj1EyySiB9t6EttT3jgLkq9frFS+KMI9YWlrCmAhIKJLh5XSTvrknw/0Bc8tQv9NjunMgFjQ8CbvfOy9DxccSlmQPQjIFMgZQMQyHw2B+/ds/xYI4GRAgXmFmMxwOQzbTzmHpbUWfcUb8DaW3u9e/szjL1lWgdh2dMeLSicvNXR6hqpxSTgglxOKEEWp3ylWFqQpRFSI4ZI3t0tV4KJBwi1AiBOWEySDOVoYYG14QzpmguqLadSghCAS4KEF7h1GqMaYrikYpI2JoWiahRNNUj1cPBhW32x6Nvq5N+M27MRfc6eHcbrePjo+Ojo4ODw9lbdXv90OAcWZmxqW78Pm34sh3etUb9Y2Nja2tLcjyFgoFWcYyDAOyBIPBAKJxTn0uuXiGw2G1Wn337l23202lUvPz8/CzAJxBtpgQAtFhj8fzPaIt2XTDIUFYCtGKqqntdrtUKh0eHhJCHj16hHHxf/PgxUluAmY1m82Tk5Ojo6PZ2dl0Og1IghXoFTC9h0N0TWqNiDvk+ncYZ9kmr7ZpBCFE04jPp4ZCnmjEuqxYQjBVVVWhqAqjVOEWNUak36cKI5ZJRgYaeYQxoip2DUtXia4SpqCEy+16AaVSttkSxDSJaVJTUGtcPwf8cZMIQRRKBwNimoxzRgjnwhDC5IQrCtXdqs+vh0OK10sUlTAhuyPCmcyL91YcILdojIx6vb6/v//1m6/hR4K5B0wqhMNhKMlJqjdENsAVRj/uWpXEQfJErCRNPTnng/6g0Wzs7uyura11u10It0seEJYZ9LwajQamrCc66MgKMSIHAyVo40qaGAQG4NyFqboJBga+ZTgcgk7lHCcCMEGLAl02i1vdTrdSrVxcXGB6DjPechTGOeqELQcU1nH/hU1SK8RVIR8gOLZHouTKh4BOwigRFlTWOKfsinwkCUGyhHQ1PeOkgDl6negncM57/Z7gQtVUSXaTN04yUewi4/hjrx32rRXMP7IQdhM0/4h94NZU4D9QuepbYdYVF5oRKgTRdBII6tFoMJlsHp4YXCiK6mKKrulop9NenzSbxBgRXSODETFMIgTRVOJ2EYUSRonXRYibuNyUKZTAC5uPVWwoFZRYnIxMMhySkUkMTiDbADYD7L8oJe02GQ6JaQrORxZnXJhUQWKo+vwuYJamEsopHQd6Y7gai9bfshvLWzgYDg6PDr96+dVvfvMb6A5DyxguDKiGOPlNkDGDUihCIcmxco7sAFkwgCp/0mg2tra23rx98+7du5mZmYcPH87MzEAbHscjtZIhlA63Xgk3kGeC0xQsgiqViqZpEJ+0iYWGARtU6GddNRPHtvXyPRhUBkIBsODTFQ6H5TihaZnNVlMK7H3wwQdutzscDmPdwnUGcjQYEwG4mNaYv6oyJ1NEwhayNkmvtcuFlF3Rdylxyn7KKT+wFjBtJ/GIWPa8EaNMakvgX3G0mUwGQ90y3TZMA8pz0BSSkzRSwEteAcnSlBEuVPHkQM9N1vv7SgffgBe3d10o+WNKEP9ZocqRG14pKFNbq4UpRNdVn9cVDqlej6kplrAsizPGiGkOGs3hzg5VFe5xcVUVI0MYFhNE0VTFpZuMjBhRElEtk/TNzmqxKGGAMUKFYCCpmRbp9Y1qrXt6bjZaotdXCMHWRjgnpgGFGVGt8LMzo1zTCNMUhTHCLS6Yorg9SjDIYjHq8xDGxuwGh478N1Q9hE3SgVvf2tra+fl5OByGvhUEEiHMBBEikJvgW1MqlUqlErRM4csAjSGUTuAuhYHkTqeDYhOU+bFQj4+PDw4Ozs/P/X6/lKCExHiz2Tw7Ozs6OoI3BPQDIJ4NTd5qtVoul5H3wdNF0i8QoOHzT05OLi8vwe3mnCMnsiyrXCpXa1Uo9o1Go2g0Cv0DXdeLxWKxWIRRKGyacrkcZOTgFfby5UukmZAfkFKczqFfHCEsFGU1MBqNJpNJwGKr2Wq2mlCegmsLlFISiQRkGGwuuLCcUQ8EOS8uLjqdDuw/pqamIMlwcXEBNUS8gPidTmc4HGYyGQhUwJMCmAW9YxjoQuQTUututxtydKenp/V6HfoEqVQKylnI1iF8OBwOXborEo3gsJ1J5e1EirvXnx2z7CtOibBnd5jHq4dCqtdDNcUyLdO0GKWWYQwadWt7x6xWTV2zVNUaWcLiCqG6qrh0rUd4h3JXYdq7vKAFAprPRzSdKApjCkUjkQtiWqTbHxVL9Xcb/fMirzfcgruhhiq4MC1iWpQL3umajQarVV1C0VWFESIsQ1BF83g1YJbXS9g1n3tp0PE+yOKCK0yhhEIaeHNzs9ls5vP5p0+f/vVf//WtexRUTA8ODjY2NorFYq/XgxsKRI5CoVCv17u8vNza2rq8vOSc93q9ZrMZCARgEABVECyYi4uLarUKm1zIFkMR5eTkZGdnZ2trC2kdNNJQ3oah9Pra+vHx8cXlBaTpWq2WHC2GaiWMQg8PDweDAURvoDYD9Dk6Ptra2jo7OxsMBh6PZ25uDlJ8Lpfr6Ohoa2vr6OjINM1wOHzv3j0InlBKLy8vd3Z21tbWvF4vND+lax70W6zxq1QqbW9vw+YPzp2wUINonGVZlWrl6OgIuCBbDXNzc6urqwj6pLoA8kpEfxC8h4Wy1+uFQweCr6Ojo8vLy0wmk0qldF1HvlwqlVqtFnSgYLJLCEGODJeqra2tw8NDGG5D6CKRSGDDePPmzdnZGRzYhsMhbHiGw2G5XH7z5s3e3h4hxOf1xeKx5aVlSLvIauMVo00QcodaP0gNnl4RYwBgTCGUqF4PCYd0n2+k68LqC2HpKjMFH3a6hmmO2m2TMYsybgrCiaCMqYqiKQNudog1sizh9poLSyRtEqYhfqNcUC4IVQinpG9Y1Ubv4Lh3cCgqZcItWwCeC25ywokiGDUMMhhqxtDNKTOFIIRzoupubzThiSdIOEx0nYCGjtkBctX+pN9Yr7VMq1qtlkollISePHkCsWBkB85pGMZYuVw+ODj48ssvt7e34/F4IBAYDAYnJyfwp4tEIghz3r17t7e3B4WpSCTS7/V3d3YhRDU9PQ3FvnK53Gw2U6lUIpGAjym0UF6/fl2v11VVhUXY+vp6q9X64IMPQqHQxcXFu3fvPvnkE5jLa5oGDEWRXtM0LOC3b9/C8QkleWBxp9OZmZkJh8OHh4evX78uFot+v//BgwfSIw/e8VDmghugYRiNRuPDDz+cnZ3VNd3r9YbDYWiro4VaqVT29/dfvXql6/r09LTb7S6VSq9evfr000+l/V+r1To+PoaEXi6Xi8ViR0dHL168OD8/J4QUCgVFUSqVytbW1sXFxV//9V/jmOUgG1WpaZidTufdu3evX7+GyFcqlYKQIRRKt7e3oacO5VVY3u7s7BSLxenp6Uwmc3R0dHJycnFxMTc39/FffQyH3e3t7Xa7vbi4ODU1FYlE4NW4sbHx4sULCLkEg0Gfz4cnAartW1tbp6en3W43Go1a3Nrf27csiyksl8slk0mbAeOcwrlL4n6QOOuKKmnXycEr9ni0SNgVCg59HjEYWMLSmaKYnA1HbDSina5t3mxBcpQxRWEqI+bI4obp85mpDO/0iWERFyQDCeGEcEEYIZyQgcGbHbNUsc6LtHRBLUsBJYJzYgnCKREqE0ThQleIrhDBiUkJJ4ri9vriCT0ao/6A0DTCOWVUmmW8x3OH3Jz+B7mBcw5rGak4DG1vu6ghiFBEpVLZ2NjY29uDTHgqlarVaufn50dHRxD2hArVxcXF8fFxLpdLJBL5fP709PTs7Ozk5ASOm5CHz+VyFxcXmUwmnU5HIhFN005OTnZ3d9fW1mBKDAVbqDhNT09TSuHtvLW1tbq6ms/nkRuiSIyCFExDX758aZomtOgQoTSbTSjBBwKBRqMBHU5EiBB+Q83O4/HAr0EIsbu7e3R0VC6Xp/PT83PzHq8H6vihUAjqbqigYSV7vd7BYNDv2WCxtrYGmV1d15EqDoe242EsFoOMdbVahYstpRSMjYODg3v37jnTTMKIIhTDNHq93unp6e7uLiyjY7EYUIZz3u/3IeKey+UgZzgajWq1GvLrZrNpGEa5XN7b29vf39dUzfqRVavWdnd3j4+PKaWhUCibzULfGVfv7du3qVQK5wipP0optOE3NjYajQYhxO/3D4fDSrWCPoPH44FpgFMxjd5FWT9UDV44mSr2fDIhxOelyaQrmfDGYqNWx2p3mEoZIS6VuRRVKNrINA2Tc5UxouiKoiuKzpiw+EiYimAeQhVOCGdE0QlTCeeYZKVEEIsTw1RNy0+pW1F1TfcxywdqF+cW48IiwqJMMEWhghvcME3GRkwZqZruC9JEmkaixKVzQrhpKqrKFCYkFf5qqvb20VyFKU6PT1TTkWdJ7Q5UmpEEVSqVw8NDXddR8yoUCs1mc21tDdLgX3/99cLCAopfMzMzDx48ePDgwcOHD2GrZZrm6ekpxHkh5R6JRDKZzNzcXCQS4ZxjWZZKpUwmk8lkarUakla4ECuK0mw2EWjcu3fvl7/8Za/Xkz4Xuq7D4wD53dzcHMS2O52O2+1uNBrNZnN+fv7hw4cwiIXKytOnT6empqSWORAEQvKJRAIVH/iqxqKxbDaLqBBNAwghQL4VeNTutI+Pj/v9fjwef/r06c9+9jPGWKlUgl/R2tpaPB5//PhxIBBIp9PxeDydTj979kxV1Uwm89VXX5VKJWmRLdc/yvmwwAqFQqhYBYNBACiiWrhPS2Ev8DOkGKzEkasBRiJsHyBVwTvR5YBDDBLJUCiUTCZRtoc779HR0fb2NgT4U6kUigDNZvP169czMzNSNex9SmF3rz8XZk0y7eg46HK7SDikp5JWJt0vlY1GU+VCJ0KlzJ4YoYrCKCeUEaZRphGqEaoTqhPGCFVAWheYfGZCUk2hHiEsJrgqhEKJizIPEx5BCOGEES6ExQWnghKOuTaLEkuQIVUsb0BE4yQzRSMxoqiCUs7BQbVzW34Vab8/QxxPxkJcAanWaDTyuD1MYZJ8wBjjFgfpqdlsovYB5f92u12tVv1+/2AwOD09RT0bRfd0Oj01NZXL5RqNRjgcrtVq0POWBpNYHmA5gGxVLpfhTyG/F5QL+CnA3CEQCGQyGcAl7A+Auag9w79genoa7qQwUEDhCZwGrHCv15tOp1GiRuG8VqsVi0VonKOXD1oWF5wy6va40UgNBAIwwsNFw0QxUsXhYFir1aD2DSxGCalYLDYajZOTE3QkwZ4FVMEwzTAMKRDsFL2SInOwKYb5HQy6cRZ4s6Zp2GmkqgQOTFrCOEdHYbEzPT0Ne+RKpXJycoLSIVSPUcWD5wgqYri21Wr19PQUFTFcWHyL7E46XWwnBoPex1C9e/0pMItSct1ay2asqxrx+rR0ik/nrOOTQbmiDA2CPrQQpmlxQgRjQlB4CnOLc0ZNLgRRuCBcKpFwIhQqiDIO4ITNH6WCC8viliK4wYUhCCOcCItb9nShxQW3hKYoqqqZphgqmojEWCZHczMkEiOUCWh44rMovmpMz3nPvLRdqFIV2D7DQPz09NTn84VDYahBTqhZSRNW/KtkXaLlBDlzUM/lgrE9rwgBSwupHJpQnU4HGuQwzgKJFL0/eFVxziHyDYNrGIWjmO30epJyUWADoC+GtAj+BYVCIZVK5XI5p6Yg7rVpmv1+f3t7e21t7eDgYDAYFAoFOJVLWzBp0ofKjnNCW/YNMYEIjywwYG3qpqJAll7ikbTAkbrAcMFBmdw0TZAY5Dr3uD16Qn/+/Hkqlfryyy+Pj49PT0/L5TKsa6R4AyTzsRloqqYqqjxC5/QVIWR2dhbNxPX19bW1taOjo5WVldXV1dXV1Q8//HBubm5jY+P4+Pjdu3c+n296ehrRZb/fr9fr2BJwEdCNzWaz6XTaKeryPg3CO9j68+WGV5dWigNRSoiqsGhEmc6r2QNargzLVdUwPaomCLG44LaukRCCWEJQShTBuOCCjh16iHM02pYiFGPFGkKhOCO4oHLAZ8w8FlAfFYRYRFhCDAUZaZorntSnpmgqRQJBW1uTTQ7siCv9rVvKnBJ00NeLRqPtdvvNmzdwwZES6VL6Fp17r9fb7/fL5TISrlqthvYfikEossjlbYtMikm1X0kKlbQvEI48Ho/H4wEtHhZMXq83GAim02l4l6OC0+l0Go1GrVYrl8uVSgUOd8Av5ERI7hKJhKZp/X4/GAyCCCoPTHosg/F0dnYGLxm/359IJCzLOjs7g6WNXGx4M5YuCj34NHh8AaoCgcD5+TmOqlKpKIoCX+Jut4uNAaiEY4ADkCReSfdZpziXVN1ERrm4uGhZFmrh6+vrS0tLU1NTaAUiPW+1WpVq5fT0tNFoXIkmWpxbXJ4yOGULCwuMsa2trUajsbm5CR8NpIpw5drf3280GvV6fWVlJZ1OAw39fn8ymczlcjA6jUajmUwmHo87eWR/UC7m7vUnzw3JFSOTE8GJ4MKeF4xG6HTOlc8NipeDelM3LEXTLc45NxBMjSW7xDiwuZq2ligobI0OIhgdg5YgYy1ncU0X2Sa4UsYwRGQa3BiZPaIYuiuQSrqnplgiQXw+QjiUUSfQSTiNeG4TckHohPUwPT29vr7+xRdfmKYJ4xyv14tJaRiTyGIKbP4uLi7C4fDFxcXZ2dn5+fnc3BzMYGBibAdNpoVaLEBKqiBAzglQCM0m2POFw+FWqzU9Pf3RRx+hNI6F7Xa5Ly8v0YmDb/jl5eXl5eXp6SkafLlcDoR7mC+l0+mFhQXM04BZGgqFCCFwFQc6YKAS2AFbUI/HMz09/ejRo9FoBKs7wJacYYRz+uXlJRxfQGptt9s4KaTMGxsbBwcHR0dHZ2dnLpcL9e9qtSpNgMBlhW8djhmFc0SRMr1yatUDa7xe78OHD91ud7FYrNfrb968icViy8vL8Ewsl8vgux0fH6+tr3U7XU3XTNM0DdMwDcMwjJEh40TTNAuFQiqZ8vv9X3/99cuXL+PxONJzdDzy+bwQ4uXLl19//bXH4/nJT37i8XiQ8y4vLz9+/DgUCsFTS7pJO0VT70Z8fjjMYg5RZyod7G0NOEYCAZbJ+Aqz1mXJLJaE0YAYEaNUCG6bHlLM/0AAi9v/SUQiAjQHTrntDk35eITnKk+0JRAh/kCooAqiM0OQAeHMH/CkU765GfdMhoVcwkUFIURhGCADM4vdrho02U5mlAkmXLorHo8/evQIgVWz2fz0008jkQj6buh2wVs8Ho8vLi6if7++vl4ulzHWF41GC4XCysoKDJZRZfd4PKqmyuEeWWFBSBUKhWDbieACNsgw7Gs2m5999hlsmmChOD097fF60un02dmZx+M5Ojr653/+Z6wxQBL8xOCmt7q6OhqNNjY2DMOAuRNsCqPRKOJEfCkyKcRlKD81Go1Go/Hu3TuUbyil0ocRxlDhcHgwGKyvr+u6Hg6HgVMAd2Rqc3NzpVKpXC632+0vvvjC4/H0ej2U8+bn50Ei0XU9GAxSSgHKCG1g7wjWrgQy5zT48fFxsVjs9/vImkOh0MzMDGp5kUgkFotVKhUwuZC7+QP+SCTi9/s1XUNXJDuVjcViqqoi9Ov1eq1WCwTaubk52LIdHx9vbm4eHh6ibwBfUjjxTU9Pr6yswNAYpt+WZcEPHHDsVFL/4+OsP3mk9p8VQFUq50DF9Wkv/Of3M1XxFqZ58aK7dUDaA2NkMCoYo1wQKrjNQ7UFVDkhnBDBCGcQb4DEO+GEWgjeiG2WwAkRVNhleTpmhEK9RlBCCOOEWoQMiRhQqoRCrmzGOzfjyqdJQOMasSxBMZMB6KN2pki/kdmH/FShCmMsEok8ePAAiHNycvLq1SvMAJqm6fV6Z2ZmQLyEfSncNBFNqKoKuJmfn19YWGg0Gt1uFzxMFE2YwjRd83q90u4Q0VAsFpuenoZHOTArl8uhplar1X73u98BX8LhcDabjcfjoVBIEiMQYYE9BCc7sDGj0ej8/Hyr1drf39/e3m40GvBfSaVSoE2Gw2F43lmWBVoWYHR6evr+/ftra2v1en1tbY1z3ul0YKrs9/kpoSi9J5PJs7Ozw8NDXAf4GCaTSXj/+Xy+QqEAfmytVnv79i0OzDTNVCr17NmzdDoNmAN2RKNRVPcwW5NOpz0ez4SHiJQYPTs7w+FhwCCRSCwvL8PeFf2Q3d3ddrsNgPN6vejJhkIhe3tIp7jgyWRS0zSUC09OTsrlMkzeV1dXc7kcSCrr6+u4R6jE3bt3D2bXhUKhVqvt7+/v7e2Vy2WcGkzCIcfslPP/IxHnz5Fa3hR9/M+jRWPzx+3/RZGICcKIYEQIyhhLJPXZQmDmcNDp18/OPZR4XRrhlm05QQSFMDFllFiMCJVbumUy0yCGQUYjKrhqWYRwSiwiCDFGxDIoNxVhEmJhWhDat4JSTplFiLCoQehQkD5TBpoazqSC8zNqLi1Cfm5ZghHCGKrK11LR93pI31IWRT8rn8//l1/8l/PiOWjiGCcMBoKgHcIqNZfL/fjHP04mk9irsQIzmUw+n9c1HQyshw8fouUfi8UAiEtLS3BjjUQiMBxG8CKpRqqqRiIRuB+fnp6enJwgJ02n07lcDsa/sVgMZPHz8/NKpYJQ7unTpz6fb2pqCsMx4HYmEonz83Pwy+BgOj8/Hw6HGWX5fB7NL3wvCuH5fB7vxLgPyByIFmdmZxRV8fl8+Xz+5z//ORzVUcYG3AQCAZBRAd/z8/PBYBCTQ0IIt9sNWgMsaRVFyeVymAeAvA8hJB6P379/PxwOz83NgQ/ldJBGZIqBQTDpobSxuLiIry4UCuCsDwaDYDCI8UmXy4VcVVXVZDKJWNXv98OyGJT3fr+vqmoqmVpaXopGoz6fb2FhAV1UmLOnUqlCoYBaYT6fd7vdU1NTl5eX/X4frUZQ8HAWzr7hXcr2w2KWLVYvAxRKFEIIE5xRyomisGhMz0/7FxfMerNZLhHL0snYoIxAPca2JGBUaERopqH2e7TZIJUKEZwojFgGJYKCrD7ok2aNdtqqMaTcYkQwSgijnAvBmCUI51QQZnLS52LkcptBvz6T9y4UlFRMeN1ccMIpVVV6xeMT36zm8L49DZ71AKBsNosqu0t3BQKBZCqJUTU4pGualkgkDg8P2+02QArrUFEUj9uDt2FIECbGwWBwdnYWznSIbmCGHg6HYUQMFgKYjdFoFLgGxkMul0un0wC1QCAwMzMDRCgWi/BqhlcoPhmDeLAOjkajlUoFRNlcLpfNZsGMTaVSCANh0IC6Xjwe9/v9uq6DJOXxeOLxOIjgCDCBg16vt91uN5tNZEOwbk4kEvAox4mDQhEOh1Eh8nq9szOzgWBACkggZsT36rpOhO1snEqlMGAkp45lYQvpOYhjlFLMSGazWVSm0ul0KBSKRCIwiwf3DRsfQDkUCuEXsVF5Pd54PN5utRWmwF+6MFtwe9yWZU1PT3s8HuxGqHLOzs4iY8WzEQ6FL0uXuLDwFsPNuqo2XLe0unv9uV+Ui5GwW3uMCLsQj469sDijhApBBkNxWTY3tmq/++L81/+qVWue/sCnUBcVljUQ3CSCU0IVykaEDimj0aiWzYYfPnQX5kg8yik1B31FYYqmECrIaEhKl8ODw8a7DV6uK72RS1BdUFg72xwKonZMq2oYIpNQZvPpv/lF+EfPWS4rwgFLtdW7KGOUUcKl2Srh9gTQ2GDtCoNv8ZhxviBlB7ko6Nu53PZwjGQtyellFKdAUILbFWrVRBCYUKiKalomSr9Y1VLVTzp3Odtk6AyisE0I8Xq9brdbUzXGGBfcMi206vqDPg5JahvIWr4Qotft9fv94WiIGr/H45G+DE66tmQk4HjgmY5ykq7pNolMvdI2QMPRMAwp+GkL5BOq6zrMsvDq9XuDwYBbXFEUr8+rqZpTnkGSddlYINsyLdOy7awnJDdgUDYYDKALBLSV+4E8eDQWbLoWZM4EURRFmilIhXXTNI2R0e11R8MReCqBYEBhChRNwTsB/QrpuXSBE8QW85Biimj1SkLpNfWxG4Kt3+xK+wPM7vynRFJqCQMhFrfHDRm7oiJwRinlhJgmaXfIZan11avyr/51sLNrHJ9EVcXPCDf7ghuUc1gDWZSZTOEeDwkE3JmMEotbgaBFhTUaKSpTVJUxwbjBWk1erY4uK6QzYENLEVQV1IJxNKcWp9xiXUpbjHkerPiePYx8/GPfvRXi8wi3LjSVKApVmK1FIa78wfiYVuoELPYd/QicPqATLjV/ULfoymVayolQ8gdV3iefV4cjOTwRrnm60FuE+uRh3zpActPo5ZZn2mm78oe0UP4kK0Fe3puOW9/8+beo9F1rv/xZFv81U5kJW1nHjPTEkd/8rTvM+tPNG16nOCHNI5QRQQkThCnE7SGppG9pQWu1i8Nh7exMJ0QRghGqwPxlrNCsCCGGI8NsVBvtIdsdMsViFNZCTKEaIxrhmjFwC+FTFIZepSAWJVwQixCTsoHg7eHA8vtpLBa4vxL/yUfq7DQJBYjCKJwQme2vJ61fEF79O5qr/y4a6ZMPlvgzPmrf6pP/LQTev71/x4Qa4uTxUvLDzP1dc8y+e/3QOqXEQR93OqNSjMQQwijRVUI9SibjfmIFe51Bu0lKpU6t5hGUCUY5YYQQAa8+ygRnpmDWSBFEo0xTFKYqhAlCiUq5QrjCDaZQqrvoWFVeCHuG2iBiqCkjl+6azgVXVgIPV/XCNAmHiKYSxojCHKEVhOavFB3YH2s+8mcBr+96KOLOaOHudff6xjiLjQFr0sYXgCUozFIZISpJxGg4FDZHXss4+/LLRqvBiKJzQQllghCC8UOqCEKEYIS5FUYVXdFURdME5YJYVFhEmLCFpxYXhAjKxlGS4ISMiBi5NR4Lex8sZv76J8rCHEnFbUMwRbFF/hwBlXD4RrO7wfq7193rL6RveENIXcgiERGEoExjK21xNpXRf/Q8KixNVYzj4261JoipWUKx+VYE2aKCgpMQzLQotytkmJwWghPCBeXQjLcINQkxGTNUZaDrSiadengv8OSxsrpIQ2FoECIlHI8Yvid0EX8Co7dJ8fixTd5fFAXmjiX07y9iv3vdwCzHyKFwpidXsAXJdpOyVIJFgmHLcFNxORr1ewNG+pyYmmWqgijjtp1NmLLQCzThEcYYoZRbgnMMBymUUGESMaJ0pKojl8sMh33zs4kPn7vv3yOFGSIIMTlRFKKqRPCx+Rj9DrhD/wQ1i1sX3uQ/0dvtRSdkwqXX3sSc2i2fT273MvgGCEBl59/RsK79KNwGW+I7lNtu1rB+sHLVuKVja9V/t+LgbY/ft7wdd3rNf3De0GFcQ693ZMZTNSgeEU0jjBFFYfMLuqpFiKJ6vZ293X61og8HPsp8qmpZRFiU2mV8dmUtQe2KvUIVhSqCUYsw0yIDSroKpbGImstF7t/zLS9ri4skGiecEUqJqhJCbUcyYCoVToh1SMGLibVya0PQaZeAP0s2wISF8thNik40EK8E3ug15ILDFCVUuu9QRqXGAyG2iUOn04HUARhSaO3bw9WEqIrKFDukpJxKU3ubV2Fxp24EiEJSTEJaZjntlEGnuHnkN+2UnX23iUK8tJlgY38meT2ld861JqYdmdtfOIHa3OLOvqFNgBib3zhFOORNAccCmg3O4vetNo7Stfvqpl+3MoT5BWa57COEETARks+Ba84UdnXNrrcIOeeCiCtPDUooobgRV46KDhM2p1G5sxcsaRM3cep9O+VdnHVNkhjQJK7E88ZVbpTlFRW2YDSTUb1ev8mJwvrWaChMy+grguhUcCG4IIogCmGE2HRTSsR4wIZQxgSlnFCT0KEghssl/D51dsZzbzX0wXPv3BwJRYnuIoQRyqDxAKUZAfrrtZb/rbv27feVC06vGSTbT9JgMMAQL9ABWODU/J4IrJxr2/mBkmcECOCCM3H1OA6HQ0j6lUolv98fDod1zdZHBhLZq0IRV8qxTvdjSizT6vf70JzRNA0+FE5gkkvCeXYSs8DGkNOdt7AiyJX77GSMgNlQRgklnHPTMEENx+AhpZQL7nSguWn/5byGEjKuEanGShhOg68J26Sbaxj4ApaZvH3S6fYKJsagBY0kObLOOaeEerweXdcJvWZwLsS42EuvmCXOiPvKBNERj0+2FK8zV+Sm4oy1v1NmcCdxo9IbaY3DKfD61aNjFQZBBVGortNgULm36vd7Nb+7FQnU34hBs8W7A4VRVVAiGBOo3lPGKNhUnBKLUIMQQ5AhJ0OFjlTFlU5FC7OeD566H9zXM1kSDhPdRRTVEaWNtWrot7Zyprcbbdper+O/4sGFMjIYjBijg6QvNMglHMgd/iowkZsuv0IrmPFpqu3ZIyMsCB7s7OwcHBwUCgWYMng8HtM0BRF4m2SBXlmNkqttGbLCb9++7fV6qVQK8zSEEMlfvQqFrgOWhGMwyISj9Xq12K7H1xN7vuACssJCiH6/X61Wj4+PfT7f8vKyx+NhlEFOS1VUQgm3bAYpEUQhipS0Bi0Tf5YekbdWDCeUEiilClNURXVeHGnzVa1Wi8Ui9DBw+6ampmB44dyH5N3B73a73VKp1Ol0DMNYWFiAVrJzeOjqXnNBGLnGkiOEUKIyVV5kp5OADHItbslQjhM+AVITJozOfePOyPqbc8Pbl/u1Lda2txCO2IYSphIXZfE4U5nGOHGrposNDo8HJ0XaGak9023RsaO9PQooKDGEGAlhMDZU1IGu8ZCfxsLu1ZXAg/vu1RVtdoZ4fER3EaoSCo9oTE5DZWscVtHvWTR1hlhgn8ONCp7D8unx+XwIu0KhkMIU595788F1bss2351bKrvKXyihpmViEvv169eVSgW+NS6XyzYWpcRpYiq/SKIJMAgaBs1mEzJPEMmam5tzvvOKn+TY3mV6a69hcou31c0Nf9IOnhHG7QxuOBxC/RkK0ROUV5kWOaVHb4ZIMphyBiDXXFcdWbm8DtKHFRk94tbj4+P9/X2pJhaNRuFvBpnGW4lUCHubzWa9Xh+NRrlcboKhilMQ75O7HYeplFBOuDPykjaLE/cFsD6xLck/34lwfc++4TcsenHdX56KsXMEoyTkJ6tL3ohfzyaqL99U1NfGaUWMGpZlccGRZcIZlDPSs/iAEEN1jVy6EQy452aC95cCT596Hz1kPh9xewhTbLSyJWZswJI0sm8IswR9D+iOtzV70XJBGIEEzdbW1u9+97uLi4tWq5VIJEKhEMZooZQ0nZ/WNV0i3YRnAaBEIqBzBXLOBReyejIYDGDn9cUXX2Sz2fv379+/fx+eXZiLnrAvdcqK4pRR8AJswTRI07SZmRlEFvJ7r6DKUY2S68eeMbqOUxOpyjcQ6CmjmEmCAhd02eU4jpQwJYQoTIFu35U5xfWYTkavODYIDUpl0Ym8CbfM+YIEtmEYpVLpyy+/hAmY1INPp9P5fD6RSEj1VExN2TVKCk8CS7q9QlbMDu7E9QRfCBlw3YwHBRcTOawU/5KirDJPtjHuehwtB6QwmHnz4t8FWd8es27p8YhJpRdKKCOKQphOVMqSKV1T/aqbh+Pm1pG1e8JLNbPZ7A56vdGIWibTVKapA50Ymq7FYr50mk3nXIsF7/K8a3ZWScQIUwlTx2X2sdkqrFydGCS+Z3Na5gVEEG7xer3+7t27t2/f7u/vR6NRmGhB5R3uLOl0WtVUFF867U6n24EoCibOYOjg0l0jY4RCFVSGIYmnqZrb447FYqFQSBDR6/UQyl1eXkLTCkbTqqrKqnyr1ULqBHU9CBxDzLM3fiE0wKKVIQmADJaolmlpuhYIBOCTjGUpJ+awPiFchSk/2GEA+KBxCHMK5KGwm4W0vNfrhaYCquCQqIehNC4v3g/tBEqo2+OG4gJ0XHGQo9EIMtAIYxljUJqXYR30puFZi0HCQCDg8/rcHjdSLSdyIVN+8+ZNo9GIxWJT2alMJkMoCQaDkNnCqeGWQR9iNBp1O10uuNvlxoQ8RtMh4DMcDtvtdrPRRLxmT4+qqqZpEHKAmjassJHkQlsRcqyQk8clhTMufNgAyhDXxr1AHTDgD/gD/n6/j1+BctHVo+Vy3cHTH4NZhECMz543lk0YRqAGY5rE6yVerz+W9t97RF5ujJIb1fWt9tFRr1I2uGkZlsZUzaWZus6CAX+hEFhd8T5+pBamSTZF3S6iKmPMgrQ7NqexbCC189M/JnTGhoa1ATup3//+9zATfP78+f/8n/8TQCA14LHto0Beb9TPzs4uLi6GwyFUBDDfr6kaTC6q1Wqz2RwOh41Go1KpQOUO4pbQ5zw6PDo9PW21WoPBAJq/2MOHw2GpVAKi4VFeXV2FYgSldDgc1mo1iOrV63XI+6qqGgwGIRCIcKPdbsMLazQaQVICBR2ojMKDGocnhMhms/Pz89IbsVgsDodDj8cDa2VgEGOs2WwWi0W4WxNCUqlUPp+HdZjb7YbkDmAXlxfZ4u7ubrVahW5EPp+HIo3MapvNJhSiq9UqxsUfP34MtQkcD9RHT05OTk5OKKUQMpuamkrqSdwaGRAB6+H/GI1GP/7442dPn927dw+4BrlXAOhgMEgmkx63Z2SOOp0ONH8gVpPL5eA+DT2/ZrN5enq6t7cHr0MkmIqi+Hw+CIFVq9WLi4tisYgthxASDAbx2BBCYIlWLBZrtRqu59LSUiQSUVW11+u12+3Ly0uII2qaNj09PTU15fF42u322dnZ6elprVaLRCKQBovFYlDguJXk8cMzP/5jYZZwxjYyxhVXvWNCiEoUQYRKCKe6SohGlpZUfySYy6tHR72jg07psl2rqF6PGgoEkklPJuMpFFy5vJJO0nCIuNxEUWzBPuH4mquBIpDkxxW1caZGCf1OnD84GCJ+qVarZ2dnkDl/9uwZxP+QQTjlB/Agnp+fv337dnd3F0Cmqiq0Ou/du/f48ePhcFipVD7//PPj42Mpfz4cDqUKeyKRGA6Hg+EA/uwXFxew7YvFYihmv379ulwuw6pP+vE8ePDA5/OVy+W1tbUvv/wSKSSe/q2tLZfLlc1mYY1xcHCwubkJA0Fd17GuFhcXcRaj0Wh9ff3NmzelUsntdqNsj3I4/E0RJF5cXHz99deFQuHRo0e5XC4SibRaLWBlo9EwDGN/f/+TTz75xS9+8fz5c1SR1tbWYC4LdHjx4sXa2hpK2pqmHR8fv3r16sGDB8+ePQN6vnz5cmNjo1QqQTRZxmXlcvnRo0exWKzVau3t7b1586bdbkNyXlGUs7OzmZmZDz/8MB6PS0oEfDEg47OystLpdDY2NgL+QDgSDoVCEMmBufT+/v7BwcHPfvqzRCLRaXdOTk6+/PJLl8v18ccf46zPzs5ardbf/M3fzM7OorhZLBaFEB6Pp1ardTqdQqGwuLgYiUQgmb+3t3dwcNDv9+E2NDMzEwgEhBC9Xm99ff3ly5cQwymVSmdnZ6VSaXFx8f79+7Va7d27d19//fXBwUE0Gp2ensZ1k5sKhO3R2Tg4OFheXn7y5Ikz1LoDr+8UZwly2/ycoI5oi+mQkSeqIFQn0wElnfPPzOins+pOmp+e9C+Lms/jCocihUJwdpZMT5NwWFAqGKVsrMIg6KTZ4ljBVPYNr4pT1wCLfpvkELUGYFa9Xr+4uOh2u/F4/Kc//ens7CylFGtYViLwgmf6y5cvd3Z28vl8MBjEo4bHemlpCeSDr7/+enNzM5lIRiKRYChYKpWKxSKErpAAyooyQolWq4XM6/Dw8NWrV8PhMB6PI4OoVCrlcjmTycC3eXNz81//9V+TySQEy1ut1tnZGbS9YB26u7v72WefdTody7LgytFoNIbDYTAYhNDV3t7e559/fnl5CTsZANYVBYkxy7KQZFWrVbfbDeNo5EHITNvt9tHR0d7eXj6ff/jwYbPZPDo6+uKLLwqFwkcffWQYBtoLX375JfJrTdPq9frJyUm/3w+FQoVCQVXVtbW1Tz/99OLiIhKJrKysNJvNy8tLXATIt+Jkf/Ob3yCOw+1otVqVSgUiiFC4lyVFKHw9ePBga2trf38/GAyGwqFCoYBUzjCMarW6sbHxu9/9bmpq6scf/bjVbsHmPhQKffDBB3Aq3NzcrFarKysr+Xwemwo0cBqNxsbGxunpKXYd7GfQaIZAI1TkGWOtVktRlGKxuL6+/uLFi6WlpUwmg8D2+PjYNM3V1VXYg//mN7/Z3Nz84IMPIA0Gigsqg6iC4YKgPX3//v1b08NbuQ5/UQQI9bv/ChXUhqyrJJHAx5BCmJ0IShRCgn41P+ULeLTlhWC/xzRN87jc4RAJhYjfzzXVgJGUFHW/pjd6lYL+qV6QsoLyL1IzVG1RPpDCUngnvMIGg0GxWNza2lIUZWVl5Uc/+tHU1FS3293d3X3x4sXe3t6XX34ZjUYDgQB0k5eWlubn5mdmZnb3dt++fUsIOT4+XllZgSwnmvHz8/NPnz5dWloKh8Obm5sHBweNRiOXy/385z9HcgEF54uLC0VR6vU65zwej//oRz/62c9+htgBsAsZv3q9fnBwsLGxce/evfn5+VQq1Ww2X758eXx83Ov1fvKTn6yurkpzxqWlpb/927+FnDnSXk3TIpFIqVTCgkG2ODc3p6pqPp8PhUIrKytnZ2fb29u4RclkEpUdJ72zUqmsra212+1kMvmzn/1sYWGBUrq9vf3JJ580Go1f/epXHo9nfn4e6vUArJ///OfQqt7e3j45OYE689HR0cHBwdnZ2UcfffTLX/4SSeKrV6/Oz8+3t7cR29osBEIpoW63O5vNfvDBB263G+7Z//AP/3Dv3r179+5hwcdiMdgywry23W73er3BYBAIBGD1hpIZ9LB0Xc/n8+FweHV1FXLSEBf8+OOPnz17hhz/8ePHyWRycXHxd7/93c7uzn/5xX/54MMPstlssVj84osvisViLBabm5tbWFhwuVw7Ozt7e3tHR0eIPZGQulyuv//7v//oo48SiQTqfdBibbVa9Xo9Ho/jbhaLRcuynDTdu/Dq+2AWvfLIQUgk6C1jGnC3F0ShxONiuuoK+12CBMCKZ4xoClEVwijn3OScUapI70w77RTXO5RkUqz++2okSdnMmxZPklMjje8ZY1Dag3E8dH4fPHhQKBTwCL58+bJUKm1sbDx+/BheD8PhcHZ2dvXe6urKqtvj7nQ65+fntVoN0sCwiS6VSktLS/fv34d6L1LUZrOZy+VisRgUB1GrRgACvfNIJLK4uPijH/2oXq+HQqHz8/Nerwdt+Ha7DXLZyspKJBIJh8Ow9mk2m51O58GDB4hHYrFYKpV69OjRgwcPAoEAPIEQLUo2udvtFkKg7AV56EAgAJnDYrGYy+UgFoo6C9JYIHu9Xt/b27MsK5vNPn78+PHjx4ILXdcBvhsbGx9//DF06CEu+uDBgx//+MelUsnr9Z6enp6dnSGag7NRtVpljKVSKcMwKpUKinr1er3T6cjOLG6oruvRSNTr9YK2srOzc3x8jEI+zJ8jkQhEXEej0enpabVa7fV60j8clTjkmFIZNRQKoQ+wv78/NTUVDAYfPHgwMzMDpMhkMmh6pNPpwWDw6PGjR48ecc63t7e3t7f7/T6KjPh8TdPwUdir8PmxWOzp06dPnz5FRwjQ7/P58LCh74kWBEj215KcOyLEt8Osq8wLfmDiilggbnGZp1JeXlBGiaDEJIRQwhSbvsBBgkY4o0BScEzrEdRptSjGUR0bNy3F+2gM33aCTC5RFH3RhqvVanJDtsELfCjTZlejTRaLxVCqcLvdwWAQri3lctk0TekqhngNUzvgB9l+7kJIf0OkloAMtAs7nc7R0dFvfvMbGDtTSjOZDERBR6MR5MzljA5E3HEiyJ7Qhjs5OYFVIhIcr9ebTCY9Hg9q9oFAAFmbJBOUy+WzszOkPyhINRoNxIwo7RFC2u321tbWwcHB+fl5Pp9/9OgRiJdSJRnI3ul0arVaIpGA/joafC6XK5lM1uv1RqMh/bHRsvT5fIjyJIOXECK7ioZhHB0dffbZZ2gdeDyeSCSSTCbBER2zM2xiMNWoV/EuLCwkEonV1dW9vb2vvvrqzZs3+Xwe2tPT09PLy8vD4fD169do/EWj0VQq5Xa7JXVL7lLI/g4PD1+/fv3q1atf/OIXP/nJT2KxGJJomJttbm5+8sknhBAEZaqqdjodJNHIK9+9e1csFlFrz+fz09PTCEh9Ph8IwNJDEy3ms7Oz4+NjuEPW6/Vqtappms/r+7PKqP0F5YYO2BKALTpZ76JjISsqKKGUCa4QQqmiEjlfhkYgo4o9Tk1l2Yo6wOlq7s0unX2Hcef3pfcy9YNZg67rvV7v4ODA5/NFo1Ewszm4VaYA9MBcC41wZJRysg/vl5bOeNlU++v8QBDuIeOLxYl3yjUjxZqhHI8WniRkGeMX9m30wuy5k7FiMmTmg8EgNOPh2ROPx6W5LGgKKNt1u92Dg4N3796dnp72+/1UKgVzGkQcCCUajcbp6enm5iaSvtnZWQilS24RSjzyxKUtNlSqUaWGrrxUT3YyS50EfXk9YUWBHQUcAk3T4vF4oVAAJcI5kCh/F3sGrsPW1hZaB81mE0FWLpc7PT09OjqCgwZ8LeXMk0yy0LU8Ozv7+uuvy+VyLBbLZrO5XE4W/sHm3dnZOTk5uXfv3oOHD6LRqPNDVFX1eDzwWIMMdCAQmJ2dRe6JG+0crmw0GgcHB7u7u7u7u3A2AdlCURSm3Okq/enqWVQQQsXtunSyhs4oYXCNZoJSIihlTHAuOIxeKYZ5qDK2VSSCg5FFJ1UlHBar9I8X5ASOwOMgmUxGo9Fisfj27VuXy4VEALVbLDZBBKInXdfb7Ta89kzTbLfbsESHqReAr91ug2UDwXhkKHLsGRETmnRY1QjfZMF7YWHhF7/4haqqsL0CralYLIJkVK1W2+02nJPRFhwOh6Bug86DBtazZ8/AUwX6BINBwzCazSbAxTAMAOVgMKhWq2tra7/97W9DodDc3NwvfvGLwWDw61//ut/v47Atyzo4OFhbW9ve3s5msx9//DGckyXWwF9axqEej6dSqbTb7dXVVbjGI46DL6GmabCt7XQ6bre73+9L1ijQDVrswNxoNLq4uPhXf/VXcoNBqOVyuSZQD5HaYDCQW5TP54vFYqC2I5f0er3xeHx9ff3rr7+OxWKzs7MffvihpHqgMIdyOGr2e3t7L168yOVy/+2//beFhQU5rWWaZqlU+uKLL05OThRFWVpa+vjjj3VdRz8XOOtyudLp9EcfffTkyRNZbcCehzNF0o2TAtvm1atXW1tbR0dH/+N//I+f/exna2trr1+/rtVqeALvlI7+VDV4hyXXlYwCvQ4slIz9Wim40dSWeKCECGr3Cq/SPHuU8Cb4EYcNxR+rbOQkl6PEI224jo6OXr9+nUwmw+Fwt9s1DAMMnWQyiYDl7OysXC4fHByYplkul09PT1FSXV1dDQQCcBiTNlwTLlJ47BDpIJ9CG9HlcqVSqWw2CzvlYrEIPidYoPF43OPxpFIpIBdqZzB/RhkeOSOKvvfv36eUnp6ewsir3+/L8WnnYI2kVsvAEAEgmJCXl5cACMRi+/v7a2trjUbD6/WWy2XgNXikclYOoQ28ndfW1rDmAYv7+/uVSiWRSMzPz6OvD44I2iCyJeJ2u6VVIly5jo+P0YiUxHrQF1B+koR+4Eiv1yuXy91uFwkyEm1wo+LxODyfU6kUan8gsqRSKXisoUQgUWkwGBwfHx8fHzcaDdTFG43GaDRCuDcYDE5PT9fW1kzTjMfjIJ2gY4jAan5+HvEd+BOwLwPhTjqhyCTUKUqBVk+n04E/LnqIV1aPVPyAetH/eTFrIh8UdGwjfZsWF1WoQ4CBXVWk6JgzOp63HwtI0IkiGSXsmp6XENeqbN+6deJkXaEg+vTpU0op5g273e709HQikWi1WmAkwyo9EonMzMzAEnVzcxOqDK1WS9O0qampR48e1ev1s7MzgAUeU3umV1EQcGGBIXfzer2qqiKng3des9m8uLgAvwmmsPCCfvToEYzCLi4udF2/vLx8+fIlyGJnZ2ewOIVZ9L1791qt1uHh4VdffVWr1Xw+33A4TKfTw+FQFunkgsFFABsAbbhWq7W5uVkqlTY3NxOJRCaToYSOhqO9vb21tTWfz+f3+9+9e4dY6fnz57DzUccvGDI+fvz4/Pz88PBwc3OzXC6DYlav1+/du/ezn/3M5/OBax4KhQKBAFr4qAzi810uF9KoarW6s7NTr9c///xz8NEIIZlMBjCE9BbrHBjU6XTA9a1UKp1OB7ZmgUAAhSTgLwxucXdQZYOnGbYNG7YI7ff6h4eHJycnCLQ7nQ58qmdnZyORSLfbPT4+3tjYSKVSDx48QNENQwV+vz+ZTD548OD3v//9mzdv4PILnMXFWVxcJGPhIDQu8FRgNBJWciDH7uzsnJ+fG4YhH9Qf0vDiP8pL+V//63+RP4GqGyXjAcTJDeHqh/aQInVU2qkNerZSHZ2MrSil7Opdt3Gy3nf/viE3lPiFlg0eYtRQUCbHAE0ymUwkE+iFY8cmhIAyPjU19eDBg5WVlWQyicRE13XYeaZSKTTmsAMnk8mFhQUUX+FvOD09nU6nw+EwONYY8vB4PMgdMPYRjUbT6TSWGapdyEDh8Do7O/vw4cOlpaVkMokAJBKJSF9C0Mcz6czMzAz0uXDM6XQarHScKSEEUzUAaPnJU1NThUIhFo9hnDAWi6FyjyJ6KpVCXQmJ7czMTKFQQO0fYhior3u93kwm8/DhwydPnuANKLoHg0HYFMZiMQAfmv2Li4uAV2iKYbQIE07RaDSTyUxNTfl8PgQpE1XzTqcDtAIELCwsPHz4cG5uDnwOcOKBHcvLy4uLiwsLC3ajwLIopZFIJJvNLiwsuF3uarVKKQXdlzEGaqvf74drLAqI8XgcUdtgMIC7Im4lMnrYNYJbL4SA52MkEkHRHZVKBJ44/UAggIBR13Vo+0QiEVh8Ly4u4jaRf1Pnnv8sueH3S9DolWwzvRaliVvFY679QVDyXZwd/mAVAMQcxDWFQuHk5ARG6v1+X9d1n88Xj8fRFcKGiTbc2tpas9lEQXpxcRF4gXUFogCCCBjEz83NgdAAH1akGOl0GpV7VKahQBCNRsHKQfsJvvAu3W6ZA4O2trZ2d3ej0Wg8Hgf7HBOFQoh0Og3X1aOjo6OjI8MwYtFYMpWMx+OYd5mZmYlGo6BHYbfXdX1xcRGd9bOzMxze4uIiRlKCwaDb7X7w4EEkEkExGwUyOQUJMAXUIrPz+/1+v39ubm5tba1cLnu93mw2u7i4GAqFvF4vZoALhUImk0EaSCkFjPr9fsMwpCX17OxsOBw+PT09PT1FpQxtPoCvU1sG43442mAw2Gg0kKPNzc1ls1mQWlDX93g8Dx48WFhYQBMWua2qqJFwZH5+Pp/PCy7CkTDnPJFIgAOMvA+5pKTyTU1Nffzxx61WC2lyq9XCqcE4tjBbCPgD6XT6zZs3e3t7w+HQNE2w/xRFgWE4GGGw49Y0DXV3NJTL5XKv10un0yiz5nK59wHW3YvKmfvv5Sfz3SpKt3HhhBOMbuwV1KE/Kq7nht+0vXwDZjnH5WVBF6UQ8A8QRCBsASigadjv91Hcxc+DwSBsUy1uyVqJnM6HkaphGFxwuEaj4eW0JnX6lbbb7VqthmJwMBAMBAPImBhj+OpardZsNj3jF2IlZGc4o3a73Wl3ut0uF9zlcvm8Pn/Aj3MEuwJYKcXwUDWrVCoI3/BSFIVRFgwFvV5vp9Ppdru9Xg/xBWrJmL5GYxEzA16PF4qvWHv1eh3xgsfjkTPVOAw0AWSUJCdAAT3ImDD2hDYFAlgAt3TelgKw+AT0QHGoODsArmzI2uIwFiRQ7aEf3CNcAajE6C6dEIJnAOEbjpYQAuanZHWg7etMsTGAySgbDAbdXrdSqTSbTYTn2FoQRPd6PaAtzMPlKAJYJphCxR4AX1i/3/++Gvy3j7P+c3qyfl/M+qPM9W7FrNsA6xat9FtlmL7Trbp19PTmx6LwKeWQbKES4hD2k2p8DhUtqVdj+22McUoKvMm+Gz4WdArs5/gEmyBGr4kLS4UTWS+7Io7Y1iJCOCYHrqybCVVU5Zp4MRdccFlYmYRyQZyaiFLE2Yn1k8JYXHDBpbWylEiWj5ZTRU92AJxiOFKhBf/qlLWRvwIMunY7yDVt2Ku6tRAYhpf6gva1ZFSKUGO3sIfhmeLUyJ6UQrzO7AQCXtHEbij64/PlETqtvOUD4FT0lnqEN5/Pb2vi+xeGWeq/Y6sT+gO4aUoNI8lLcBLlIcUnI4VrK5YLwghj7Jr0uHybsDm3E3pYE916hdnSEddEo4gtESf1muX6uSaazMU1pwxxJSov5bQkjiDBuRK0IzbN1Snn5ARWpzr7lTiX3GXYWDJM2Lpa+EBw0KRipxNEpE7pBMdKIjKQ0dnTvKkKjwOeACzJdJOx1QQKyAvILc4Fd8qcSoADZklkdzZGJY7bKAyBaUG44MQi8vFwXjH7M69vVDLNdMpyyejyZnf7juXwHwuzJgHru97C9znWfAdLKzEWdaPfYHVPr1moimvf7tR4m4BI59KCkvq4BUEd7YdrTmU3Vd4nBdcpmXBGsJ9+Rq/eTyfF7L8hHJ4IqSYbJBM3SpBblUidyoXvC5Al3EyoYN8SO4hbpIdvjTKcMqdXav1ETFxPSqngAqrHt0uziVucBm61NXLqFF4ptTk+VpowOZ+K74FNd1qmP2hu+J57IL5lkHX73RX0PczX71+qv+nQc+sk/a2/Ij1d3vdsTcw5yoiJ3JiOnDCncrKrJN9SZpHvs3iwV4X4Vk2UyUFccX2pUHKr/q8cDJgAoEkd6vdf80nt+et/dWbgCOv+YO5/de5ccM5x5NdwZGy648z8JvSyvxM6TMiK3tz/rjnI0UnUvnmtvusg9F1u+JdiFzqh/HtNa3jsT0EFlaWiiWfrlmfiG/l/E8vP9lO4FaDJJNBI6WTn0wknoT9yB/5WdnvXzUOuYjFxS0Xp+x3PhKTypL3gdzwFCUASbScUqK9U2Og3hVHfaQrjllO+fiMnbJ/eJ8Z/97rDrG9aJ7LWI5M1ZxXGBiyb/U8nIOM9KSN1mvdNklqFbWzBBbfVSply67N+iwUhfAPHlRcpqf4Dm5XieOxivvhB4/SbUP4HQy1U367uKZJB8d2+8YfHlDsUu8Ms8g0CNaj7OiHg2kYNR0BxVWP6XiW6STcupwXGH9a5v75Bywfa6TD250YLcAWuGckoNqb/m1cY3geswKhrZTXyXUud32vK9VtHZ3fYdIdZ33k3w2SynJgFzWrS+O+Pf9IpEUTwsX+OwhSmMLCrZLbyLR9uWZeZdHX+Mwc4ztI4YskJqsG/N9iSxI5JF5/vcSvFd+tjf8vo7A6w7jDrWzQHuXD2khA+mIYJUh+mwCRdUza8v6mKLL4doAkyMkaDwQCSUrqme31eOCl8S6Ukm5Zh8cFgYFomIQR8eglbf+ZW7pgkQWw7LHP8gpDOTQ7dv+2C5JwbIwOWFuCUT5hxfWdS4d2Y8h1m/ckigO/ExSfjqhCxzal63V69Xq/Wqoi2MMyMsR4pkvcNfIsrwLpRfXc20SxuQVMU0/+hUCgej0P9RrqoTgRlNzdqwzC6ne7Z+Vm/33e5XJjREUx8cxEXn3+zBfltQOqWsxMEnjf1en0wGFiWFY/HIbjsJL5dqwlSerO/dqtb8kT13Vn+p99ox3vt7MZk4MFwgGnESCQCrSunba2sPMpmCyE3pv2/RVfu5uV1CGP+kLzDO8z64WJ4+geNM76DysS3SRkEZ8J2Zq7X6/t7+zu7O9vb20gPoSO+tLQ0Pz+POZX3dZ2dNIUJSgQefIAgHN5N07y4uHjx4kW9Xu/1enNzc5g1A+1bes1fTVhKmjt+xighpNvtHh0f/frXv65Wq5jTjsaiClO44KqiKooim5tOZrkdiPExhjKbEX4L5gvCOQe9W8ahTj9LcDIxcQINeGhIpdNpdGClvywaBVd0fIfWvpO/6mTbOwEClHdkdpJx/j7mxDX+x5j8gfHp/f39jY2NJ0+eYLTb7lewq5waxUp809gc5VoT5htMUiXn1jEJ8R4kpeQmcP+5Sml3mPWf6QUeM56twXBQLpd3d3dfv36NQUKMhqGkhaxHLjaZDUmjKk3T5H4uKelSQ062IJFXDofDcqkMRSrprYC5ZSkpNxwM0ZSEYsm1YRHOQbWHX+nFxUW5XNY0DbJ2iNFGxogP7SWEyUFFUQiWI+OCC8MwQARH2is1S50uyqqiQphFTgthHvAmoxW9CwzcAZTx/gleOJjx+MYJLrhzckVS253ipZRQMM6l9SwEZOTMoKSt36S8OgdoJH8F1xl2EjLrlwBqf5QlJhhS+AQgtXwkUD2w33ndKfqu6H6HWX/ioqxNjBK81WptbGy8ePHi97//fT6f//CDD2dmZhLJRK1WA35JQMGzDvVuwzCgXQdRBwj4YWFjiUJ8DiOyEISglPa6vYODg63Nre3t7YcPH66srCwvL09PT6uqyiiDSF6j3uCCK4oSCoZUnyrpjpzz4WiIiWsInGJsWC519D2hkgqFdSguKIrCBbe4RTixLAtix0h+YVOsKEq/34eDMToPfr8fsjkYosZ4trOXKmWzgsHg3NwcpAtgmChN5CEpQwnF1RgMBpgxdg5FwwUawjvQsQHSSfVqTLcoikJt6UjbyUJKGOMK4FecwzoIBo2RIYTw+/25XE5RlEwmo6oqAFQOQgNz8btut1tVVCnoChDE0wLJM+ipdrvdK3drn88JmuROmu8Os/5MmAWMaHfa5+fn7969K5fKuVzu/v37T54+icVigUBAimpiIUEmCWpw1Wp1MBi43e54PJ7P5VPpVDKZ7HV7tXqtWCw2m01oijcaDehtra6uzszMKIpSb9QPjw4PDg+KxSKE+qAkEwwGucVL5VLxvHhyegJT+5npmampqWgs6nK5DMMoFov7+/utVqvX7QkiGo3G2dmZUwwegssHBwfQXIYi1fT09MzMDOSxyuXy5eXl2dkZvPOmpqbm5+eBI/v7+9CMRqF6ampqbm4O/1QsFlF6g34DVixEuLLZLIymEXfAVv78/LxcLrtcrnAoPJWbEkLU6/VyuVypVJaWlrLZLAxoj4+PB4OBpmmVSuXy8jIcDsN9K51OO+38AJRo8fX7/WqtenZ2dnJygkHxmZmZTCbj9XoHgwHcHufm5qDHAKlSfEUsFsMdgSj+YDAolUpra2v1Wl3VVInC8O5OJpPtdvv8/BweQm63Gy5B+Xze4/FAfRQe1NARg8ZsMBiUo4W3wBYld/X7O8z6ozALJFGLW41G4/j4eG1tjRL68ccfP3/+/OnTp3gbCh8ywmq1WuVy+eXLl19++eXFxUWv1/N6vfBbfvL4SSKeaHfap6enX3zxxfHxMSGk3W6Xy2W32x2JRAghkM2q1+tHR0fHx8elUglLEXJRMzMzhmFsbGxsbGxsbm4ihnr06NHIGLk9bsj1HR4e/su//EvpstRsNj1ejxDi9PQUXu04yFqttrW19cUXX2xtbfX7/XA4vLS0BB1khCcHBwdff/3169evm82m1+v98MMP4cEjhFhbW9vY2Gi324i/7t+/D0R2uVwnJyfwOm2324yxarVaLBafPHny9OlTiKWcnZ0hFkPYdXR0tL6+7vf78/l8LB4TQhSLxZ2dnf39/XA4nMvler3e8fHxJ5980mw2fT7f8fHx7u5uKpWan5+HamskEkGDz2l4Ibhot9s7Ozvr6+vr6+uQVP/xj3/MOY9Go7Va7YsvvpidnYU96nA4vLi4wG0Kh8OhUKjf7xeLxUQigcju/Pz8t5/99vDw0OV2wZ4LsmJofZbL5bdv3/7jP/6jaZqQS15cXIyEI6qinp+dv379+uXLlwgtIaAGvUZot1+ZYjhg69tzHe4mou8w672Ud+yHSEwURQn4A5lMJhgK3pzXw/uhWXx0dKRp2i9/+ctgMFgqleq1+ldffcUoi8Vi0FQ6Pz8/OTlJJBK5XO6DDz6A9fnBwYHb7b5//z48WWF1t7S09MEHH6ysrGSz2VqtdnJy8u7dO5fL9d//+38HPhaLxVarBeg8Ozvb3NxcX1+fnZ19/vx5u9OGErRhGBAObrVaa2trv/nNbyily8vLiUTCNE24JRuGsbi4mEwmofXe6XRCodCPf/zj+/fvp1IpyAHev38/m83CafHw8BASz8+fP0dkpGlaoVBoNBq1Wu3169cbGxtICYHC+/v7vV6v2+16PJ5sNguR6Hg8Ho/HUdvqdDrFYnF7exsQ02q1Tk5OXrx4oev6j3/84w8++ODZs2dHR0eNRuPrr7+2LOvDDz8MhUK2d9FYcaHRaGxtb3366aedTgeSeAhwEENVKpWNjQ30UiD1ubW1dXx8jJSw1Wrt7e399re/jUQijx498nq9+Xz+b/+fv202m7qu47ohu4Q62Gg0wh2Jx+Ozs7PLy8tLS0vBUFBRlEg0srq6Go/H6/V6s9msVqvw5oF704SYzF3h/A6z/qQkQyEIIRCWY4z5/L5YPAaxXSl9JWtYw+Hw9PT01atXnPNIJPLxxx/PzMy8e/fu888//+rlV6FQaH5hHtb2jUaj2WzCh+qjjz56+/YtHEYZY3Nzc9lMdm5urtlsViqV+/fv/+hHPwIiINbY2dlZXV199uzZxcUFIWRnZ6fdbsMeGTbr5+fnz549+/gnH5+cnCAXg6geIaTRaGxtbX355ZePHz9eWlpaWVmpVqubm5utVqvdbgcCgUwmg8o9dDifP38+NzcH69bRaJTP5zOZDGPs8PDw8vKyWq1eXl7Oz8+73W7IKCuKUi6Xt7e3d3d3hRCwy+acdzqdi4uLTqcDx2khRLfbrdVqsHQG3CMZPDk5gcMo/Cb29/ch8bywsJBMJv/pn/7pq6++2t/fd7lcD+4/CAVDTjkd+UWbm5u6rmez2fn5+ZWVFeA1jFqLxWIgEKhUKnA2hRn11NQUDH7Oz8/X19c//PBDKAvCqBV1t06n86//+q/QaIV7iGEYvV6v0WhAZHVhYWF2dhaFsGAwiLT6/Pz84OBgZ2fn6OjoyZMni4uL0WhUNhCuBVZ36eAdZv2ZUEw2npzqJfDghLIw1vb8/DwSvWw2Oz09nclkRqMRIiBIoRNC7t+/v7y8nM1m6/X67Oxsr9ezhxkpkWau0mAVTqj1eh1GZG/evCmXy4eHh/A6rtfrHo+n3W57vd7l5eX5+XnEDqPRCO4JqHwDGS8vL2FWDNwB76xUKqFmDM17n883Pz8PmXngrGVaxWLx/Oz84vIC1hgQyEenDFWtTqdzeXm5sbFBKf3Zz362tLQUDofhwQepZQQacn7ALsCPaVZQNJR/9Xg8uVxuYWHh2bNnyWRS07TZ2dlGo1GpVFD5lnIxMnUKBALZbHZlZaVSqRwdHaHgKI3dotHo9PS0y+U6OjpKpVJerxf9hHQ6nclkOp2OruvBYFBRFOSwKLqj/Hd5eYlM+ac//WmhUEBDIxAILCwsPH70+IMPPoDis2RpwOm6WCxeXl52u12gcLfbDYVCt+SAN+rx31uw4e71l4tZTlVMNL8QcEHhe0KZAA3BXq+HVl0gEEgkEjBMDwQC8I+xLKtareZyOVTcDcNA8gKF8nA47BSuk86p0k7GMAy426O/BhNDwzDg6IlUBS4JcFUIh8P9fj8SicRiscFggMo3OJPdbhfmiZA2RoYl5eQhwe7xeMBihcVss9m8vLjc3d09Oz3rdDuQ9wX6SBA3TbNarZZKpXq9DlOyQqHg9XqhngwLDJkZyevmHBsAbElmExzYUqlUPp8PBoOj0Qhsz0ajcVO5FMfg8/my2ezjx4/39/fPzs5KpdK7d+8sy0LXNRqNzszM9Hq93d3d0WiUSqWEED6fLxKJBAIBQDYuAhJAtGgROQ6Hw5WVladPnz5//lxRFBBH3G53Mpmcyk3NzMygqN/v91H9xAbWbrclhQWNSKd+1rdT9/gDzsF3rzvMmpSgw4aPgKLT6RwfH8disen8NBiJkr4IopPEF+mxioa9YRjwcQCQ4YfSVFnyEqRVDNIlTAhJ1U1pWgEvUr/fHwgEvF4vLHD6/b50QwCUQFYcP5GxITgB8F7HqS0sLITDYfgAoWePbEjaAg4Gg+3t7Tdv3pydnVFKP/jgA8752toasi0cJMKKra2tcrkcj8eXl5c//PBDGNDjG3GaiGtQOwfdwcnAkiVC6TstOW74CeTVbWYmoxOSxKhtp9NpINf29vb6+vr//b//t1QqPX78+P79+8lkcm5ubnNz8927d+gY6rqez+fdLrdlWqPhCC7cElb6/T5YpltbW/l8/r/+1/86NTWFWywPVZr6gNdaq9U2Nzc//fTTXq83PT0N7xy0iRG13Ur3/yPUxu9ed5h1nV2NPwcCAVRzQSsNBALpVNrtduu6jlE+BCNer9ftdjPGYAQ/OzvrdrtLpVK1Wu33+/F4PJvNejwe0/GSlG6n4K80PR4Oh3IeG3VfvPx+P7JLWFEFg8F4PF6r1eAqiO0dBaNSqXR5eYmGIAwREPeBspRIJAKBAGMsHA7DuWsCR4As3W734uLi6OhoNBrF4/F0Og3eGWAR/En0Dd+8eQPb5HQ6jWsCLJb8TJkVogLV6/WazWan0+n1ehcXF9VqFd7ak91A2RUcczWBwhOhFmIV8E5SqZRlWRcXFzs7O6enp16vd35+PhqNZrPZg4MDNDENw4DXmT/g54IbJmhtBpCo1+sVi8Wvvvrq5ORE07REIiHLXrCVluV/3C9EUiCXHB8fwygoEAiAh4ELNSkZRsZis/SOR3qHWeRPIDuDHIFzHgqFUFjp9Xqbm5uw7UokEsFgsNPucMHD4bDX6wV1UFEU9N1AAtrf3z89Pe12u36/H3160OglZmGjlgYKUiAcmCWNW+C+FQqF0PtPpVK6rmN567qOFMzn81mWdXl5WalU6vV6sVhEjRkrTVVVOOilUqlYLAaiExr8iBQQ9EGjXeYv8I8BDiaTyampKb/fX61WW62WNDE2TXNzc/Ozzz7b3t5eWFgoFAp+v//09NTn87ndboRs0olaSvpQSpvNJmpqjUZjZ2fn5OSk0WgMh8NbyL3iStMK18SpV2ELmRGK4LTVagkhpqamFhcXm80mCn/dbjeTySSTSY/HU6/X4Sa9srKyuroaCoUQLQKzUA1oNpu7u7uffPKJaZp/8zd/k81mkVDD242PX7JliQOr1+v1eh3Ohk+ePBmNRnt7e91ut91uw8RQVhIkzN5p+N1h1p8+PSSEhMPhBw8eoC7LOf/8888DgYDH40GyBspPPp+fmpp6/vz5wcFBpVL58ssv19bWarUa5/zevXvLy8uZTKbVajWbTQziwJ5T4hGSJmQQsEGcmZnB8kAbq1AoILfq9Xq/+tWv4KwVCATAkEJv/uLiYm9vb3d393//7/8N+qjP54NnIj5zdXUV9az19fVKpQKJhWQymc/nUcny+/2gPkUiEZxvOBzO5/O1Wg3IAr57s9kMh8OZTCYSiQwGA+lhdXFx8dlnnyGczOVy2WwWERxcHWGHBdNTOEUeHx9/+umnMCLzeX0o2zPG4FBbKBTS6TRkDhVFQSIMN0lcKFkRs/URuWg2m5ubm41GwzCMUqmEYtZUdioUCiEEy2az9+/fR9kxmUxGIhGgP3ojs7OzoVAI44fNZrPf7w+Hw8vLS9M0t7e30Ru5d+8eKu7BYBDUYmw8mqYlk8np6enz8/PhcPj555+jR+x2u5eWluAXeVNV9Q5W7jDrTzlBKgsQwWDw0aNHoNhggkdOpcViseFw6PP5ZmdnZ2Zm3G43IaRarX7++eedTgcenz/96U/hI22aJlasYRhYzIQQFLxh8KnrusIUv8+fyWRQYkdO4Xa7FxYWXC7XaDR6+/bt73//e0Db9PQ00DCbzc7NzVUqFXA7P//8c/APUqlUOp32er1onD169Mjn8/3TP/3Tixcv4H7q9/sfPHgAP2q47KVSKRwSBl88Hs/i4qJpmv/yL/+yubkJJoGmaXNzcz/60Y/i8Xi/30ecomlaqVT6x3/8R03TdF1/+PChaZrhcDgYDKbT6X6/j2wUjIdWq1UqlZC7KYqia3oimchms8lkEtX3qamp1dVVTNLgaqO5YRgG+o9Xc5qUMcoEFVzwRqOxvr6+t7dXqVRAT3/27NmTJ09gOuv1eqenpz/++ONer0cpzWQygUAArF18471796LRKHgMMHPs9XoHBwdw4YW5t9vtXl1dBb8UqI2RTMZYPp83TfP8/Hxzc/P//J//A5NHME5TqRRw9g5H/rI8LH5gzHIKsQshOp0OWmOXF5dSzMDj9iQSiUQyAUjq9Xrn5+dID1H3wexOJBoJBUPdXheOqkKIaDSKHjx+grm2VDLl9rgx+9JqtUCexjwjNn8kU9VqFV6EAX8gHAnncjm/34+I4OjoCM1Nr9eLKUif1xeLx2KxWCwa6/a6zUbz6PioXC5Lq/dYLIa15/P5SqVSu90GlkWj///23rO5jSvPHu6AnDNAAARAMGeKkqhgyR57ZM2up57/Tm1tqNraV/uF9iPsu60t79TWVM16PF6PR5YtUZkSMwmSYABIRCJnoLufFwe6bIIglTUeCz3zQpYAdLr33F849xwTtjRns1nwJ9PpdHOjMs1YLBZHl0OtUjMsEwwGQSgHEReH5fnBsmw0GoWNqMFgMBqNmUzm8PBwf38/k8kQ2QaVUqXWqH0+n91ux+0jTnS73cidwWsrFApyuRy7ZIjAC8QnUFEKhULZbLZSqbAsC7qJ1WrFTkB8IB6PI612u91ms5m0GjKZTCKRsNlsVqs1lUolEon9/f1qpapSq2ATyzCMQqHwer3Ys4WLNJlM3d3dJG/NZrPhcDiVSoHTJ5PJ5HK5Uqk0m8wGowE7T49cFOnjshmdo4NZb4VwLG5poQjRxlmHOlWBU/x5sSXBy1cxTvEQImKgwtnieW0vuOVi2haAT7WHEY79ZcsFvKGKOQKW02yBzmilvbbNX9vn1nqzL7IdO+PUTdPD59Wro+331DHZnM7RyQ3fgiPAyYHY9NQR2on5/dyx+73u9HwJwHoZY7H3o/dyDODaDY5W/OqUsTqY9V6sX4+sW39CCHUcQNtPP/r9XcBbEGX+a95Y91LC2fSr6VR2jg5mveY63OLZ99NBUqLVe2Q4TNGnpYGv58nwwgs46aX4StBD9Is/oBHVibTey8F8yEHWT/najvRM2jqSvmNZ8bfycMS38KEth52jg1mdo3N0js7RqWfR9KuKeZ9dTnr5TWendsToIzvPphfsy1TlaOG0fbkvcL0ml0GLqnunX8DZjbwjV5uXqLj9RZyZXyiC3LZFi8f7IuGGztHhOlDvsGtGakBN8RPq9fvTpxUyXpv38FLXRr9Nv8/TLoCiqFe1tm9fevsptf/bYu4ZVmCdlLCTG3aOztE5OkcHs96wTkz/FAuxRyIBf7nuRCf/6RxUp57106KYUgLzWsDdYqj3NqFKTFWnqVNzQ4o+5t76tskO7Sn4wisQ2TrpUufoYNbbZk5SL1vnfs9UA+o5R7GtGNN7opU+L8aLQy3hlfy96Q54dY5Obtg5Okfn6MRZ1Idd0HpblMs36Ty22YsnZjBQL9j2/JJb+V7vAlr/XqBfSH7/KRfCXn7f9St9sgMlHa4D9deybfi08fqGGg8v35J/n4/lhfuETlO5+IlzHTpHJzfsHJ2jE4Z0jg5mdY7O0TmoTj2rc/yFUsKfZ8TUiag6RwezOknQz6Br0Tk6RwezqI5YaOcZvsWl4g17r52D6tSzfq7x1F8LYL3hjH2nE77Npu531CTtHB2uwwcLYT/jCXBayPPWYesNDTXEX/8LKs13jk6c1alhdZ7A2xF+b/1/J6+nOvWsztFu3HdQ7y9ee2rLle2o+nXirM7RCbg6R+foxFmdo4NKnaODWR9iliG8moT5a1scn3ENHzIinOaYfVoe1+Jj1vYZtvffbSsEJpz5Xo4nia/6vjqlgE5u+E7k4dsaHb+LoOMFjuof/It4mU82AUd4A2toQXhhuZ0U5t+6g2Tn6MRZ1JvXX+EWcXJs0vRZ/gstq/oLUYzECC90e/9Jrcbvk7VwmqDFyUWlbRz0UqgnvEEs/CqF+TNoX3/V0dZfVnSkkxs2AesM0eA3p181o4PnMQLw8a9oW8zZSPqq4eFrhJPHUnhxKgeDIlo4UvWiTwRKJ6Sh26xMpzz6Yz5yLeeiX7BKNa9ZoE51hKM7uzg6mPVafBwAliAIR96CL9TDO6WY9YLw4fi5yDx5vTX8JzWMXv4Rvcn1C7wghp4jvBDBUGvMJbQ510vyGppvqgWsxed60T2eFdM9H2xvKzz5cAoLH3ScJVAC/n/2UGg7ml8GX44NI6F5ujPO1vzZ1wsV30/FpW100O7sLTHIK89M4YT8vOgsx1D+7DXpDW/2jPciHPfQpdo/hPYXKRz9Zksz4XUG8dHDEt6bIdNfMDPo1LNeekycZvh8mmUOqfW2W7ffRW77HlZamqZPaiu3PTU8uo/iEepVKiDC8fbIT7sALgaNthLV7Se2yMD8DW+wxcT3fdY0/yK02w5mvSZkiSupJ/MRMnpeewy9QkW/WZ0W3k920PZxtDm1QBE9e/IMTz6u0yFLOHsSnvZwSKn+PU0m4eUg4/R7fjsbvN8xZrXJgunmm6WF9w1bkg/ckFUQHeIu4bFeXpuiyPHM8fn74ziO53iO4xiWYRjmDXsrJ2GLXGrzOkmE9cYQ+daLKcdyH1Hljm76zNIkJuV5vl6vcxwnCALDMCzLMgxDJslpXTby5FvKWyQuQ85FjBpbavCvmo61TQ+PctUznr/Ikg63SdM0y7ISiURcI3vzdfXlB0BrNvBKD+H5NTehSnjZOkkHs95gOaKPWS1wPFepVMrlcqVSYVmWZVmpVCqVSmUyGcuyLfjVttdO0zRDMzRNl4qlUCgUj8cz6YzX5x0cHJRIJAzD1Go1nufx4wTIeJ7neK6FUXFsCh5fm5FeZbPZYrHI87xcLjcYDFKplMAu/RwMOJ7jOA5f4XleEARyXjFA08+Po7PTtMALHM+dRG38a8uPQBGEYRiaommGbglzgDvir+NiWoC4VColk8n5+fnd3d1CoWCxWPr7+3t6ejweT71e53keJ+U4DnCGRyeOwjiew8+yLMsyrLjmxfM8z/MCLzS4BtfgeIGnKZqVsIAM/DJBf07gOI6jKZphGUEQBL6JfbgRnufJU2Johpyd3BHLss3THR8kuOx6vV6tVueezG1sbOh0OqfLOTo6atAbeJ5vIiwvCIJAM6L/0U3E5ziueXYyHp6DFMuwLUQZ8SWJnwNeH3mJLaOa4B15dyc/07KO0gxNM3TLEH0/3QDJB5Xm4eU10YrjyuVyKpWKxWLZbDafz7MsK5fLTSaT2Wy2WCwKhaLtCt8McE4sjsViMRgMbmxshMPheqPu8/kAFhg04nFAJvCpoR8ltAQmHMfVarW9vb2Dg4N6vW40Gvv6+gwGg1wuJ2kXLox+ri908tSnhXIEdnmabxtpioc7QSuxkzYBXJ7ijzCOZo5WiHa5Bs/zyWRyfX391q1bKysrtVqtr69PIpGYTKaWWKCFnNWcY7QACMNBJhu+y/N8tVrNZrOHh4eVSqVareJbMplMoVBonh8yqUwikRCAIySG1nsUR2e0KLg6vgC0revRNM1xXKlUevrs6a1btxwOx+TkpNfrNRgMwjGcERiBEWiBoRiKpprLgEC1mIq35M5H6faL9MVOhu0tsCUGr9PGzLGSCE1jHuVyuWq1igerVCrfNVHrA8IsXuA5jqOZ5vDK5XJra2tPnjy5e/cuhjVFUWq1+sKFCxcvXrx06ZJGo0HCQtaooxcG+GOO4gue50ulUiwW29nZ2djYcLvdpVIJIRu+jkEABCFhCwEIshhiwpBBg/hCwkoKhUI8Hr9169aDBw8qlYrX6/3888+Hh4c9Ho8YdDCIEY9gDuMQTydEfOSyca7mxTA0IxxNe0qgEJuQh0Z+VjyscfEsyzI0Q/GUQAsE3Wjq6Iv4FgEsjuOq1erKysoPP/zw6NGjbDY7ODjo8XjsdrtSqWw0GmIMwgXjdRzhrDhQEl0GPlyr1XK53P3797/++utMJlMul0lAZDKZPB7P6Ojo5OSkxWIxGAy4MHzxKJ4ij4WieZqnaEocJpOBAXQjkIfw/CgGZxiaphuNRrlcDoVCi4uLqVTKYDBUKhX8q8ALAi2Ib0eMJrjgZkPj+dM8qmO0I9PiD80rpGiKoggon4SzlqW05bzkW+STYrk93Fc+n79z504oFHK5XD09PQMDAwqF4mWqsR3MeqncsME1JLSEoqhyuRyJRObm5mZnZx89ekRRlF6v53m+0WgUCoVKpdJoNOr1eq1Wk0gkUqmUjNRmmE0zDMMIlICvoEhB07RGozGZTDabTavVYorW63WyyCMlUSqVCoUCX0T6Q6aHVCrFtBH38jFQ8/n83t7e/Pz87OxsrVZLJBI2m02n07lcriYA0RTCsXq9XqlWkB6SWccwDMmGeJ4HXpC7w9qI6K/RaJDFluf4eqOO8LNZfxEoMegg5cHncfE8z7MMK1fIGYahBIrneF7gCVaKp0S1Ws1kMhsbG8+ePdvf31coFHa73ePxuFwunU4nCEKj0ajVavV6XRAEqVQqkUgkEokYMiqVCpmfjUYDr4nMfMTR29vb33//falUomnaYrEolcpCobCzsxMMBhOJRKFQmJqaUqvVJJPFSfH7CoVCLpczDEPRVFtpTDzJer1O0zTOLghCtVpFUCwIglKplMvlMpkMt1MoFNLptEajKZVKPM83I1Oeb3ANlLowQnCzLMtyHIcArVaryWQyCSvBlaA4IJfLScaAsYS3jD/jUcikMoqm6s8PfIsAH45arVYulwFScrlcKpXi7/GVSqWC6yHjXCKRyOVyXHk8Ht/e3p6dnd3a2hoYGBAEobu7G+v0uyPHf0hxFs83Gg3MvUwms7W1df/+/fX1dYlEMjo6evXqVbx1l8vV1dUlCALAS6lUkqlSqVQwQGUymVKp5BpctVotFArValWj0ajV6omJCZfLlUqlPB6PTqcDOKZSqUwmUygUZDKZXq+3Wq0KhaLRaJRKpVQqhTqaUqnEL8hksqPsjDoK0NLp9Pb2djgcjsViNE3HYrHl5WWPx3Pu3DmMP0Bko9EoFAvpdLpWqyEPwhCUSqU6nU4mk+EuUEXK5XJ6vd5kMiEeRGyCehmBjHK5LJfLzWYzpl8zzGFoxJWZTObw8JBhGMxMqVTKc7xMLrNYLHKZnGKoeq2OAIdhGLVajYvBDZbL5UQisbOzs729zfO8yWTq6urq7u72+XxKpRKlrmw2m06nOY5Tq9V6vd5oNAL46vV6uVzOZrMcx6lUKkw8tVpN0B9PAxM+lUopFAqbzfbRRx+5XK61tbXNzc3Nzc1IJLK2tiYIgt/vVygUwAh8HrhjNptNJhPePqATyT4pTZbL5VKplM/npVIpro3n+Ww2m81mc7mcIAgWi8VkMhmNRowfLA9qtVqpVJI1r1av4VHkcjkMA6PRCBjFbYbD4Ww2azKZVCoV+hXVatVsNttsNtxmpVIpFovZbFYikeh0unw+n8vlcC6DwUAJVCqdKpVK1WrVYrFYLBayLmJG5HK5VCoF2LVarQjKGo1GpVLJZrOZTEar1arV6mw2W6lUZDKZTqezWCxYFdbW1m7fvn3v3r1IJFKr1SwWy7lz5xQKBWDrZJGhg1mvf1Sr1Xw+H41GM5mMUql0Op3T09MowGs0GpZlo9FoJBLZ2try+/3nzp1TqVQcx83Nze3v70skEo/HMzU1Va/X0+n0/Px8OBzu7e01mUz1ej2VSkUiEbVa7ff7E4nE/v7+8vLy/v4+cM1isUxMTEil0lAotLu7GwgEMOctFovH4xkZGRkaGsLqTQnNKKnBNWrl2t7e3vLycj6fx4jHL+zt7WUyGYPBIJPJisViOp0OBoO7u7vhcLheryOwwk1hMJlMpnK5vLm5ubi4iHK+RqOx2WxDQ0M9PT0ulysSiayuriaTyWw2y7Jso9HIZrNyudzhcAwMDAwPDyvkCoqmYtFYKBwKBoPxeDyfzwPBlUqlTCarVCpGo/HixYs2m00ikQQCgaWlJYZhdDrd9PS02+1GXFCv18Ph8NOnTxHvUBSVzWaDwSDyC5qmS6XSwsLCxsZGoVDgOE6hUDidTr/f39vb6/V6U6nU7u7uwsJCKpXC9G40GrhCq9UKZBSvVUql0m6zj4+Pj46Oulwuu92uUCgikcj6+nogEAgGgw6Hg2GY1dXVvb29WCxWqVR4nrdarbhxg8EQjUZjsVgikfB4PGNjY1qtlqbpxcXFra2tw8NDh8Nx6dKler2eSCTW1taCwWCpVGIYxmg09vb2TkxMYOU7VvASqEwmc3BwsL29HQwGM5lMsViUSCRardbpdPb19Q0PD2PhfPTo0dLSEoJEAFa1Wu3q6vJ4PENDQzabLRQKBYNB4K/RaATQy2QylUpls9koiorH41iAsSSMjo52dXUVCoVIJBIIBPb392OxGMMwMpnM4/H09PT09/dTFLWzsxMIBNbW1nQ6nUajSafTpVJJLpc7nc6RkRGj0ahQKObm5n788cednZ1CobC1tWU2m71e7+joaG9vL03R72h/kuRDk38iUXG9Xi8Wi4ASk8nU09NjMBg0Gg3DMIhivvvuuz/+8Y+fffaZyWQyGAzlcvl//ud/Hjx4IJfLP/nkE7vd3mg0wuHw7373u/v373/yySd9fX0URR0cHKyvr3McNzo6GgwGHz9+/PXXXwcCAYlEYjQaHQ5Ho9FwOBzPnj2bnZ394YcfdnZ2aJr2+/0AzcHBQax+lISiaIpl2Fq5lslkgsHg/Px8tVq12+0mk0kQhFgsFg6HE4kECp+5XG5jY+MPf/jDw4cPNzY2OI5DVYjneZ1ONzIyolarvV5vPB7/4x//+F//9V8IHBiGsdvtH3/88aeffqrVare2tr7++uulpaVgMIg4MR6Py2Qyp9P561//2mQyYZVeWl764Ycfvv/++0gkQtM0YgcEidls1uv1YkorlcqHDx/+53/+p0wmc7vdVqsVmNVoNIrF4tbW1p07d7a2tjKZDP4SUTCC3GQy+d///d/ff/89qRz19fVdvHjxN7/5TU9PTywWe/z48W9/+9tAIKBSqQAHX3zxhUqlUiqUBr1B3LOTSqVardZut/f391+8eHFgYMDv91ut1u+///7Pf/5zMBhcXl5GXvz73//+wYMH+/v7iKaNRmN3d/c//dM/9ff3z83NPX78+OHDh5999pnZbMaju3PnznfffReNRs+dO+fxeNLp9NOnT//0pz89fPhQEASJRKJSqWZmZqrV6tDQkMvlwm2iD8jzfCKeePTo0Xfffffdd99hoWo0Gmq12ufz3bhxw2QyyeXyfD5/+/bt3/3ud2azWSqVIlyq1+sul6u/v/9f//VfL1y4sLKycvv27W+//bZYLBqNxlwul8lkcHan00lRVDQazefztVrN7/ePj4//27/9m8PhSKfTz549++1vf7u6uor3qFAoBgYGLl++/C//8i8KhWJ+fv5Pf/rTt99+q1arNRoNaoISiWRoaOiXv/xlT0+PzWZ7/Pjx7Owswtvd3V2cVCqVAvXIXqsOZr3mwbKsTCpDqqXVaru6ugYHByuVyuHh4Z07dyqVisvl8nq8o2OjMplMLpezLFsqlQ4PDw8ODlD9icVikUhEpVJFIpHd3V2WZXO5XD6fL5fLiOoRP5dKJYybYDC4urpaKBQcDsfU1JTf73c6nTab7eDg4NmzZ3NzcxKJZHp6enBw0OfzuVwur9eLeoE4qK5UKvF4/ODgIBaL+f1+n89nt9tjsdh33313cHAwPz+PvC8UCi0sLKysrORyud7eXrPZbLfbFxcX19fXMXs5jtvf37979+7GxoZWqx0aGvJ6vYCMnZ2dlZWV4eFhRAe42d7e3u7u7kKhcHBwsLm5uba2Nj8/39vbq1Kp7t+/Pzc3p9Forl27Njw8LJPJeJ4vFovJZPLhw4f7+/t7e3tGo9FsNicSid3d3ampqf7+fq1WS6hYEonE5XJduHABaVShUDCbzZcvXx4fH9doNI8fP75161YoFOrq6jp37pxWqw2Hw7lcbm5uzuVyOZ3OdDqNili5XJZKpXa7vbe3d3h42OFwKJVKQTjaMo0qIU3T4HDIZDJxzRGJFZ5AoVAIBALVanV6elqj0chksq2trVAo9OTJk0qlolKpEKVGIpHNzU2GYVQq1fb29s7ODvLiSqWysbHx7bffVqvViYkJt9tN0/TKykosFrtz5w5qDoRjwXFcsVSMxWLffPNNMBhUqVRjY2NutzsWi8Xj8UQi8fTpU4vFAqRDYa5cLhuNxsnJSYqiDg8PM5nM+vr60tKSTqdDIFmtVimKMhqNPp9PoVAsLCxEIhGFQtHV1XXlypVEIrG6uprP53FT29vbDx8+vH//fjAYNBgM09PTyEMTicT8/PzQ0FBXVxcqrchDXS7X+Ph4vV5fXFxMJpPLy8tms3lmZmZ6ejqRSGxsbGSzWafTOTw8PDk5iXs/Q1/oDbPFDwizmsOXoYFZeA2ZTCYSiTx58uTZs2c9PT1jo2MURQ0MDqhUKq1Wy7JsoVBAqsVxHMpSFEWlUqndnV2lSolAHVmAxWIpFoukDJTNZvf390OhUL1e7+7u/uSTT6ampjwez8HBQSAQCAQCGxsbAwMD09PTf/u3f9vd3a1QKEwmE7AVw5owmOLxeDQaTSaT165du3r1qtPpXFlZ+f7776PR6Pz8fHd3d29vbzgcXllZCQaDEolkcnJyeHjY7/fzPL+zs0NKUdFo9Mcff8xms2az+cqVK1euXLl169aTJ0+AStFoFNUrxCYTExNXr15tNBqzs7MLCws7OzuLi4ssyxqNxrm5ufX19evXr9+8efOLL76QSCT5XH57Z3txcXF+fv7w8DAUCpnNZsyuZDJptVonJyeNRiPP8yhOIw2Ry+XRaBRpuNPpBAJqNJrt7e2vvvrK5XJNTEz8wz/8g9PpBIr93//9n9vt9nq9yI5RNlapVH6//9NPPx0fH3c6nQqFotnrfN6sREEKvQXAlkqlMhgMKpUKpbFCobC3t4fimkKhOHfunNPpVKlUhUJhbW0Nd33t2jWn08mybCqVCgQCOp3ObDbv7+/H4/HR0VG9Xl+tVre3t+/cuTM9PX3+/PkLFy5wHJdOp/f29h48eOByuT755BOMwCZmFYvb29u3b99mWdbn83322WeXL18OBAIPHz78wx/+sLq6ireAZQzz3G63f/7553K5fGdn58cff7x3797a2prVajWZTDqdDjCKfqjX681ms3t7e7VazWQy3bhxA2WEZDJ5cHCAhPTevXuPHj2KRCIXL178m7/5m1KpFIlEvv766/X19YWFhVqthjIlehcjIyNTU1M8z6dSqZ2dna2trYsXL/r9/pmZGYB+uVz2+/1TU1MXLlzweDwv2KDaibNeITFkaYTlEonEarVevnzZYDD4/f7t7e3d3d1isfj02VOL1VKulF0uF4rxtVptaWkJZR0UnjA+dvd2USrmOE6v19vtdqvVGovFEHGgnOR2u/v7+w8PD1dXV7/88svV1dVz585ZrVan09nf3x8Oh9Pp9P3790ul0tjY2MjICNrwSB8YhmFohud5dAyTyWSpVEokEltbW+FweGtrK51ONxqNaDSaz+W5BpfL5bLZLMMwDocDGZDFYhkYGAgEAvV6HfXsTCaTzWZTqVS5XL5//340Gl1ZWQmHwyhXl8tlVO5VKpXdbu/r6xsYGMhkMiaTCW1QlMzwAI1GI2ARqRnLstaiFXlrMpkMBAK1Wi0cDkciEa1W6/V6BwcHkWwiPZewErVajWTTZDIlEgm8EZ1OV61WG40GTdM2m623t7erq6urq2tgYGBjY0Mmk+VyuZ2dHazkeB0zMzPXrl27euWqyWxCJwENuBbWAulaEj4XWf/xkNPpNPhcd+/eRYlgY2MDPThBEHQ6HaChWCwuLy+r1WqXy5XP53U63fj4uM/ny+fzhUKBYZhoNPr06dNYLMZx3ObmZqlU0mq16B0TpgvHcfl8vlgschxnt9vHx8d7e3s9Ho9MJiuVSsD9VCqFsB1hqdVq7enpGRoa0mq1ZrN5a2tLEIR8Pp9KpfB2KIoymUyjo6Ojo6MOh8NkMikUCovF4vP5RkZGFArFs2fPcIOVSiWXy8Xj8cPDw3q9vre3980339RqtWw2iwFcLper1SrWbEEQPB7PlStX/H5/Pp/v6upKJpO1Wq3RaLAsq1arjUYj2pFYTqxWq1KpRIcRfYZObvgWGA8oRuj1+qGhIbPZ7PP5lpaWnj59+uzZs1AotLS0pNfre3p6UOY8PDwMBAKIzJVKpdfrReFmd3eXNIatVqvdbjebzWgJgyohkUi8Xm+j0YjH46urq2tra0gYr169ev78+eHh4UKhsLS0dHh4+ODBg1wuB76Fx+NBvYNlWEEQatVaMpkMBoOHh4eNRgNxeK1W29/fz+fzaCCm0qlisYhKhyAIGo3G7XZ3d3drtVqbzWaxWDDIkLSC8Y8v8jyPJMtoNKJ7iNwNyabdbkc1RK1WKxQKpAkgnfE8r1AozGaz0WiUSqUyqUwqkZqMJrvd7nA4QqHQzs5OOp0GKNtsNrfb7XK5SGkcVDK5TK7ValHfBepptVqFQlEqlTDiNRqN2WxGu9DhcKAxh44n+lY0TWu12sHBwdHR0YGBAZqm6436sf0JhGAlInDVarVCoZBMJovFIkIJpVKJjgRiZHRdWZZVKBRer9fhcJjNZrPZXC6X7XZ7PB4PBAIajSaXy5XLZcAEill4sJVKJZVKYYxJpVKDwaDT6RQKBchlBCVrtRpIFWq12uFwWCwWdA8ikYjBYEDBu1wuIzxkWRYNHJfLpdfrMXp5nsc7xblomlar1d3d3S6Xy2q1okur1WqtVmt3dzcGsEKhyGazYNvm83l8t1KpxGIx9F71er1KpcJQJ+QYq9Xa39/vdDqTyaTJZFIqlfl8HsuqQqFQq9SgoaAHjfZ0c9lgqHexvf3D4meRgi7GNJYvk8lkMpm6u7s5jstms6VSKZ1OSyQSu90+ODj49OnTtbU1FL/RRZJIJPF4fGNjg6IowFZ3d7fD4QAHFdQYpC19fX1+v7+np2d5efnJkyfhcPj+/ft6vb6/v396enpsbGxlZQUcsa2tLTSqxsfHmzRChq5Wq+l0Gg2yZDKJ8wJ9stksChDxePxg/2D/YB/NtXq9nsvlDg8Pc7mcWq1GeAUARTEFa6PZbEZkl0qlarWawWDo7e3t7e3F54F9eFygCBEUwAwH6T8SiSQSCb/fL5PJaIZWa9Q2m21gYADNx0gkEgqFHA7H8PCwzWaTyWRkUyFPNfctYVYQZEHHgNA7yqVyLpur1+qkPg2iKdIrwsJVKBTgcHA8R7gs5BXgrjFL0XRLpVJbW1v37t3b3t5GJOJyuRB6syzrdDp/9atf9fX12e32dDqdy+UQdTqdzkajMTIyUq1WA4EATdOhUKjRaPh8vv7+fpPJlEqlALUYNiMjI2azGbEwy7Kjo6OI09Fg4Xme8I2R+4PSjBwWUCWTybCBDLUCEvEhIALcgCoF/hQhzZEoEv+JIgOaTkA3uVyuUqnATaFpur+//+bNm6Bc5fN5uVw+Pj6OxjSgB79DUBjP/2izF94pzxcKhWKxSObX0dauDtfhTfhZWBxAm8pmswcHB2DToZSOUguWNblcjmU2EAikUilQqCYmJnp6epBGJZPJer2uUCiGhoZQ85ZIJKDhkS07mKUymQwEBZ7nM5lMKpVKp9Nms1kmkxkMBq1WW6/X8/l8JBIBqQfDFCt2JBIBAZJhmMHBwe7ubpPJVK1Us7lsPB7Hr+2F9lDGcjgcwLWHDx8mk0mbzba0tJRIJFAkRmpmsVgQBWg0GrvdLpVKK5UK9rLodDqpVIqw/2iz3nPwwlhEQqfRaOr1+vr6ulqt5jjOYrEgYjIYDD6fb2tra2lpCXGHz+cbHh42m83Yo0eYpTRNC/TR/hi07RB3gFVksVjKlXJwOzg/Px+Px3d2d/b29lA3dLlc6JMeI/EzNMVRmF1iwiShIB0cHDx58qRWq8Xj8eXl5cXFxVKp5PP5sKhwDS4WiymVyiYtlmXVajVgTqfT6fV6pVJpNptHRkZQld/f3y8Wi11dXche0VkDLwnXg4IX6mWEQAOuKZBXoVAg36xWqxsbG0+fPmVZNpvNIvTGQmixWEj9K5/Pgx0ikUiCwWAkEgEpzGazEd4cAReyQpMlB6dubquQSFQqVVdXVyQSAd1PKpWq1WoAH1iEYgY1+TP5ZawfzV0iDI2xure3FwgEPB6P2+0GJe3k9tIOZr0yZtXrdazJqVRqfX39hx9+CAaD+Xwe4BIMBrPZbH9/v9lsRpnG6XRqtVqMXZqmu7q6+vv7S6XS7u4uiHyNRsNisQwODmq1WkRAyJtYlq3VaoFAAJWyg4MDYBw4e4lEYnNzE6kiOlYSiQTrHvv8EAQBZVoM0KmpqY8//vjK5SsDAwO1ei0SiaAM/80332xvb6+trbnd7oGBgdnZ2UAg8OWXX4Jtj6aBy+VCsIBdiisrK/v7+6lUKp/Po27SaDQYhpmcnCRcEIx1Qv4mfzYYDG632263Ly0tPXnyBLzc3t7egYGBS5cu+f1+pKXILNC0ApcHG3oxYXAWEHQBOng15XIZ7RG32z04OBiJROaezIHWu7+/f3h4KJPJfD7f1NRUPp9PJpOYRXh3WIowvRHF4DeRPVUqlWQyCQ56oVAoFAqlUgn8ksmJyYGBAYqiUumUXq/f39//05/+tL6+DhZYsVgcHx9nGMbn86GYsLi4KAgCOsW4TqR+XV1dZrMZz3xjY0Ov16fT6Wg0iodmsVhAkQe9Bpmv3W7v6ekJBoNPnjwplUooESQSiXA4PDAwMDU1hQ4gTdPY+fD06VPQaGOx2OHhITLB3t5eEoLhlrHsAVlIbIudD4BL5PtjY2OFQiEaje7s7Ny9e9dgMCiVymQyiQXMaDRiCW8J3xCroo9ZqVQompLJZAzD5PP5Z8+eYcG4cuXK5UuX353Sw4dVgyeRKhZ2FCMTiQSeNRhxFy5cGB0dRV2zu7t7cHBwcnJSrVY7nc7u7m6Px1MoFLxe78DAQLFYlMlkQ0NDGLhgDBuNxkKhgBGAXgxaNjKZzOFwOByO/v5+u92ey+XS6XQikSiVSiiHoSyCJhdZ31D99fv9Y2Nj58+fHxwa9Hl9HM+h8JlKpUCkAhr6/f4bN244nc5cLoeYBWMLIw9snY8//lij0czPzxcKhSdPnhSLRTSGNBoNwgGbzYblUavVSiQStVpttVr7+vpQ4TIajei4ozNQq9VQBk4mk9glazKZrFarSqVCFmmxWHp6evR6PbYWUUJzByVeBMuyBoPB5XKl02m9Xo8cR6fTDQ4Ofvrpp2hWptNp7BYAX+TChQu9vb2hUCgWizmdTkEQUGHBryEDJZksOHE9PT2FQoHneY1Gg01IuJHh4eFz5871D/Rr1BqXyzUyMnL9+vXV1VXcTrFYRDsCZWZIfbhcLmyZqNVqKpVqamoKQwW/OTY2duPGjUgkgp5dMpmsVCoWi0Wv12M4oQQBdNNqtT6f75e//KXRaETQt729jR0Lk5OT586dO3/+PDiARGsBu5ERMblcLpvNNj4+7vF4EokEGh0ej6erqwv1QY/HMzExgf2boKr29fVJpdJ8Pm8ymfR6PbjNPM/ncrlisVir1fCfer0euw7K5XJ3dzf4FjqdDpmHx+NJpVJg0lAUpdPpwIXGNmn01sGYeXdiXh8WZpGsDTwdzECyI6e3t3dwcPDixYvAIHRMzp07h7RRo9F4vV6Xy1UoFAYHB69cuVIoFFiWPXfu3NDQEJjoFovF6XRyHIcWGMMwJBxzOp3j4+MXLlyw2+1arTaTyYTDYWSmvb29o6OjV65c6e/vB/ucbD1Tq9Uej+fy5ctAUrPZTDO0hJGgApVMJqPRKDjoXV1dUHpAZJdOp4vF4sLCwvr6OoY7ghSDwWC1WmUy2crKyuLiIoKFkZERt9uNpAx6A+hgKhQKrVbb3d09PT2tVCo9Ho/RaNTpdFeuXNHpdOiOVatVbEXC8q7X681mM3Jh5FPd3d14FCR2Y1lWKpEyNCOTyUD1RDKOsrFGoxkbGzMYDCaT6cmTJ7u7uyh+j4yMXLp0CfOwUqmYzeb+vn6app1dTq1WSzgiSO6wIVSpUDqdzqmpKXTo9Ho9iFdWq7W3txdZoVQqZVgGxC5wBe7duxcKhfb397u6umw2m8/n83g8iLutVuvU1BTHccivr1y5MjY2hi3BNpttZmbGbDbfvn374cOH4Mfo9Xqn0wn6pVQqdbvcY6NjZovZ6XQi5cRKoFQqQ6FQMplEE+bcuXNTU1NTU1PVajUej6PWBhzR6/Ug6wJwL1y44Ha7a7Wa2WweHR31+Xx9fX1Go1EikYyMjAiCYDabUXC0WCwXLlyw2WzpdLqrq8toNHq9XqSfS0tLq6urpVKpUCg4nU40TDBI0JpADxrFjZGREaVSmUqlent78UAUCsXVq1elUunu7i4yDGy2b3pZtVU3pd9I/vDD4meRFhJ61VevXh0YGCgUCshQECM4nU6dVseyLCVQarV6oH8A6aRcLne5XAA7SKYQpEOLXaPRjI6O2my2YrGI9uLo6KhOpzt//nyj0TCZTA6Hw+12o+04OTFptVrRosJuOI/HA4EBcp1qtRr1Xax1aJxhUyTDMFqtdnh4GOs/9s0Eg0HIBshkMhAmURkF0EhYCaKY4eFhlUo1PT2Nuoler+/x9XR3d6tUKrfb/dFHHyF5cTqdQHmXy3Xjxg00EzH3nE6nVCq12Wz5fL7RaIDLptfrwRGbn59HXGm32y1mi0atwU5GBD7gRhOGJ0hPCDDdbjfmpEaj6e7upigKfVs8IofD4fV6kWShtKTVahma8fX40EYUL0sMzUglUrVGjTkGxgCq9ejBmc1mxMJom6AFhlzM5XJhJ41WqzWZTL29vQBx1Pu9Xi8YCTzPd3d3y2VyrIKYwDKpTKlQjo6OorOGtcTv96Nnd+HiBbvDjmBWr9crFAqr1To9PY1qfbFYlMvlgDmHw6FSqUDuRRUfqHT58mWdTlculzGWUMzCxiP8ps1mUygUNEWPj48DiHFqi8UyNTXV09NTKpXwnBGcjo2N2Wy2sbExQumwWq1dXV0qlQrj0GKxdHd3A+tpmh4aGnI4HAh7Id+mVqsnJyetVivI92azmWiNnO2z9/rBR9sN6z/jUEvcT2mRVWBIOVf0oDmOa3AN0po5jTxBdBrQDhNvEkIRAfv1xSwhgRcgSUcEGMDBg5AA/lUQmp8Sd9bENS90yiiB2tzaXF5eBqG/v78fm3Xv3Lnz7Nmzqamp69ev/+M//iMKN0RFhGg/yKSypi7g8ftDEYSiKJlUhlKr+DHiYsgWGbDGfvjhh4cPH4Kfff78+f/3//2/3/zmN9ValeM4hVzBSljICiKQlEqlpMjCMixpfkHllTxSXKdUKpXL5agrk2eI+vEZ7wUvl7TPyOpF9r2jWEl2+YA8dSSzBxCkGYj8EI2dZh8NQ4UW6erRDN4XKdWBB9Dcj0VRRACD7BUn44cUuclIjEaj29vb//7v//7tt9/OzMx8/vnn//zP/+x0OqvVKjqG4sDkyALyuSgXL/AttA8imAPOLQQFxb7czRlA0RBTxOfFlBFyRsyUFn1Uopxztv5fJ856BZ1i8RNv1V18/hybapYs21SPev4a2uioCc3Pt7wwjFFQATFqT/qJIn6mGZrmacwQoix8JBDcFJg7glQyUVF7PsY4oxmKogqFwvb29ubmJqhGjUZjfHz8+vXrH330kdVqhVQArhNN66YyJ/Nce+u5OgoJ98TkTDG7jfwBM6FWqx0cHKAwv7O9Y7VaR0ZGPvroox5/D6khChSm0TGMboopP18nmnAmsGRWE5YQToRn1aIIdraCMBiqBKQEXgDKiPvxRxcp0h0V62c11USf40uTMEkw4vm/8hRPlKeIxBihv5CTip9nS6W1RRORSIYR2CW7kdA5EY9eIkkIKWdaoInaaosqFvm7I20/gRIogTxY8ucWgS3xGc9w3zg5rTr1rLegWd4iOt4m9z7hQEdE1IhtRMt6TnCnRWIYM6cVuWiqqdL7fJltmYonhWuJOBSZis2ZwwtyuRwiIYlEAj1K5Fb9/f2XL18eGxtD2nVsnSSno5uq3uI2+TFdPaaNDCaBEhJmNrMYixl7ks6fP+92u5tiYwwjdtMhM1a8tgP9xULAZNzjk83AUzTnXzKsJosBJTSVVMX4e1LurrlU0Iwow6Gbgssi34CTY4D8E07H0AxYY2JBwdMkQ09q/4PXCkYFCAQIRckAI7/T1mAC6xACLjFCHUmSCiKww1BnmqqqbdUHxeKXRBe37e6cd+qV/WHlhqRtT14AQRPxcne0DEJKnOOagnMi6woyDsjnSdrCMiwZqWTPM1kkj6m/06IMtNEg+oJEj5z8rHgMkazwaOgLFFp44f3w4eEhNLBQoQOH22AwoGuOnIXwLXGiJoA+T06bT4OhxTrobSV6xTqWaLft7++jQG61WtFAlMlkRC5OrGxFpn3LKcjTJtBM1GJBccKDQth1Wm7YopLekq20LFQtaHUkM8wLAiXgXMQUWtwOI8KkSAZJTC3GIDHN+CjZPB7WETl/koDjR6CKtbCwEAqF7HZ7d3f3wMAAZJGavyCcajdLPkDGakt+dyQnLRxdG3npLQqlJ/0ETv5li7ppi/LqW7SV7XiFHVv6jtBEOAqFoJJ+tuvlEeOOFxpCs0CDigAZkU3Xe/GK+lwwV5yekOieFmgS1lEile62UaFcIZfJZRqtBtqeuC+wtMRT6EjgmDqy7eIFnhbok17tLcs4+aJ4FSWxEir9TqcTKpqkeIfhS9wliBjxSaF3coUt8/lY+HMiW2m7pItJ2G1rK0e7iJhjaa84chToo9qQ2GinxUuVPn6cLAKIL5hkwW1mMt0aIcKpBLsRIfgDtjpZcXmOJ57kJOJrcRLAdbdaH4k0spv/Qh8F9m0jrLbC/GdvzXlHCssfVpzVxk9J5BDYUn0HmojhrGmO8rzsKo41SCyA/0STrsE10FHC4DgyySIj4HkwdXKgYAGElKU4zjrb64lw1tsWII7dGampC6cXSmmqpV4jBt+WLKDF9EWcMpOyLkVTpCBNDGmQUZ5hr9D2b1oemhgXxH0P8dNuxhQMTQI98XlRIiSVL/F9Hf1BHIQ+h4mTr0OM/uRZHcEBfeyCT8ukyMMUb2lqeZvEredkqHIs0uQFMphPBqEviHqEY3PhVfO+V/IS78RZL36OSIuOcjS6vYnm0fCij/66xZaGhFonzUTbrvNtDV1azWYo4QglX+7Vig0sTisxNGHzqFTWfrVsItXxbAhOqyehvyUhImVjMscQXgGCxcFmy+w97R7bDn1xmNPq3nYcEUiJClY9bQxcRZhL+pIt/Ufy/snywzW4Y7uRRG+89fopWhxEt8Qgp01m/CyxI2jzNE44C7b5KeGs8OeMBt9RbvEGMES9Jc2sTm74Bo+Ybk/7Ilu6CITBd6/VjokXjtUyYafKt9qutHg3vWf/uDPC/jOy45NP71iChsCEF0jJD2sGQzO0hD7ZV30l4VlSTwQRpEkEO5la0kcuvKR21oJx4lrbSTgmVElxbfRlmphvN3Vq6eS8FQ/dF06EM4D1Pc/NDmZRb76NUdzVqlar8IMBKRTsYXFrXJwhtqz8bTyin1dVm16BL4kZPw3Ql0qlDM3A4pTwOci+aDQBuAbX6iT4Bln/UaB6/EGdrIu1RKP4S1JBP7JuO7O1R7ZVtAlSjgdA4jhLnGe9J7f0d7b37/0DVgez3g5mEc4U9t/H43GkRW63W6VUcRyHrhzM7EhayjU5N5yYTMgyrFT23DGMEo4qJugGUPxfBWSRNh+8zsjNwteHoigICWg0Gjy00/LZlzoRdcQsI2kXx3Fcg6s36kdGhDQjlUpZCUvkq8i2UxJqifsGLS0IroGfbKBxKX1+kDZZa4ZLAEqgSYX7LzbP6Z/VjOtg1tuRuAE/s1AowFAA200+//xzbI6FyDr+wDIszdDQC4UJBSRosBsGezLMZjOhqh6lWgL/nrLCt7H8gtQKTJHJZZRAxWKxtbW177//Hro62FV3tAHgzUQcSUueF/h6vV4sFCPRyEZgI5VOlctl7F0nW39isdjKykq1WpXL5dDkhKaY3+93OBzYqXOUDAtCqVwKh8Pb29sbGxuZTAbeQtjWDr0H7O7qHB3MeoetwyOyIiU0O8H08QD+5aLfFsdwjuOgGVIoFBQKxejoKNZkIt0lk8nqjXqtVgNbfW1tbX9/P5fLQU7P7/cPDg5CKFIMWC2OAG2D/TO6OS01tWb9vaWzjlyKPtYUJ7SLllps2853C8cqnU4fHBwAi51Op1ajrZQrMDQiMgNtKeBt+Qpnlt0E7FjA3qNGvZHL5eAeMjc3B3EFKJ3iYiiK2tnZuXXrVj6fh0pivV5XKpWQxu7r6+vp6YGcNPqbqXQqHA4vLS0tLS0tLy9DM8NkMmHzKbyaXlDPerPs7PWKZe8zoO5g1vvQVm42uekjFi8RpTsNrdoyKgmRGrMLynkQacrlcmA/ihkALMvC1e7bb7+dnZ3d39+HVysSDQiEulwut9sNsTdCdj+2zY1hWszoCcWhhTQg3oUjkA2OrEC+37wvupV1RVEUxVMCJTA0I9ACxR8rpYkJk4TaSkywoYS1srLyhz/8gWVZi8Xyy1/+cnJy0mA0DA0N/frXv5bJZJA/FzOYWjp9SCfFXvYnKQVk059AH+1PKJVKe3t7X3311ePHjyORCFhO6XQ6k8kAj+BLEggEYrEYAZ1YLAbhvZ6enosXL8KEguf5fCF/9+7d2dlZaLQzDAOxinq9Ho/HYQQJVZZTUeY46enlK0Etjci/lu0l76EK9oHt3RER2YkMcSwWAzscfl9dXV2Q9Mzn87FYDEJUTVvzSpVhGIPRACMsZECHh4fYlA/EgYYfmD6E9k24QnB2ePr06dzc3MrKCqT4urq6QFJ3Op12u12lVDUajXw+n81mE4kEvA8gBApAVCqUlEDBj+Dw8BDuCdjnYbPZoMkNdTBcG4KLQqHQqDcomoK4pVarhQEi/NAymUw+n2cYRi6Tm8wmo9GoUqoomoKXVy6b43gOjCq5XG4ymWiahg4fZOmlUqnD4YC0QLVa3dzYfPjw4ezsrFQq7erqcjqd8GSEpgIkOuEwBiNuiEEjfVYoFHq93mgwSqQSiqJA60cVTCKRQCUdmqhGo1GlUklYCRJnoF4ulwuHw/Pz87BEgwMbfha8fAwAoosPgwwMg1AotLa2VqvVEPPCY3Vubu7BgwfpdNpgMMBAQKPR4HogI9MSB71FfPkpR1id3PD9wRZDMxRDwaF3Y2Pj8ePHP/74YyaTqdfrkA25cePG8PAwRVGBQOD27dvpdBq0cuQ7crl8dHQU0kUSiaRara6urj579mxnZyebzcpksmQyube3B/U74gCOXR0wDkBNJxAIcBx34cKFmZmZ0dFRtVpdr9dRltbr9QIv7O3tLS4uPnr0KBqNFotFv98P87iBgQGZTCZwQiaTWVpaggNrKBSCKuHMzMzk5CRky2EAs7KyAmwKh8LlSlkul4+MjMzMzMBssVKpHBwcPHjwYHl5ORgMSqVSo8F4/sL5c+fOebo9NE2vra6tra/haqVSKWz+JicnBUH46quvFhYWDg4OIH0zMzNz8eLF0dHRWq323Z+/u/Pjnc3NTbiKwsnRarWWSqXNzU21Wg0ItlgsuVwuFArduXNndXUVSqRmsxmid3a7nWVZSIDt7e0JgqBWqw8ODiKRyNDQ0NjY2MzMDAzHUDVHOIkwNhqN0jQ9NTV17dq169evYwMNnB1KpZJSqYRWj9ls/uyzz371q19lMpnNzc1vvvlmdXX16dOnuMdqtRqJRGAD3t/ff+XKlS+++AJ4jZUMYn4A3zesynWODmadUvl4ziRAqaJQKEDPF9vistns/Pw8HE3g/rS5uYn0DWKYUDQtFAo0TcNiM5fLIaCA5pROp4PzuF6vF3egAFv1ej2VSm1vby8tLXEc5/P5gFkOhwNWJbAtwDS+devW4uJiNBpFRWx7e3t/fx/R0MTEhCAICwsLjx49unfvHiC1WCzu7e0haALNolwub21twflKLpfDMQxBGdgYarU6GAwuLS3dvXsXiVK9Xo9EIwvzC4VC4erVq3qdfntnG6ZEFEVpNBqn08kwzOHhIaSfpVKpy+WqVCqVSgW6cbCEoWmalbCIXhGBQub48PBwZWWFGAIVCoUHDx7cu3dvc3Mzm82qVKpKpYIHnkqlLl68CJ+bYDC4sLCAuKZQKOTzeTiDIs7t6emB6h7RgZDJZJA/TiQSMKy3WCwOh0OtVrMsWy6X0SJUKBQovbtcLsjzHxwc5LI5uBbGYjE4sGYyGZqmIWzv9XohBglKvUQqEdMdTgoznBZ8/ZRzvQ5m/bQgq+nWSTV5CTCh6OnpUalUMENfWlrCiLdarY1GIxaLbW9vJ5PJ4eFhl8vVaDTS6XQkEpHJZBMTExRFxWIxWNh7vV4YgsIRAyYrhI6EP2PS7u3tbWxsDA8Pj4yMXLx4cWxsDEllk9DEMIlE4tmzZ//7v/+7sbFht9vdbrfH45mbm3v27BmajKjQ//jjj7Ozs0+fPh0bGxsbG4Nj3a1bt3Z2dqBiqtVqQ6HQw4cPYZvs8XgYhoESfDweh6Tq/Pz8nTt37t+/r9FoPv3001KptLOzs7yyHNwOWiwWj8cTCoUCgcDi4qJEIoFXBfIviA6Ojo66XC64zMJrA/6daICSbToI0CiKSqVSy8vLOp0O3lO5XO7bb7/98ssvZTIZtNWTyeTS0lI0Gt3Y2IAlRCaTgT0Xqlow0YD3GjSkurq64B0NLFCr1RACzufzKysrWDkuXrxoNpsJvqBMJnl+wDac5/mJ8YlIJPLw0UPozReLRTjiwPbV5/PB2L0pFMGw2DQD/BLvZ+jgVAezqHehWQpZTsgGVKvVXC4HswOYm8KglOM4OJR89NFH09PTS0tLKysrKysrxWIR9ZdwOFwqlXQ63czMzNTUlF6vX1hY2NvbUygUzb3BInU30IKwww4CkpBtI4YoADiI5+XzebPZfP369ZGREaiewhFvdXV1YGCAZdnt7e1KpWK322dmZm7evBmNRtfW1uBusLq6KpVKBwcHwfOGBdnly5fr9brJZNrf308mkzs7O5j54XCYoih01lA52tzcBLbi8hQKhVwu7+vru3bt2sjIiN/vl8vlxWKxXC7DNxTlMFTx8vk8RVGwy4ZWMjT1h4aG0um0WKivWCxCA1oikUxNTZ0/f356ejoej8vl8kAgEAqFYDUG+WmWZXt7e//u7/4O7IR0Oh0IBFBrE0usQOMUtswGgyESiUSj0du3b+/s7MzNzZ0/f97v9xNNKyI1QUh2hEZHHMaIKiT0YIklNcMwAiMwLEOL9kHRVAeVOpj1zvqGWCpRP4IrVD6fhzB8uVxGzojURqVSKRSK8+fP37hxQ6VSlcvljY0NqLzncrloNFqtVnU63fT09C9+8Qto9d65c4dIvhBRrZbdbZgDpPVGnGNgDR0KhQgeXbhwwev1FotFKBeDJCGVSvf39+v1Opwdbty4sbu7K5PJ7ty5E4lEtra2YMKMU1ut1qGhoevXryPEuHv37vb2djgc3tjY2N7ejsfjyI7hBQ/7L/hrWCwWiqIUCoVCoejr6/viiy8gbZ5KpQ4ODpAIw7KsWCxCvxg+fTB/Rk/D7Xb7/X5/j3+9vk6qe5AnDofDuVxOJpONjY198sknExMTkUgEle+nT5/CyQqFeRjc3rx5E3Ho7Ozs6upq0/rleRiLZ6tWq91u98cff6zVah88eBAKhYLBIDAL8p4Oh0Ms04rXgaCbWPgg+BLroIlpGURWQKCEFlnOt9v+/7kW4Ns+ope/WcmHhlbE63x7e/v27dvBYDCXy0EgHKVZ6F4TET65XI4WG7GuQ9UJrCv41sCaBa0xqLO3+L/iUCgUELQyGo3pdHp9fT0SicDIi+hkwXCsUqnAhE6j0eDUOAWq6dAjRlEc14YPQ5Q9k8kAB4kVjVKpVClVMqmMlbAOh0On06FdmM/nAWrVahX2f/V6Heav4Cihugy6gMlk8ng8arW6UCg8ffr0yZMnS0tL1WrVZDIhbYR9C5GIQiKG9E0ikUD5D21HgDUpclEUhSsHTBDeQ71eB1sdGRzK/0jP8RkEgESlh+wo1uv1yE8nJibi8Xgikbh///7CwsLq6qpOp/v0008VCgUxKCNNYTj0HRwc8DwPihwMU2UyWTqdRl0Mxg1kJByxWI7HWO3FFTodwLcEx5IPM8jKZrOwdQuFQjqdrre3F55OAAji4IJiLRwiIClD5iRshwlpCBXuer1eLBYxE1pkD0BoNBqNTqfT4/GgwI/ijsPhIFVkRCvUc3ZVuVyGr32lUqnVasSrHdAJojnmNsliMKkQxxFV6HqjXqlUWJYF3uHuZDIZmfagrSNlNhgMer0efjm4DLBAbTZbo9FIJpOrq6voV4JcDr8DuVxeKpVOiucRl9CjbTQimig+AN13eOeVSiWo0+DyEBzhppRKJdlOQDyNidgZiXdYloUxmtPpBF9ke3u7UChEIpGDgwNCmqvVaqVSKZPJJBKJQqEQDAZXVlYODg6wtFgsFoVCUavVtFptOBze3d3d2Nhwu93AaLJlEir1NEt3EsNObki9U6nSdDqNgVgqlfr7+wcGBiYmJnZ2djY3N4lJFwrq1Am+DDIIUI2sVitN08lkcnl5GZM/EAgcHBxArY3USprPWiIxGo29vb3nz59/8ODB9vb2V199tbu7OzY2BjtPBE0syyIUikaji4uLxN51bW2tWCyaTCa/3y+VSlH0OXh+7O/vgzDVaDQMBoPZbNbpdCzLovB/cHAQCocqlcrs7Oze3p5arQax4/DwMJFIFItFn8938+ZNhFEAIJ/PV61Wl5eXCYMfJlEodUWjUSSMH330UTwen5+fhwgq7pTkWcViMZVKAYZICAlJT9hWwxRne3t7fX1dq9XCIjSfz+MKu7u7gZgkcSYbzptJGdXK+63X69lsNhgMVioVg8EAFhsSf+q5fwR+qlgsJpPJQCBw7949eCDPzs4WCgWHw+Hz+dxuNzqMNpttdXV1eXkZ0Zzb7TYYDDDftVgskGMlYvOdo4NZbznIEmuVwFAP5IBoNBqJROB8dUyw9LhSOCIvhANwrxscHFxeXt7Z2VlcXMxkMgqFYmdnp1wuw1xXzDUnvaqenp4rV64gKIvH42Bg6fV6uVzu9Xq9Xi9MwEKhELAglUptbm7CBMxutw8PD/f09Mjl8vHxcZ7n19bWVldXv/76a+xeFATB7XZPTk6CZY70J5vNhkKhubm5QqEAmkVfX19/f39fX18+n69Wq6CtJhKJfD5fLpfB6kQGhMafeBsNYjGVSgXiRSQSgUVzuVwmVkZI5QwGA6xbV1ZWYIcF2048f71ebzKZfD5fMBjc39+/e/duOp1OJpMwZBweHu7t7XU6neFwGLGh2Kf2KKqiW+UWarVaMpl88uRJJBLRarUcx5XL5Wg0qtVqe3p6kNyBmAr/8KWlJZDU4vF4vV53u90XL16EERkIIpOTk5lMZn9/PxwOz87OYltPvV6XSCSwNYXnWAdKOphFvYvNzEg6JBIJZsvQ0FCxWJybm4vFYgcHB+A3kU4iuOzi+QDHsEajgZTN4XD09fXNz88vLy/Pz88vLCwYDAZUwQibtEXcjmVZcHwkEonBYHj8+PHu7m4gEMCEPH/+/NWrVy9evOj3+5PJ5Ozs7LNnzx49eiSXy0FzHxwcvHbtGjp3SCEjkcjc3Ny9e/coikLV6cKFCzdu3NBoNDBPBHt2d3cX8dTe3t7w8PDMzMzExMTg4CBqc4lEYnd398svv8QjstvtPp/PbDabTCY0K4koO/KmgYGBSCSCy0smkxzHIcmCFE+9XlepVDabzev1Li8vb2xs/PnPf85kMk6nk7gcgnMLI3vsnV5bW7tz5w7ob+Pj45cuXRofG7fb7DBPBh1EKpUSK5Aj5GJo8U6mSqUSjUZnZ2efPHlCLlulUnV3d1+6dOnKlSsMw6TT6Vwul8vlKpXKwsLC5uZmpVJRKBRDQ0MzMzM3btzwer3Yt2A2mz/99FOTyXTr1q1AIHD//n10V6RSKUJjp9NJTMA6RwezqLfObyAlXp1O5/P5fvGLXzgcjp2dHQiZwxYQpRy73S6Xy2/evAnPUWwAdLvdly5dAne0t7fX5XKZTKZr167JZLJ4PF6r1WCSjm1AsAUX+xpgjqlUKpZlJyYmQNEMhUKZTAbgMjAwMDg4CIeVa9eumUymYDBYLBYFQYDr9eTk5PDwsMFgkEqlfr8fu0zi8TgYA6DCj4yMwAIPpTHIRQwMDKBflk6n/X7/9PR0d3c3phzKSbu7u9lsFtMP1C2r1arVasfGxmAuOz4+jvQWrq6Yz2CioSOBAvzY2JjX64Wp6s2bN3t6enZ3d+HY7Ha7u7u74VY/MDBgs9lg5ymRSHp7e+PxODb3SCQS0Nw9Xo9Wqx0cHKzX6x6PZ3p6Gtm3xWK5du2a1WodHh7u7+9HdY/kj3K53GazXbp0yWQywTmVpmlY7U5NTdlstka90dfX9/d///eHh4cUReHiQZLw+/19fX2QakBQCfdsROVDQ0PxeLxUKuGxGwyGkZERjJPOJpv3eXxAevBozJE9tyATpdNp7H1FQqRWqzEzVarmpj88H+ySw/447LCDPQTY85lMBvZcWq0WTEioYqGuT0595Fglqryg2gKKFvbQwWgaUlMoBmFbj1ar1Wq1IHNjflYqlVKphKhBIpEoFAqj0ajValUqVSQSCQQC//Ef//H73//+5s2bv/jFL86dO2cymbBZz2q1orIDJxucCCx/ILJOp4OKDkn6jEaj3Wbneb7BNarVarFYTKfT+XwefstEiAItArVaje3KiUQikUiA52k2m6VSKS4VxSwJK+F4rlqtJpNJECbgVm0ymWCazfM8zlKtVvV6vcPhAJ0ChE9ynSzDNs17GLrRaIBkh2tDSm40GuE8JJPKeIEvl8uQlEGKB06pUqmEwT0048V7cZBgFovFfD6PvBKfR56IRvMrmY92jk6c9bI7TsWyB9ijD5YW/gluMUSJCZELYagTYhG6aegbUhSFXbJgZpH2IpIXeN4cUXsoWiyhiW+hlo8URi6XA/JwIqRRKOVIJVLkcRKJhNgXg22P7j4uGF8niTB+Frem1+tB7sfviF1RFQoFqB6YeJjDuGXIHvA8r5A3/XskrISSN51BDQZDvV5Hg6+5FZxt9vgogaLVNOjyOCOeNuKXZi2cpnCnJpNJpVLV63XSLiS1MyA4ni15TdgHTm4EZoSE9ICbVSqVhCWHB9s8I80gSiLeEKzoEEswi0cOHrVcLic2jnjap7mLd44OZr0dzBK32DFXEV61/TzLsi21VaJmKf5LzBwA2RmnbpqS8sKREQtN4wJOy2QlEolSqWyr6kW8W8i2mLYnVSqV2Mer0+n0er1YlqtlQsLS9eSPAH1aRLJkjEwmlbUtPIt7eRKJRKlQmowmcX+vRR6P3AV2BbW9BfGJaJrGAz9NAoHQIBAyt6UCgSTx8kopANkzHnUnMexg1k+Xz/bXcqhUKofDcfnyZa1We/78+YGBAY1G8/N4IGdf7ZvfyxmWP6d9rINZnXrWz1a9C54UrzTET1VPPTMjQS8/FArFYjGfz9fV1aXVatEfeD09jPYE3XZGUievjP4rZ1yeNIh8ScDqpI0dzPo5YFY7QBBeFrPaOWu2/Tqq/tg4iao84cS/LcxqC17vCLPet0/aSwDQy1xJB7M6mPWhY9YxK9UzprHQ/Bral4QH0MZG+61g1nED2neKWT8R2HrJa+hgFtWpZ3WOl5U2pGiKpo56YaJCdYdM1KmEdjCrc7yctjcltDTRjywOhDPN6eizjOpaMYg+Cnbezjp/XLVAJKp//CPtnEjfir/eX2m00gmyOrnhzzlDfGER/jWmRNsPvGGkcKz2zAuvcdmdqd453vD4/wE6KJhDNEbH5gAAAABJRU5ErkJggg==" style="--w:401px" width="401"/>
 </div>
 </div></section>
-<footer><div class="wrap"><span>Оваа статична страница не собира адреси, не користи колачиња ниту аналитички алатки. Хостингот може да води технички пристапни логови.</span></div></footer>
+<footer><div class="wrap"><span>Оваа статична страница не собира адреси, не користи колачиња ниту аналитички алатки. Хостингот може да води технички пристапни логови. До кои пратеници е отворен нацрт се памети само во твојот прелистувач.</span></div></footer>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script>
     (function () {
@@ -1626,21 +1683,27 @@
       };
       let selectedEmail = "";
       let toastTimer;
+      let seats = [];
+      let marks = [];
       const sendArea = document.getElementById("send-area");
       const after = document.getElementById("after");
       const list = document.getElementById("list");
       const fold = (s) => s.toLocaleLowerCase("mk").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-      search.addEventListener("input", function () {
-        const q = fold(this.value);
+      let activeParty = "";
+      function applyFilter() {
+        const q = fold(search.value);
         let visible = 0;
-        for (const item of items) {
-          const show = fold(item.dataset.search).includes(q);
+        items.forEach((item, i) => {
+          const party = item.querySelector(".send-mp").dataset.party;
+          const show = (!activeParty || party === activeParty) && fold(item.dataset.search + " " + party).includes(q);
           item.hidden = !show;
+          if (seats.length) seats[i].classList.toggle("dim", !show);
           if (show) visible++;
-        }
+        });
         count.textContent = visible + " од " + items.length + " пратеници";
         empty.hidden = visible !== 0;
-      });
+      }
+      search.addEventListener("input", applyFilter);
       function buildUrl(base, params) {
         // encodeURIComponent avoids '+'-to-space and encodes Macedonian text safely.
         return base + "?" + Object.entries(params).map(([k,v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v)).join("&");
@@ -1676,6 +1739,7 @@
         chosenEmail.textContent = selectedEmail;
         document.querySelectorAll(".send-mp").forEach(b => b.setAttribute("aria-pressed", b===button ? "true" : "false"));
         after.hidden = true;
+        syncHall();
         updateLinks();
         if (window.matchMedia("(max-width: 900px)").matches) {
           document.querySelector(".letter-panel").scrollIntoView({behavior:"smooth",block:"start"});
@@ -1706,8 +1770,7 @@
       Object.values(links).forEach(link => link.addEventListener("click", () => {
         if (!selectedEmail) return;
         after.hidden = false;
-        const row = document.querySelector('.send-mp[aria-pressed="true"]');
-        if (row) row.querySelector(".send-tag").textContent = "Отворено ✓";
+        markOpened(selectedEmail);
       }));
       document.getElementById("another").addEventListener("click", () => {
         document.getElementById("choose").scrollIntoView({behavior:"smooth",block:"start"});
@@ -1717,6 +1780,150 @@
         if (navigator.share) navigator.share({title: document.title, text: text, url: location.href}).catch(() => {});
         else copyText(text + "\n\n" + location.href, "Пораката и врската се копирани. Залепи ги каде што сакаш да споделиш.", 5000);
       });
+      // ---- Assembly hall: 120 seats in a half circle, one per MP (alphabetical, not real seating) ----
+      const hall = document.getElementById("hall");
+      const hallInfo = document.getElementById("hall-info");
+      const hallReset = document.getElementById("hall-reset");
+      const buttons = items.map(i => i.querySelector(".send-mp"));
+      const SVGNS = "http://www.w3.org/2000/svg";
+      const STORE = "pdp-opened";
+      const canHover = window.matchMedia("(hover: hover)").matches;
+      let opened = new Set();
+      try { opened = new Set(JSON.parse(localStorage.getItem(STORE) || "[]")); } catch (e) {}
+      const hallNum = document.createElementNS(SVGNS, "text");
+      const hallSub = document.createElementNS(SVGNS, "text");
+      let previewIndex = -1;
+      // Parties as listed on sobranie.mk; colours only tell groups apart and are not the parties' own.
+      const PALETTE = ["#c0392b","#2f6fb7","#1f9d8a","#e08a1e","#8e2f6b","#6b4fb3","#d4b106","#3aa655","#5aa9e6","#b85c38","#c2578f","#4a5a8c","#9bbf30","#0e7c86","#5c4033","#e36f6f"];
+      const partyCount = {};
+      buttons.forEach(b => { partyCount[b.dataset.party] = (partyCount[b.dataset.party] || 0) + 1; });
+      const NEUTRAL = ["Независни пратеници", "Без наведена партија"];
+      const partyNames = Object.keys(partyCount).sort((x, y) => NEUTRAL.indexOf(x) - NEUTRAL.indexOf(y) || partyCount[y] - partyCount[x] || x.localeCompare(y, "mk"));
+      const partyRank = {}, partyColor = {};
+      let hue = 0;
+      partyNames.forEach((n, i) => { partyRank[n] = i; partyColor[n] = n === NEUTRAL[0] ? "#8a8f98" : n === NEUTRAL[1] ? "#c3c9d1" : PALETTE[hue++ % PALETTE.length]; });
+      function partyTag(name) {
+        const el = document.createElement("small"), dot = document.createElement("i");
+        el.className = "mp-party"; dot.style.background = partyColor[name]; el.appendChild(dot); el.appendChild(document.createTextNode(name));
+        return el;
+      }
+      buttons.forEach(b => b.querySelector(".mp-person").appendChild(partyTag(b.dataset.party)));
+      const legend = document.getElementById("party-legend");
+      partyNames.forEach(n => {
+        const chip = document.createElement("button"), dot = document.createElement("i"), num = document.createElement("b");
+        chip.type = "button"; chip.className = "pchip"; chip.setAttribute("aria-pressed", "false");
+        dot.style.background = partyColor[n]; num.textContent = partyCount[n];
+        chip.appendChild(dot); chip.appendChild(document.createTextNode(n)); chip.appendChild(num);
+        chip.addEventListener("click", () => {
+          activeParty = activeParty === n ? "" : n;
+          legend.querySelectorAll(".pchip").forEach(c => c.setAttribute("aria-pressed", c === chip && activeParty ? "true" : "false"));
+          applyFilter();
+        });
+        if (legend.children.length >= 7) chip.classList.add("extra");
+        legend.appendChild(chip);
+      });
+      const moreCount = legend.querySelectorAll(".extra").length;
+      if (moreCount) {
+        const more = document.createElement("button");
+        more.type = "button"; more.className = "pchip pmore"; more.setAttribute("aria-expanded", "false");
+        more.textContent = "+ уште " + moreCount + " групи";
+        more.addEventListener("click", () => {
+          const open = legend.classList.toggle("open");
+          more.setAttribute("aria-expanded", open ? "true" : "false");
+          more.textContent = open ? "Прикажи помалку" : "+ уште " + moreCount + " групи";
+        });
+        legend.appendChild(more);
+      }
+      (function buildHall() {
+        const radii = [100,130,160,190,220,250,280], total = radii.reduce((a,b) => a+b, 0);
+        let counts = radii.map(r => Math.round(items.length * r / total));
+        counts[counts.length-1] += items.length - counts.reduce((a,b) => a+b, 0);
+        const pts = [];
+        radii.forEach((r, ri) => { for (let k = 0; k < counts[ri]; k++) {
+          const a = Math.PI - (k + 0.5) * Math.PI / counts[ri];
+          pts.push({a, r, x: 300 + r * Math.cos(a), y: 302 - r * Math.sin(a)});
+        }});
+        pts.sort((p, q) => q.a - p.a || p.r - q.r);
+        // Seats run left to right; MPs are placed party by party (largest first), alphabetically inside a party.
+        const order = items.map((_, i) => i).sort((x, y) => partyRank[buttons[x].dataset.party] - partyRank[buttons[y].dataset.party] || x - y);
+        order.forEach((itemIndex, pos) => {
+          const pt = pts[pos], c = document.createElementNS(SVGNS, "circle"), m = document.createElementNS(SVGNS, "circle");
+          c.setAttribute("class", "seat"); c.setAttribute("cx", pt.x.toFixed(1)); c.setAttribute("cy", pt.y.toFixed(1)); c.setAttribute("r", "11");
+          c.style.fill = partyColor[buttons[itemIndex].dataset.party];
+          m.setAttribute("class", "mark"); m.setAttribute("cx", pt.x.toFixed(1)); m.setAttribute("cy", pt.y.toFixed(1)); m.setAttribute("r", "4.2");
+          c._x = pt.x; c._y = pt.y; seats[itemIndex] = c; marks[itemIndex] = m;
+        });
+        seats.forEach(c => hall.appendChild(c)); marks.forEach(m => hall.appendChild(m));
+        hallNum.setAttribute("class", "hall-num"); hallNum.setAttribute("x", "300"); hallNum.setAttribute("y", "286");
+        hallSub.setAttribute("class", "hall-sub"); hallSub.setAttribute("x", "300"); hallSub.setAttribute("y", "308");
+        hallSub.textContent = "отворени нацрти";
+        hall.appendChild(hallNum); hall.appendChild(hallSub);
+      })();
+      function seatAt(ev) {
+        const box = hall.getBoundingClientRect(), k = 600 / box.width;
+        const x = (ev.clientX - box.left) * k, y = (ev.clientY - box.top) * k;
+        let best = -1, bd = 24 * 24;
+        seats.forEach((s, i) => { const d = (s._x-x)*(s._x-x) + (s._y-y)*(s._y-y); if (d < bd && !s.classList.contains("dim")) { bd = d; best = i; } });
+        return best;
+      }
+      function showInfo(i, mode) {
+        hallInfo.textContent = "";
+        if (i < 0) { hallInfo.textContent = canHover ? "Помини преку место за да видиш кој пратеник е. Кликни за да го избереш." : "Допри место за да видиш кој пратеник е."; return; }
+        const b = buttons[i], who = document.createElement("span"), n = document.createElement("strong"), e = document.createElement("span");
+        who.className = "who"; n.textContent = b.dataset.name; e.textContent = b.dataset.email; who.appendChild(n); who.appendChild(partyTag(b.dataset.party)); who.appendChild(e); hallInfo.appendChild(who);
+        if (mode === "chosen") { const ok = document.createElement("span"); ok.className = "ok"; ok.textContent = opened.has(b.dataset.email) ? "Нацртот е отворен ✓" : "Избран ✓"; hallInfo.appendChild(ok); }
+        else if (mode === "pick") { const go = document.createElement("button"); go.type = "button"; go.className = "btn"; go.textContent = "Избери →"; go.addEventListener("click", () => choose(b)); hallInfo.appendChild(go); }
+      }
+      function syncHall() {
+        const sel = buttons.findIndex(b => b.getAttribute("aria-pressed") === "true");
+        seats.forEach((s, i) => { s.classList.toggle("sel", i === sel); s.classList.toggle("done", opened.has(buttons[i].dataset.email)); marks[i].classList.toggle("on", opened.has(buttons[i].dataset.email)); s.classList.remove("hover"); });
+        buttons.forEach(b => { if (opened.has(b.dataset.email)) b.querySelector(".send-tag").textContent = "Отворено ✓"; else b.querySelector(".send-tag").textContent = "Избери →"; });
+        hallNum.textContent = opened.size + " / " + items.length;
+        hallReset.hidden = opened.size === 0;
+        previewIndex = -1;
+        showInfo(sel, "chosen");
+      }
+      function markOpened(email) {
+        opened.add(email);
+        try { localStorage.setItem(STORE, JSON.stringify(Array.from(opened))); } catch (e) {}
+        syncHall();
+      }
+      hallReset.addEventListener("click", () => {
+        opened = new Set();
+        try { localStorage.removeItem(STORE); } catch (e) {}
+        syncHall();
+      });
+      hall.addEventListener("click", ev => {
+        const i = seatAt(ev);
+        if (i < 0) return;
+        if (canHover) { choose(buttons[i]); return; }
+        seats.forEach((s, k) => s.classList.toggle("hover", k === i));
+        previewIndex = i; showInfo(i, "pick");
+      });
+      if (canHover) {
+        hall.addEventListener("mousemove", ev => {
+          const i = seatAt(ev);
+          if (i === previewIndex) return;
+          previewIndex = i;
+          seats.forEach((s, k) => s.classList.toggle("hover", k === i));
+          if (i >= 0) showInfo(i, "preview"); else showInfo(buttons.findIndex(b => b.getAttribute("aria-pressed") === "true"), "chosen");
+        });
+        hall.addEventListener("mouseleave", () => { previewIndex = -1; seats.forEach(s => s.classList.remove("hover")); showInfo(buttons.findIndex(b => b.getAttribute("aria-pressed") === "true"), "chosen"); });
+      }
+      syncHall();
+      // Hall and list are two views of the same 120 MPs; only one is shown at a time.
+      const pickPanel = document.getElementById("pick-panel");
+      const tabs = {hall: document.getElementById("tab-hall"), list: document.getElementById("tab-list")};
+      function setView(view) {
+        pickPanel.dataset.view = view;
+        Object.entries(tabs).forEach(([k, el]) => el.setAttribute("aria-selected", k === view ? "true" : "false"));
+        if (view === "list") {
+          const row = document.querySelector('.send-mp[aria-pressed="true"]');
+          if (row) list.scrollTop = row.closest(".mp-item").offsetTop - list.offsetTop;
+        }
+      }
+      tabs.hall.addEventListener("click", () => setView("hall"));
+      tabs.list.addEventListener("click", () => setView("list"));
       function notify(msg, ms) {
         toast.textContent=msg; toast.classList.add("show");
         clearTimeout(toastTimer); toastTimer=setTimeout(()=>toast.classList.remove("show"),ms || 2600);
