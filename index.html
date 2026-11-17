@@ -237,6 +237,11 @@
     #pick-panel[data-view="hall"] .panel-heading{border-bottom:0}
     #pick-panel[data-view="list"] .hall{display:none}
     .hall{margin-top:12px}
+    /* Share card */
+    .card-box{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;margin-top:12px;padding-top:12px;border-top:1px solid #cfe9b0}
+    #card-img{display:block;width:132px;height:auto;border-radius:9px;box-shadow:0 4px 14px #1c280e33}
+    .card-side{flex:1;min-width:170px}
+    .card-side p{margin:0;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -1612,20 +1617,22 @@
 <p class="provider-note">Ништо не се испраќа автоматски: провери го нацртот и притисни „Испрати“. Ако текстот недостасува, копирај го со копчињата под писмото.</p>
 <button class="btn copy-recipient" disabled="" id="copy-selected-email" type="button">⧉ Копирај адреса на избраниот пратеник</button>
 <div class="after" hidden="" id="after"><strong>Го отвори нацртот?</strong>Откако ќе го испратиш писмото, пиши и до уште еден пратеник или покани и други да пишат.<div class="after-actions"><button class="btn" id="another" type="button">Избери уште еден пратеник</button><button class="btn" id="share" type="button">Сподели со порака</button></div>
-<div class="share-box"><div class="field-label">Порака што се споделува</div><p id="share-text">Донирањето кај нас сè уште е покомплицирано отколку што треба, а новиот Закон за донации и спонзорства чека од 2024 година. Јас пишав до пратеник и побарав постапката да продолжи. Потребна е една минута, а секое писмо се брои. Пиши и ти!
+<div class="share-box"><div class="field-label">Порака што се споделува</div><p id="share-text">Да донираш е љубов! ❤️ Но, законот што треба да го поттикнува донирањето создава лавиринт од процедури, па донаторите се откажуваат од даночните олеснувања што им следуваат.
+Јас пишав до пратеник и побарав да се заложи за промена на законот. Пиши и ти!
 
-Време е за закон што ќе го охрабрува донирањето. ❤️</p></div></div>
+Време е за закон што ќе го охрабрува донирањето.</p></div>
+<div class="card-box"><img alt="Картичка за споделување: Јас пишав до пратеник. Пиши и ти!" height="1350" id="card-img" width="1080"/><div class="card-side"><div class="field-label">Картичка за споделување</div><p>Слика со твојот број на писма, за Instagram, Facebook или Viber. Не содржи имиња.</p><div class="after-actions"><button class="btn" id="card-share" type="button">Сподели слика</button><button class="btn" id="card-save" type="button">Преземи слика</button></div></div></div></div>
 </div>
 </section>
-<div class="letter-content"><h3 class="letter-h">Текст на писмото</h3><p class="letter-sub">Можеш да ја испратиш подготвената порака како што е, или да ѝ дадеш личен печат: додади или измени што сакаш во твојата е-пошта пред да ја испратиш.</p><div class="field-label">Наслов / Subject</div><p class="subject" id="subject">Прашање за продолжување на постапката за Законот за донации и спонзорства</p><div class="field-label">Порака</div><pre class="letter-body" id="letter">Почитуван/а пратенику/пратеничке,
+<div class="letter-content"><h3 class="letter-h">Текст на писмото</h3><p class="letter-sub">Можеш да ја испратиш подготвената порака како што е, или да ѝ дадеш личен печат: додади или измени што сакаш во твојата е-пошта пред да ја испратиш.</p><div class="field-label">Наслов / Subject</div><p class="subject" id="subject">Барање за продолжување на постапката за промена на Законот за донации и спонзорства</p><div class="field-label">Порака</div><pre class="letter-body" id="letter">Почитуван/а пратенику/пратеничке,
 
-Ви пишувам во врска со постапката за донесување нов Закон за донации и спонзорства во јавните дејности.
+Ви пишувам во врска со постапката за промена на Законот за донации и спонзорства во јавните дејности. Идејата за негово донесување беше да овозможи даночни бенефиции за донаторите и со тоа да поттикне повеќе донации за јавно добро. Наместо тоа, постојното решение создава лавиринт од процедури, па донаторите се откажуваат од даночните олеснувања што им следуваат.
 
-Предлог-законското решение беше објавено на ЕНЕР во јануари 2024 година, а Владата предвиде донесување нов закон до вториот квартал на 2026 година. Тој рок е поминат. Во меѓувреме, 140 граѓански организации побараа продолжување на процесот, а на јавната расправа од 21 септември 2026 година беа разгледани конкретни предлози за подобрување на законската рамка.
+Постапката за промена е започната, а предлог-законското решение беше објавено на ЕНЕР во јануари 2024 година. Владата предвиде донесување нов закон до вториот квартал на 2026 година. Тој рок е поминат. Во меѓувреме, 143 граѓански организации побараа продолжување на процесот, а на јавната расправа од 21 септември 2026 година беа разгледани конкретни предлози за подобрување на законската рамка.
 
-Како граѓанин/ка, сметам дека е важно да знаеме кога ова прашање ќе добие институционална завршница.
+Како граѓанин/ка, сметам дека промената е нужна и дека е важно да знаеме кога ова прашање ќе добие институционална завршница.
 
-Ве молам да ме информирате дали ќе го покренете прашањето за продолжување на постапката пред надлежните институции и, доколку процесот остане во застој, дали ќе ја разгледате можноста за поднесување предлог-закон по пратеничка иницијатива, согласно член 71 од Уставот.
+Ве замолувам да го покренете прашањето за продолжување на постапката пред надлежните институции и, доколку процесот остане во застој, да ја разгледате можноста за поднесување предлог-закон по пратеничка иницијатива, согласно член 71 од Уставот. Доколку Ви се потребни дополнителни информации, Ве упатувам на Здружението Конект (konekt@konekt.org.mk), кое веќе 15 години работи на оваа тематика.
 
 Би Ви бил/а благодарен/на за конкретен одговор за можните следни чекори.
 
@@ -1887,11 +1894,13 @@
         opened.add(email);
         try { localStorage.setItem(STORE, JSON.stringify(Array.from(opened))); } catch (e) {}
         syncHall();
+        updateCard();
       }
       hallReset.addEventListener("click", () => {
         opened = new Set();
         try { localStorage.removeItem(STORE); } catch (e) {}
         syncHall();
+        after.hidden = true;
       });
       hall.addEventListener("click", ev => {
         const i = seatAt(ev);
@@ -1911,6 +1920,76 @@
         hall.addEventListener("mouseleave", () => { previewIndex = -1; seats.forEach(s => s.classList.remove("hover")); showInfo(buttons.findIndex(b => b.getAttribute("aria-pressed") === "true"), "chosen"); });
       }
       syncHall();
+      // ---- Share card: a 1080x1350 image drawn in the browser; nothing is uploaded ----
+      const cardImg = document.getElementById("card-img");
+      const cardShare = document.getElementById("card-share");
+      const FONT = 'system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+      let cardCanvas = null;
+      function wrapText(g, text, maxWidth) {
+        const out = []; let line = "";
+        text.split(" ").forEach(w => { const test = line ? line + " " + w : w; if (g.measureText(test).width > maxWidth && line) { out.push(line); line = w; } else line = test; });
+        if (line) out.push(line);
+        return out;
+      }
+      function renderCard() {
+        const W = 1080, H = 1350, c = document.createElement("canvas"), g = c.getContext("2d"), n = Math.max(opened.size, 1);
+        c.width = W; c.height = H;
+        const bg = g.createLinearGradient(0, 0, W, H); bg.addColorStop(0, "#35562b"); bg.addColorStop(1, "#5f8a4a");
+        g.fillStyle = bg; g.fillRect(0, 0, W, H);
+        g.strokeStyle = "rgba(255,255,255,.07)"; g.lineWidth = 90;
+        g.beginPath(); g.arc(W + 40, -30, 330, 0, Math.PI * 2); g.stroke();
+        g.textBaseline = "alphabetic"; g.textAlign = "left";
+        g.fillStyle = "#dcebcb"; g.font = "700 30px " + FONT;
+        try { g.letterSpacing = "3px"; } catch (e) {}
+        g.fillText("ЗАКОН ЗА ДОНАЦИИ И СПОНЗОРСТВА", 80, 118);
+        try { g.letterSpacing = "-2px"; } catch (e) {}
+        g.fillStyle = "#8fbd45"; g.fillRect(80, 160, 10, 332);
+        g.font = "800 100px " + FONT; let y = 248;
+        g.fillStyle = "#fff";
+        wrapText(g, n === 1 ? "Јас пишав до пратеник." : "Јас пишав до " + n + " пратеници.", 860).forEach(l => { g.fillText(l, 120, y); y += 112; });
+        g.fillStyle = "#d3f5a0"; g.fillText("Пиши и ти!", 120, y);
+        try { g.letterSpacing = "0px"; } catch (e) {}
+        // the hall, with this visitor's letters lit up
+        const k = 1.5, ox = 90, oy = 560;
+        seats.forEach((s, i) => {
+          g.beginPath(); g.arc(ox + s._x * k, oy + s._y * k, 11 * k, 0, Math.PI * 2);
+          g.fillStyle = opened.has(buttons[i].dataset.email) ? "#ffffff" : "rgba(255,255,255,.2)"; g.fill();
+        });
+        g.textAlign = "center"; g.fillStyle = "#fff"; g.font = "800 66px " + FONT;
+        g.fillText(opened.size + " / " + items.length, W / 2, oy + 288 * k);
+        g.font = "600 34px " + FONT; g.fillStyle = "#f1fce5";
+        let my = 1096;
+        wrapText(g, "Време е за закон што ќе го охрабрува донирањето", 900).forEach(l => { g.fillText(l, W / 2, my); my += 46; });
+        g.fillStyle = "#fff"; g.fillRect(0, 1186, W, H - 1186);
+        const mark = document.querySelector(".slogan img");
+        let addr = "";
+        if (/^https?:$/.test(location.protocol)) addr = (location.host + location.pathname).replace(/index\.html?$/i, "").replace(/\/$/, "");
+        if (mark && mark.complete && mark.naturalWidth) {
+          const mh = addr ? 80 : 92, mw = mh * mark.naturalWidth / mark.naturalHeight;
+          g.drawImage(mark, (W - mw) / 2, addr ? 1186 + 20 : 1186 + (H - 1186 - mh) / 2, mw, mh);
+        }
+        if (addr) { g.textAlign = "center"; g.fillStyle = "#3b5e30"; g.font = "700 32px " + FONT; try { g.letterSpacing = "0px"; } catch (e) {} g.fillText(addr, W / 2, 1186 + 134); }
+        return c;
+      }
+      function updateCard() {
+        try { cardCanvas = renderCard(); cardImg.src = cardCanvas.toDataURL("image/png"); } catch (e) { cardCanvas = null; }
+      }
+      function saveCard(blob) {
+        const url = URL.createObjectURL(blob), a = document.createElement("a");
+        a.href = url; a.download = "pisav-do-pratenik.png"; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      }
+      document.getElementById("card-save").addEventListener("click", () => { if (cardCanvas) cardCanvas.toBlob(saveCard, "image/png"); });
+      cardShare.hidden = !(navigator.canShare && window.File);
+      cardShare.addEventListener("click", () => {
+        if (!cardCanvas) return;
+        cardCanvas.toBlob(blob => {
+          const file = new File([blob], "pisav-do-pratenik.png", {type: "image/png"});
+          const text = document.getElementById("share-text").textContent.trim() + "\n\n" + location.href;
+          if (navigator.canShare && navigator.canShare({files: [file]})) navigator.share({files: [file], text: text}).catch(() => {});
+          else { saveCard(blob); notify("Сликата е преземена. Прикачи ја каде што сакаш да споделиш.", 4500); }
+        }, "image/png");
+      });
       // Hall and list are two views of the same 120 MPs; only one is shown at a time.
       const pickPanel = document.getElementById("pick-panel");
       const tabs = {hall: document.getElementById("tab-hall"), list: document.getElementById("tab-list")};
