@@ -1744,6 +1744,7 @@
         const text = (greetings[selectedGender] || genericGreeting) + letterBody;
         return name ? text + "\n" + name : text;
       }
+      const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
       let needsPaste = {};
       function updateLinks() {
         const letter = currentLetter();
@@ -1765,6 +1766,12 @@
           link.classList.remove("is-disabled");
           link.removeAttribute("aria-disabled");
           link.removeAttribute("tabindex");
+        }
+        // iPhone: the Gmail app does not reliably fill in the text from a web link, but it does from its own address, which is built into it.
+        if (isIOS) {
+          const app = buildUrl("googlegmail:///co", {to:selectedEmail,subject:subject,body:gmailLong ? PASTE : letter});
+          links.gmail.href = app;
+          links.gmail.removeAttribute("target");
         }
         copySelected.disabled=false;
         sendArea.hidden=false;
