@@ -1627,13 +1627,13 @@
 </section>
 <div class="letter-content"><h3 class="letter-h">Текст на писмото</h3><p class="letter-sub">Можеш да ја испратиш подготвената порака како што е, или да ѝ дадеш личен печат: додади или измени што сакаш во твојата е-пошта пред да ја испратиш.</p><div class="field-label">Наслов / Subject</div><p class="subject" id="subject">Барање за продолжување на постапката за промена на Законот за донации и спонзорства</p><div class="field-label">Порака</div><pre class="letter-body" id="letter">Почитуван/а пратенику/пратеничке,
 
-Ви пишувам во врска со постапката за промена на Законот за донации и спонзорства во јавните дејности. Идејата за негово донесување беше да овозможи даночни бенефиции за донаторите и со тоа да поттикне повеќе донации за јавно добро. Наместо тоа, постојното решение создава лавиринт од процедури, па донаторите се откажуваат од даночните олеснувања што им следуваат.
+Ви пишувам во врска со постапката за промена на Законот за донации и спонзорства во јавните дејности. Неговата цел беше да овозможи даночни бенефиции за донаторите и да поттикне повеќе донации за јавно добро. Наместо тоа, создава лавиринт од процедури, па донаторите се откажуваат од даночните олеснувања што им следуваат.
 
-Постапката за промена е започната, а предлог-законското решение беше објавено на ЕНЕР во јануари 2024 година. Владата предвиде донесување нов закон до вториот квартал на 2026 година. Тој рок е поминат. Во меѓувреме, 143 граѓански организации побараа продолжување на процесот, а на јавната расправа од 21 септември 2026 година беа разгледани конкретни предлози за подобрување на законската рамка.
+Постапката за промена е почната одамна, а Владата предвиде донесување нов закон до вториот квартал на 2026 година. Тој рок е поминат. Во меѓувреме, 143 граѓански организации побараа продолжување на процесот и овозможување поедноставен, поефикасен и потранспарентен систем за донирање.
 
-Како граѓанин/ка, сметам дека промената е нужна и дека е важно да знаеме кога ова прашање ќе добие институционална завршница.
+Како граѓанин/ка, сметам дека е време за закон што ќе го охрабрува донирањето.
 
-Ве замолувам да го покренете прашањето за продолжување на постапката пред надлежните институции и, доколку процесот остане во застој, да ја разгледате можноста за поднесување предлог-закон по пратеничка иницијатива, согласно член 71 од Уставот. Доколку Ви се потребни дополнителни информации, Ве упатувам на Здружението Конект (konekt@konekt.org.mk), кое веќе 15 години работи на оваа тематика.
+Ве замолувам да го покренете прашањето за продолжување на постапката пред надлежните институции и, доколку процесот остане во застој, да ја разгледате можноста за поднесување предлог-закон по пратеничка иницијатива, согласно член 71 од Уставот. За дополнителни информации, Ве упатувам на Здружението Конект (konekt@konekt.org.mk), кое веќе 15 години работи на оваа тематика.
 
 Би Ви бил/а благодарен/на за конкретен одговор за можните следни чекори.
 
@@ -1721,13 +1721,19 @@
         const text = (greetings[selectedGender] || genericGreeting) + letterBody;
         return name ? text + "\n" + name : text;
       }
+      let needsPaste = {};
       function updateLinks() {
         const letter = currentLetter();
         letterEl.textContent = letter;
         if (!selectedEmail) return;
-        const gmail = buildUrl("https://mail.google.com/mail/", {view:"cm",fs:"1",to:selectedEmail,su:subject,body:letter});
-        const outlook = buildUrl("https://outlook.live.com/mail/0/deeplink/compose", {to:selectedEmail,subject:subject,body:letter});
-        const outlookWork = buildUrl("https://outlook.office.com/mail/deeplink/compose", {to:selectedEmail,subject:subject,body:letter});
+        // Cyrillic takes six characters per letter in a link, and Gmail answers "400" to links over roughly 8,000 characters; limits below stay under that.
+        // If the full letter does not fit, the link carries the recipient and subject only, and the letter is copied to be pasted.
+        const MAX_GMAIL = 7700, MAX_OUTLOOK = 7500, PASTE = "Залепи го писмото овде (Ctrl+V, или држи и избери „Залепи“). Копирано е во меморијата.";
+        const web = (base, p, bodyKey, MAX) => { const full = buildUrl(base, Object.assign({}, p, {[bodyKey]: letter})); return full.length <= MAX ? [full, false] : [buildUrl(base, Object.assign({}, p, {[bodyKey]: PASTE})), true]; };
+        const [gmail, gmailLong] = web("https://mail.google.com/mail/", {view:"cm",fs:"1",to:selectedEmail,su:subject}, "body", MAX_GMAIL);
+        const [outlook, outlookLong] = web("https://outlook.live.com/mail/0/deeplink/compose", {to:selectedEmail,subject:subject}, "body", MAX_OUTLOOK);
+        const [outlookWork, outlookWorkLong] = web("https://outlook.office.com/mail/deeplink/compose", {to:selectedEmail,subject:subject}, "body", MAX_OUTLOOK);
+        needsPaste = {gmail: gmailLong, outlook: outlookLong, outlookWork: outlookWorkLong};
         // The address is left unencoded: some mail apps show "%40" literally.
         const other = "mailto:" + selectedEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(letter);
         for (const [key,url] of Object.entries({gmail,outlook,outlookWork,other})) {
@@ -1765,6 +1771,11 @@
       links.other.addEventListener("click", () => {
         if (selectedEmail) copyText(currentLetter(), "Писмото е копирано. Ако текстот недостасува во пораката, залепи го.", 6000);
       });
+      for (const key of ["gmail","outlook","outlookWork"]) {
+        links[key].addEventListener("click", () => {
+          if (selectedEmail && needsPaste[key]) copyText(currentLetter(), "Писмото е копирано. Залепи го во пораката (Ctrl+V, или држи и избери „Залепи“).", 7000);
+        });
+      }
       document.querySelectorAll(".send-mp").forEach(button => button.addEventListener("click",() => choose(button)));
       // Spread letters across MPs instead of everyone picking the first name.
       document.getElementById("random-mp").addEventListener("click", () => {
