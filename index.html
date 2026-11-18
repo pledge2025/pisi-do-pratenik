@@ -238,6 +238,7 @@
     #pick-panel[data-view="list"] .hall{display:none}
     .hall{margin-top:12px}
     /* Share card */
+    .card-box[hidden]{display:none}
     .card-box{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;margin-top:12px;padding-top:12px;border-top:1px solid #cfe9b0}
     #card-img{display:block;width:132px;height:auto;border-radius:9px;box-shadow:0 4px 14px #1c280e33}
     .card-side{flex:1;min-width:170px}
@@ -1621,7 +1622,7 @@
 Јас пишав до пратеник и побарав да се заложи за промена на законот. Пиши и ти!
 
 Време е за закон што ќе го охрабрува донирањето.</p></div>
-<div class="card-box"><img alt="Картичка за споделување: Јас пишав до пратеник. Пиши и ти!" height="1350" id="card-img" width="1080"/><div class="card-side"><div class="field-label">Картичка за споделување</div><p>Слика со твојот број на писма, за Instagram, Facebook или Viber. Не содржи имиња.</p><div class="after-actions"><button class="btn" id="card-share" type="button">Сподели слика</button><button class="btn" id="card-save" type="button">Преземи слика</button></div></div></div></div>
+<div class="card-box" hidden id="card-box"><img alt="Картичка за споделување: Јас пишав до пратеник. Пиши и ти!" height="1350" id="card-img" width="1080"/><div class="card-side"><div class="field-label">Картичка за споделување</div><p>За приказна на Instagram или Facebook. Се споделува само сликата, без текст. Не содржи имиња.</p><div class="after-actions"><button class="btn" id="card-share" type="button">Сподели ја сликата</button></div></div></div></div>
 </div>
 </section>
 <div class="letter-content"><h3 class="letter-h">Текст на писмото</h3><p class="letter-sub">Можеш да ја испратиш подготвената порака како што е, или да ѝ дадеш личен печат: додади или измени што сакаш во твојата е-пошта пред да ја испратиш.</p><div class="field-label">Наслов / Subject</div><p class="subject" id="subject">Барање за продолжување на постапката за промена на Законот за донации и спонзорства</p><div class="field-label">Порака</div><pre class="letter-body" id="letter">Почитуван/а пратенику/пратеничке,
@@ -1924,7 +1925,7 @@
       const cardImg = document.getElementById("card-img");
       const cardShare = document.getElementById("card-share");
       const FONT = 'system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
-      let cardCanvas = null;
+      let cardCanvas = null, cardFile = null;
       function wrapText(g, text, maxWidth) {
         const out = []; let line = "";
         text.split(" ").forEach(w => { const test = line ? line + " " + w : w; if (g.measureText(test).width > maxWidth && line) { out.push(line); line = w; } else line = test; });
@@ -1972,23 +1973,20 @@
         return c;
       }
       function updateCard() {
-        try { cardCanvas = renderCard(); cardImg.src = cardCanvas.toDataURL("image/png"); } catch (e) { cardCanvas = null; }
+        try {
+          cardCanvas = renderCard(); cardImg.src = cardCanvas.toDataURL("image/png"); cardFile = null;
+          const mine = cardCanvas;
+          // Build the file ahead of time, so the Share button can call navigator.share straight from the tap (iOS requires that).
+          mine.toBlob(blob => { if (blob && mine === cardCanvas) cardFile = new File([blob], "pisav-do-pratenik.png", {type: "image/png"}); }, "image/png");
+        } catch (e) { cardCanvas = null; cardFile = null; }
       }
-      function saveCard(blob) {
-        const url = URL.createObjectURL(blob), a = document.createElement("a");
-        a.href = url; a.download = "pisav-do-pratenik.png"; document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 4000);
-      }
-      document.getElementById("card-save").addEventListener("click", () => { if (cardCanvas) cardCanvas.toBlob(saveCard, "image/png"); });
-      cardShare.hidden = !(navigator.canShare && window.File);
+      // The picture can only be shared (never downloaded), and only on devices that can hand a file to another app.
+      const cardBox = document.getElementById("card-box");
+      const canShareFile = () => { try { return !!(navigator.canShare && window.File && navigator.canShare({files: [new File([""], "a.png", {type: "image/png"})]})); } catch (e) { return false; } };
+      cardBox.hidden = !canShareFile();
       cardShare.addEventListener("click", () => {
-        if (!cardCanvas) return;
-        cardCanvas.toBlob(blob => {
-          const file = new File([blob], "pisav-do-pratenik.png", {type: "image/png"});
-          const text = document.getElementById("share-text").textContent.trim() + "\n\n" + location.href;
-          if (navigator.canShare && navigator.canShare({files: [file]})) navigator.share({files: [file], text: text}).catch(() => {});
-          else { saveCard(blob); notify("Сликата е преземена. Прикачи ја каде што сакаш да споделиш.", 4500); }
-        }, "image/png");
+        if (!cardFile) { notify("Сликата уште се подготвува, обиди се повторно.", 3000); return; }
+        navigator.share({files: [cardFile]}).catch(() => {});
       });
       // Hall and list are two views of the same 120 MPs; only one is shown at a time.
       const pickPanel = document.getElementById("pick-panel");
