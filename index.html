@@ -254,7 +254,7 @@
 <span class="eyebrow">Поддршка за промена на Законот за донации и спонзорства во јавните дејности</span>
 <p class="motto">Време е за закон што ќе го охрабрува донирањето</p>
 <h1>Испрати писмо до пратеник</h1>
-<p>Избери пратеник, а потоа одбери Gmail, Outlook или друга апликација за е-пошта. Примачот, насловот и писмото ќе бидат подготвени за да ги провериш и испратиш.</p>
+<p>Избери пратеник, а потоа одбери Gmail или друга апликација за е-пошта. Примачот, насловот и писмото ќе бидат подготвени за да ги провериш и испратиш.</p>
 <div class="cta-row"><a class="cta" href="#choose">Избери пратеник ↓</a><a class="cta cta-2" href="#why-title">Зошто е важно?</a></div>
 </div></section>
 <div class="wrap"><div class="privacy" role="note"><span><b aria-hidden="true" class="check">✓</b> Без регистрација</span><span><b aria-hidden="true" class="check">✓</b> Без внесување е-пошта на страницата</span><span><b aria-hidden="true" class="check">✓</b> Пораката се испраќа од твојата е-пошта</span></div></div>
@@ -1614,8 +1614,6 @@
 <p class="delivery-explain">Отвори го писмото во:</p>
 <div class="providers">
 <a aria-disabled="true" class="provider gmail is-disabled" href="#" id="send-gmail" rel="noopener noreferrer" tabindex="-1" target="_blank"><span aria-hidden="true" class="provider-symbol">G</span><span><strong>Gmail</strong><small>Отвори нацрт во Gmail</small></span><span aria-hidden="true" class="provider-arrow">↗</span></a>
-<a aria-disabled="true" class="provider outlook is-disabled" href="#" id="send-outlook" rel="noopener noreferrer" tabindex="-1" target="_blank"><span aria-hidden="true" class="provider-symbol">O</span><span><strong>Outlook.com / Hotmail</strong><small>Лична сметка: отвори нацрт во Outlook.com</small></span><span aria-hidden="true" class="provider-arrow">↗</span></a>
-<a aria-disabled="true" class="provider outlook-work is-disabled" href="#" id="send-outlook-work" rel="noopener noreferrer" tabindex="-1" target="_blank"><span aria-hidden="true" class="provider-symbol">O</span><span><strong>Outlook (работа / училиште)</strong><small>Службена сметка: отвори нацрт во Microsoft 365</small></span><span aria-hidden="true" class="provider-arrow">↗</span></a>
 <a aria-disabled="true" class="provider other is-disabled" href="#" id="send-other" tabindex="-1"><span aria-hidden="true" class="provider-symbol">✉</span><span><strong>Друга е-пошта</strong><small>Ја отвора твојата апликација за е-пошта</small></span><span aria-hidden="true" class="provider-arrow">↗</span></a>
 </div>
 <p class="provider-note">Ништо не се испраќа автоматски: провери го нацртот и притисни „Испрати“. Ако текстот недостасува, копирај го со копчињата под писмото.</p>
@@ -1697,8 +1695,6 @@
       const copySelected = document.getElementById("copy-selected-email");
       const links = {
         gmail: document.getElementById("send-gmail"),
-        outlook: document.getElementById("send-outlook"),
-        outlookWork: document.getElementById("send-outlook-work"),
         other: document.getElementById("send-other")
       };
       let selectedEmail = "";
@@ -1752,15 +1748,13 @@
         if (!selectedEmail) return;
         // Cyrillic takes six characters per letter in a link, and Gmail answers "400" to links over roughly 8,000 characters; limits below stay under that.
         // If the full letter does not fit, the link carries the recipient and subject only, and the letter is copied to be pasted.
-        const MAX_GMAIL = 7700, MAX_OUTLOOK = 7500, PASTE = "Залепи го писмото овде (Ctrl+V, или држи и избери „Залепи“). Копирано е во меморијата.";
+        const MAX_GMAIL = 7700, PASTE = "Залепи го писмото овде (Ctrl+V, или држи и избери „Залепи“). Копирано е во меморијата.";
         const web = (base, p, bodyKey, MAX) => { const full = buildUrl(base, Object.assign({}, p, {[bodyKey]: letter})); return full.length <= MAX ? [full, false] : [buildUrl(base, Object.assign({}, p, {[bodyKey]: PASTE})), true]; };
         const [gmail, gmailLong] = web("https://mail.google.com/mail/", {view:"cm",fs:"1",to:selectedEmail,su:subject}, "body", MAX_GMAIL);
-        const [outlook, outlookLong] = web("https://outlook.live.com/mail/0/deeplink/compose", {to:selectedEmail,subject:subject}, "body", MAX_OUTLOOK);
-        const [outlookWork, outlookWorkLong] = web("https://outlook.office.com/mail/deeplink/compose", {to:selectedEmail,subject:subject}, "body", MAX_OUTLOOK);
-        needsPaste = {gmail: gmailLong, outlook: outlookLong, outlookWork: outlookWorkLong};
+        needsPaste = {gmail: gmailLong};
         // The address is left unencoded: some mail apps show "%40" literally.
         const other = "mailto:" + selectedEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(letter);
-        for (const [key,url] of Object.entries({gmail,outlook,outlookWork,other})) {
+        for (const [key,url] of Object.entries({gmail,other})) {
           const link=links[key];
           link.href=url;
           link.classList.remove("is-disabled");
@@ -1801,7 +1795,7 @@
       links.other.addEventListener("click", () => {
         if (selectedEmail) copyText(currentLetter(), "Писмото е копирано. Ако текстот недостасува во пораката, залепи го.", 6000);
       });
-      for (const key of ["gmail","outlook","outlookWork"]) {
+      for (const key of ["gmail"]) {
         links[key].addEventListener("click", () => {
           if (selectedEmail && needsPaste[key]) copyText(currentLetter(), "Писмото е копирано. Залепи го во пораката (Ctrl+V, или држи и избери „Залепи“).", 7000);
         });
